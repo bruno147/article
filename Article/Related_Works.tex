@@ -1,0 +1,44 @@
+\section{\textbf{Related Works}} \label{sec:relworks}
+	
+		The reason why TORCS presents itself as a satisfactory AI benchmark is because there is an infinity of
+		possibilities on how the sensorial input received from the server will be translated into the behaviour of the
+		actuators, and they can all be compared in a race, which has a robust and steady scoring system. In other
+		words, there are many different approaches concerning how to teach the racer encoded by the developers to
+		drive in a racing competition only with the information given by the sensors, and the metric to that issue
+		is the performance on the race itself.
+		
+		By controller, let it be understood that the subject is the programming code that in fact controls the
+		car/driver/racer within racing environment. Some examples of awarded controllers and their driving methods
+		will be presented in this section. They are what can be called the State of the Art among TORCS, and it is
+		very common among them the incorporation of machine learning methods, along with other evolving techniques
+		using artificial intelligence. Instinctively, as the nature of the problem comprises evolution by experience,
+		learning procedures tend to enhance performance and competitiveness. Essentially, there are two ways of
+		evolving controllers: Online Learning and Offline Learning, the first meaning that improvements are achieved
+		during the actual race execution time and the latter that it is done before the competition, on the account of
+		the developers themselves and with their own resources.
+		
+\subsection{State of the Art}
+		
+		The current champion of the SCR Championship is the controller \emph{Mr. Racer}~\cite{MrRacer}, and it has
+		proven to be the State of the Art by winning at least the last three competitions that happened. The authors
+		of this implementation learn parameters offline through Covariance Matrix Adaptation Evolution Strategy
+		(CMA-ES), use regression and low-pass filtering to reduce noise impact, distinguish normal asphalted roads
+		from dirt-based ones for behavioral separation and implement an authentic opponent-handling method. Their
+		Online Learning consists on the track model selection to categorize into dirt or asphalt, choice of databased
+		sets of parameters that best fit the track and the tuning of a target speed for all its corners.
+		
+		Another renowned controller is \emph{AUTOPIA}~\cite{AUTOPIA}. According to the founders of the
+		competition~\cite{SoA} and the authors of \emph{Mr. Racer} themselves, it is a competitive match, with the
+		potential to even be the best one available, but since no entries were received from them in a while, their
+		means of winning a competition were somewhat restrained. Nevertheless, assessing its performance is
+		worthwhile, and its description is the implementation of a modular Fuzzy Architecture, whose division contains
+		gear, steering and speed control. Their controller is optimized by means of a genetic algorithm for Online
+		Learning, and by means of landmarking the lane exit points for further speed reduction for Offline Learning.
+		
+		\toDo{Nós vamos	comparar o nosso piloto com o AUTOPIA? Se sim, devemos dizer isso aqui.}
+		
+		These and other controller exemplifications served as parameters for the analysis and development of the
+		approach presented in this paper. Aspects incorporated and adapted feature modularity, offline learning
+		through genetic algorithms, online learning through landmarking and choosing sets of parameters for different
+		categories of tracks, etc. \toDo{Adicionar o quê mais fizemos no projeto como pincelada inicial para fazer o
+		gancho com a seção Controller Structure.}

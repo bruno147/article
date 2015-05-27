@@ -1,0 +1,11 @@
+\section{Methodology and Experiments} \label{sec:exp}
+	Once defined the model and what parameters has to be tuned. In order to find the best configuration of parameters of the controller designed it was use a genetic algorithm.
+	
+	To find a general controller with good results for any track, the controller is evaluate with relation it's performance in various track, including dirt tracks and road tracks. 
+	
+	Due to the differences between dirt track and road tracks, it was made a two isolated evolution of controller, the first only on road tracks and the other one only on dirt tracks.
+	
+	Each individual race alone in a list of tracks, and the sum of the distance raced in the firstly 10000 cycles of time in each track is the fitness of the individual.
+	
+	In the end of evolution there will be pass more than 600 generations, each generation with 30 individuals.
+	

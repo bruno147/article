@@ -1,0 +1,91 @@
+\section{\textbf{FSMDriver - Controller Structure}} \label{sec:fsm}
+
+	\subsection{First Approach - A Finite-State Machine With Five States}
+	
+	According to Mat Buckland in \emph{Programming Game AI By Example}~\cite{AI}:
+	
+	\begin{quotation}
+		
+		\emph{
+		``A finite state machine is a device, or a model of a device, which has a finite number of states it can be in
+		at any given time and can operate on input to either make transitions from one state to another or to cause
+		an output or action to take place. A finite state machine can only be in one state at any moment in time.''}
+		
+	\end{quotation}
+	
+	Some of the main aspects desired to idealize a controller for TORCS were sufficed by the concept of	finite state
+	machines~\cite{FSM}, the most important one being the goal of reaching an autonomous driving behaviour in a car
+	race. This architecture was chosen in order to transform the problem of complex driving into smaller problems of
+	situations found within the racing environment. Initially, the design of the finite-state machine proposed
+	comprised the following states:
+	
+	\begin{itemize}
+
+	\item \emph{Straight Line};
+	\item \emph{Approaching Curve};
+	\item \emph{Curve};
+	\item \emph{Out of Track};
+	\item \emph{Stuck}.
+
+	\end{itemize}
+	
+	Essentially, for this method, normal behaviour covered \emph{Straight Line}, \emph{Approaching Curve} and
+	\emph{Curve}, as the controller was located inside the track boundaries and no recovery actions needed to be
+	considered, whereas exception behaviour consisted of \emph{Out of Track} and \emph{Stuck}, situations in which
+	such conduct was expected. Here, a consideration needs to be taken into account: the real first model of the
+	finite-state machine did not have an \emph{Approaching Curve} state, but, as the interpretations of the demeanour
+	concerning the \emph{Straight Line} and the \emph{Curve} were so different from one another, a preparation had to
+	be established so as to smoothen the transitions between them.
+	
+	If the controller was currently in \emph{Straight Line}, it would be expected of him to simply go as fast as he
+	could, with no steering changes whatsoever; when in \emph{Approaching Curve} state, he would reposition himself
+	in relation to the track and recalibrate his speed in order to make better curves; or, when in situations of
+	\emph{Curve}, the pilot would reduce speed proportionally to the curvature of the curve, and then redirect
+	himself towards the sensor pointing the biggest distance value read - which represents the direction of the curve.
+	For the exception states, even though the expected deportment is well known, e.g. a stuck controller should
+	maneuver the car out of the current situation and proceed to normal race conduct, the implementations vary among
+	developers. The strategy chosen for the exception states was used on both proposals as a matter of regularity of
+	comparison, and is explained on the next subsection.
+	
+	The major problem about this way of treating the matter is that the function responsible for choosing which state
+	is more appropriate for each situation would more than often be overcharged, and, in some cases, rather different
+	sets of parameters received by it would result in the same classification among the states. Thus, in order to
+	minimize the dependency of the driving performance in relation to the function in charge of the transition
+	between states, a project decision was made to reduce the number of states.
+		
+	\subsection{Proposition - A Finite-State Machine With Three States}
+	
+	The very nature of the initial architecture gave rise to the new approach. As mentioned within this very section,
+	three of the states were innately part of a common bigger state, thereby \emph{Straight Line},
+	\emph{Approaching Curve} and \emph{Curve} summed into \emph{Inside the Track}, resulting in the new controller
+	with only three states, which were:
+	
+	\begin{itemize}
+		
+		\item \emph{Inside the Track};
+		\item \emph{Out of Track};
+		\item \emph{Stuck}.
+		
+	\end{itemize}
+	
+	\emph{Inside the Track}, therefore, is how the car, desirably, will spend most part of the time. The controller
+	assumes a position of increasing the speed while steering towards the sensor with the biggest read value. This
+	state also brakes, if necessary, when approaching turns.
+	
+	\emph{Out of Track} is when, for any unknown reason, the car is found outside of the track limits. In this case,
+	the proper behaviour is to try to return to the lane. In road tracks, the outside track normally has a different
+	terrain, sometimes dirt-based, meaning that skidding frequently occurs, and in a effort to avoid this, a control
+	system to brake when the car begins skidding above a threshold was implemented.
+	
+	\emph{Stuck} represents any given situation that the car is unable to progress in the race. This is a delicate
+	state, because it presents itself as difficult to identify and also due to its impact to the performance of the
+	controller. In order to detect \emph{Stuck} circumstances, the speed of the car is monitored throughout the race,
+	during every game tick, if it lingers with a low speed for a determined period, then it is considered stranded,
+	or stuck. When detected, this state activates the reverse gear of the car and turns it until its front is
+	directed towards the correct axis of the track. The reason why \emph{Stuck} is a sensitive state is because, when
+	detected early, might indicate false positive, and when detected late, could lessen the efficiency of the
+	controller. Thusly, detecting \textit{Stuck} situations is crucial, and so is handling the car out of them.
+	
+	In conclusion, each state in this manner of dealing with the process becomes, ideally, an independent problem,
+	whose solution can be attacked separately. This way, they can all have individual sets of parameters susceptible
+	to improvement, which will be discussed in the next section.

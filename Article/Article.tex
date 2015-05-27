@@ -1,0 +1,108 @@
+\documentclass[journal]{IEEEtran}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+%\usepackage[caption=false,font=footnotesize]{subfig}
+
+\usepackage{url}
+% Making the references and links clickable
+\usepackage{hyperref}
+\hypersetup{
+	%colorlinks=false,
+	pdfborder={0 0 0}
+}
+
+
+\usepackage{xcolor}
+\newcommand{\toDo}[1]{\textcolor{red}{#1}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{University of Brasília}
+\rhead{\thepage}
+\cfoot{Comparing the Performance of Different Sized Finite-State Machines with
+	Genetic Algorithm Learning on TORCS}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\begin{document}
+	\title{Comparing the Performance of Different Sized\\Finite-State Machines with\\
+		Genetic Algorithm Learning on TORCS}
+	
+	\author{\IEEEauthorblockN{Bruno H. F. Macedo\IEEEauthorrefmark{1},
+			Gabriel F. P. Araujo\IEEEauthorrefmark{1},
+			Gabriel S. Silva\IEEEauthorrefmark{1},\\
+			Matheus C. Crestani\IEEEauthorrefmark{1},
+			Yuri B. Galli\IEEEauthorrefmark{1} and
+			Guilherme N. Ramos\IEEEauthorrefmark{1}\IEEEauthorrefmark{2}\\[0.2cm]}
+		\IEEEauthorblockA{\IEEEauthorrefmark{1}University of Brasília}
+		\IEEEauthorblockA{\IEEEauthorrefmark{2}gnramos@unb.br}}
+	
+	\maketitle
+	
+	\begin{abstract}
+		
+		This work presents two different approaches developed to control a self-driving car in the racing environment
+		simulated by TORCS. The problematic revolves around the representation of the complex behaviour that
+		describes a pilot during a race, whose proposed solution is a finite-state machine. The first method models
+		the problem with states that separate the full driving behaviour into smaller fragments, thus simplifying the
+		analysis and permitting parallel optimization; whilst the second method reduces the number of states with the
+		objective of improving the performance, which is done by attenuating the impact that the function that
+		manages the transition between states has on the controller as a whole. Furthermore, in order for the final
+		controller to attain competitive status, i.e. parameter fine tuning, the incorporation of a genetic algorithm
+		was performed. Evolving the driver using Genetic Algorithm passed by defining the set of parameters 
+		which would be the target to be optimazed, it initializion, random attributes insertion, evaluetion fuction 
+		which provide a score, value that determine how good the parameters is.\toDo{Falar como foi, sucintamente,
+		o processo de evolução com o Algoritmo Genético(é o suficiente?)}
+		Validation\toDo{evaluetion?} occurred through exhaustively testing the configurations of the two approaches, comparing them
+		along with artificial intelligences provided by the platform and also State of the Art implementations.
+				
+	\end{abstract}
+	
+	\begin{IEEEkeywords}
+		
+		finite state machines, computer games, TORCS, artificial intelligence, genetic algorithms, self-driving car
+		\toDo{Finish keywords}
+		
+	\end{IEEEkeywords}
+	
+	\section{Topics}%
+	
+		Talk about:
+		
+		\begin{itemize}
+			\item How the problem appeared;
+			\item The approach chosen to solve it;
+			\item How we evolved it by applying a genetic algorithm;
+			\item How we improved the process of evolving through virus infection.
+		\end{itemize}
+		
+		Include:
+		\begin{itemize}
+			\item State-of-art exposure;
+			\item Model definition (theoretical outline);
+			\item Test results;
+			\item Results analysis;
+			\item Prospects;
+			\item Future works.
+		\end{itemize}
+		\newpage
+	
+	\input{Introduction}
+	\input{TORCS_Environment}
+	\input{Related_Works}
+	\input{FSMDriver_ControllerStructure}
+	\input{Genetic_Algorithm}
+	\input{Methodology_Experiments}
+	\input{Analysis_Conclusion}
+	\input{Future_Works}
+	
+	%\nocite{*}
+	\bibliographystyle{IEEEtran}
+	\bibliography{Bibliography}
+	\toDo{Adequar as referências ao padrão do IEEE: \url{http://www.ieee.org/documents/ieeecitationref.pdf}. Quando
+	há 3 ou mais autores colocar et al.}
+	
+	
+	
+\end{document}
