@@ -8,8 +8,8 @@
 	- such as different operational systems and architectures - and multi-programming language ones alike.
 	
 	TORCS deals with a robotic simulation in the format of car racing. It serves both as an ordinary AI game and a
-	research platform, for it provides a complete sensor-based interaction system in which the developer is able to
-	interpret received parameters of the car - such as speed in X and Y axes - and construe them in order through
+	research platform, for it provides (\toDo{não sei o torcs dá alguma coisa ou não}) a complete sensor-based interaction system in which the developer is able to
+	interpret received parameters of the car - such as speed in X, Y and even Z axes - and construe them in order through
 	coding to control the car through actuators, some of which are acceleration and steering. This behaviour is
 	widely embraced when it comes to artificial intelligence methods - a set of inputs to result in a set of outputs.
 	
@@ -17,7 +17,7 @@
 	and actuators, as mentioned earlier, and interact with other cars in the environment by a life-like collision
 	system. Nevertheless, TORCS is still a simulator, and its limitations, along with the defined racing environment
 	and the modeled robotic car, are more than likely to affect any results obtained. This is an inherited
-	characteristic of any real-life problem simulation, what in academia is denominated \emph{reality gap}, and it
+	characteristic of any real-life problem simulation, what in academia is denominated \emph{reality gap}\toDo{referencia}, and it
 	stems from the simplifications attained concerning the car models, the technical features of the tracks, and so
 	forth.
 
@@ -34,13 +34,13 @@
 	between the two and, in addition, some of the information about the racing execution remains hidden from the
 	controllers, such as the geometrical format of the track and its category. SCRC and TORCS communicate through
 	UDP packages, and each player receives information regarding the sensors of the car, some of which were already
-	presented earlier on this section.
+	presented earlier on this section.\toDo{colocar imagens ilustrativas}
 	
 	A brief description of the sensors is as follows: the driver can use a set of sensors that inform relative
 	position, speed, and car condition such as rpm, damage and gas. Useful information about the car during a
 	race can be mined from the data provided by them; for example, there are two sets of sensors labeled
 	\emph{track} and \emph{trackpos} that inform the position of the racer according to a desired direction and
-	according to the track track axis, respectively, and these two sets may be combined to inform the absolute
+	according to the track track axis, respectively, and these two sets can be combined to inform a aproximated
 	location of the car.
 	
 	The complete sensorial input information can be found at the Simulated Car Racing Championship Competition
@@ -52,3 +52,11 @@
 	and deduce information from it at will, for a limited time; Qualifiers, a stage that places each driver in a
 	race alone against the clock; and the Actual Race, when finally the eight best pilots from the Qualifiers race
 	competitively.
+
+
+	The races from the SCRC adopt the following structure:
+		\begin{itemize}
+			\item \emph{Warm-up}: when each drive is able to explore the track alone, and can carry information about the track, with a limited time. This encourage the aplication of online learning techniques that can be usefull in a race on the same track.
+			\item \emph{Qualifiers}: in this part each driver race alone against the clock, the better one is qualified to competite in the final race.
+			\item \emph{Actual Race}: The best eight pilots from Qualifiers race with each other on the track.
+		\end{itemize}
