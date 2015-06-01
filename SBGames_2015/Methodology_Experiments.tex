@@ -1,0 +1,26 @@
+\section{Methodology and Experiments} \label{sec:exp}
+	Once defined the model and what parameters has to be tuned. In order to find the best configuration of parameters of the controller designed it was use a genetic algorithm.
+	
+	To find a general controller with good results for any track, the controller is evaluate with relation it's performance in various track, including dirt tracks and road tracks. 
+	
+	Due to the differences between dirt track and road tracks, it was made a two isolated evolution of controller, the first only on road tracks and the other one only on dirt tracks.
+	
+	Each individual race alone in a list of tracks, and the sum of the distance raced in the firstly 10000 cycles of time in each track is the fitness of the individual.
+	
+	In the end of evolution there will be pass more than 600 generations, each generation with 30 individuals.
+	
+	% needs review, just throwing ideas
+	In order to find the best set of parameters for a general track the two machines states were evolved in three different set of tracks, one with 4 dirty tracks, one with 4 road tracks and another with the 4 of each type. 
+	
+	All the six controllers were tested in a predefined set of tracks, different from those where they were evolved. For the sake of comparison AUTOPIA's results were also used, since it represents the best controller developed for SCRC.
+	
+	% the set of tracks was defined by autopia
+	% tracks image as in the autopia's article
+	
+	The evaluation method used in the evolution was based on the qualifying stage of the SCRC, where each driver races alone for 10000 game ticks and those with the greater distance covered are selected. Different from the SCRC there was no warm up stage before each race.
+	% explain warm up stage
+	Warm up was only used in the comparison phase. % set of 6 tracks
+	
+	% is the fitness graphic among generations appropriate here?
+	% add tables with the evaluation results
+	

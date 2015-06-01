@@ -1,0 +1,34 @@
+\section{Genetic Algorithm}
+
+	Due to the quantity of parameters to be tuned and the defined granularity, the space search is enormous and it's necessary some space search algorithm. In this study was chosen a evolutionary algorithm.
+
+
+	A genetic algorithm is a evolutionary algorithm inpired on nature, in special with the concept of natural selection introduced by Charles
+	Darwin\toDo{referencia}. The mais idea is that a set of solutions can be envolved like a population of a specie on the nature. Genetics algorithms applications are present at many areas such as control engineering at non-linear system identification, biomedics to develop legs mechanism to proteses and even economy to forecast the behavior of agents.
+
+	A solution, called individual, can be represent in a strings of parameters, each individual is a string that contain the information necessary to evaluation.
+
+	The first population is totaly randonly, because we don't have clue to where begin to search. This population pass through a fitness fuction that index a score to each individual. The fitness function  tells how good the solution that are being evaluate is. After evaluated each individual of the population, is time to choose the parents that will generate the next set of solutions, for this is picked individuals with the best fitness score of the generation. \toDo{melhor explicar, e fazer alguma referencia sobre o método}
+
+
+	For each two parents is generate two child solutions that are a crossover of parents.
+
+
+	A randomly initial population is created, than, accordingly with the fitness function, is associated a score for each individual that represents how good the individual is.	
+	
+	
+	
+	For the model with 5 states, it was necessary adjust 22 parameters, each state has a different quantity, including the \emph{transition} function, as follows:
+
+	\emph{Approach Curve} has 4 parameters.
+
+	\emph{Transition Function} has 3 parameters.
+
+	\emph{Straight Line} has 4 parameters.
+
+	\emph{Out of Track} has 7 parameters.
+
+	\emph{Stuck} has 4 parameters.
+	
+	
+	

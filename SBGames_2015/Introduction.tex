@@ -1,0 +1,34 @@
+\section{\textbf{Introduction}}
+	
+	Automation of day to day tasks is an endeavour that has moved a large amount of scientific resources in the
+	recent history. One specific example is target of studies around the globe by a lot of universities, companies
+	and industries, which is the automation of vehicles, more specifically, automobiles. The objective of such
+	attempts is the development of artificial intelligences capable of driving a car safely, with traffic law
+	enforcement, real-time decision making, efficiency and, in addition, resource economy - as with gas or even
+	time. The practical applications of such controllers in autonomous vehicles are enormous.\toDo{referencia sobre o que foi dito}
+
+	The Simulated Car Racing Championship (SCRC), using the platform TORCS (The Open Racing Car Simulator), has
+	brought an excellent environment for benchmarking AI approaches for the problem of autonomous car controllers.
+	Notwithstanding, the optimum behaviour of a controller is a complex matter in its full extent; for this purpose,
+	the strategy adopted to deal with it was to divide the problem into smaller portions, i.e., less complicated
+	subproblems, in order to implement a finite-state machine that admittedly covers all necessary behaviours. Later
+	on this paper, each of those subproblems are treated as the states of the referenced finite-state machine, which
+	individually incorporate different but complementary parts of the integral behaviour.
+	
+	Computers are more suited for applications that require testing different sets of parameters or configurations for
+	a given problem, and although hand-coded methods might present satisfactory outcomes in questions of such
+	intricacy such as the one discussed in this paper, they will hardly ever outperform the ones that are
+	computer-aided.\toDo{referencia} Considering this, after an initial structure of the controller was designed, a method of fine
+	tuning was assimilated to it, which was a genetic algorithm.
+	
+	Apart from this Introduction, this paper is structured as follows: Section II introduces TORCS, the working
+	environment used in the context of this task, along with the competition, SCR Championship, that currently
+	represents the utmost metric to evaluate the performance of the controller proposed; Section III presents what is
+	already being done at this context in related works, highlighting the strategies that are standing out and
+	analyzing the characteristics responsible for it; Section IV then explains the proposal of the developed
+	controllers, clarifying their behaviour and structure; Section V defines how these proposals were improved by the
+	computer-aided method of a genetic algorithm; Section VI describes how the validation process occurred, through
+	the methodology, the experiments and the results achieved; Section VII analyzes the results originated from
+	Section VI and provides conclusions about them, which establish the comparison between the finite state machines
+	with few and with moderate number of states; and Section VIII points out prospects about what is yet to be done
+	in future works.

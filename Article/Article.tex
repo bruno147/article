@@ -12,7 +12,6 @@
 	pdfborder={0 0 0}
 }
 
-
 \usepackage{xcolor}
 \newcommand{\toDo}[1]{\textcolor{red}{#1}}
 
@@ -20,14 +19,12 @@
 \pagestyle{fancy}
 \lhead{University of Brasília}
 \rhead{\thepage}
-\cfoot{Comparing the Performance of Different Sized Finite-State Machines with
-	Genetic Algorithm Learning on TORCS}
+\cfoot{Comparing the Performance of Finite-State Machines with Different Numbers of States on TORCS}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
 \begin{document}
-	\title{Comparing the Performance of Different Sized\\Finite-State Machines with\\
-		Genetic Algorithm Learning on TORCS}
+	\title{Comparing the Performance of\\Finite-State Machines with\\Different Numbers of States on TORCS}
 	
 	\author{\IEEEauthorblockN{Bruno H. F. Macedo\IEEEauthorrefmark{1},
 			Gabriel F. P. Araujo\IEEEauthorrefmark{1},
@@ -44,13 +41,17 @@
 		
 		This work presents two different approaches developed to control a self-driving car in the racing environment
 		simulated by TORCS. The problematic revolves around the representation of the complex behaviour that
-		describes a pilot during a race, whose proposed solution is a finite-state machine. The first method models
+		describes a pilot during a race, whose proposed solution is a finite-state machine. \toDo{Reduzir}The first method models
 		the problem with states that separate the full driving behaviour into smaller fragments, thus simplifying the
 		analysis and permitting parallel optimization; whilst the second method reduces the number of states with the
 		objective of improving the performance, which is done by attenuating the impact that the function that
 		manages the transition between states has on the controller as a whole. Furthermore, in order for the final
 		controller to attain competitive status, i.e. parameter fine tuning, the incorporation of a genetic algorithm
-		was performed. Evolving the driver using Genetic Algorithm passed by defining the set of parameters 
+		was performed. Evolving the driver using this method initially required the definition of a set of parameters
+		to be the target of optimization, which would constitute the search space of the 
+		
+		
+		Evolving the driver using Genetic Algorithm passed by defining the set of parameters 
 		which would be the target to be optimazed, it initializion, random attributes insertion, evaluetion fuction 
 		which provide a score, value that determine how good the parameters is.\toDo{Falar como foi, sucintamente,
 		o processo de evolução com o Algoritmo Genético(é o suficiente?)}
