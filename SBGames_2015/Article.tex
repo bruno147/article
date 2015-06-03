@@ -30,8 +30,7 @@
              \toDo{Colocar os e-mails. Devem ser os academicos?}
 }
 %% Keywords that describe your work.
-\keywords{finite state machines, computer games, TORCS, artificial intelligence, genetic algorithms, self-driving car
-	\\\toDo{Finish keywords}}
+\keywords{finite-state machines, computer games, TORCS, SCRC, artificial intelligence, genetic algorithm, self-driving car}
 
 %% Start of the paper
 % Attention: As you need to insert EPS images in Postscript, 
@@ -58,13 +57,13 @@
 		
 		This work presents two different approaches developed to control a self-driving car in the racing environment
 		simulated by TORCS. The problematic revolves around the representation of the complex behaviour that
-		describes a pilot during a race, whose proposed solution is a finite-state machine; while one method treats
-		the problem with a more partitioned approach, the other tries to generalize the possible situations.
-		Furthermore, in order for the final controller to attain competitive status, i.e. parameter fine tuning, the
-		incorporation of a genetic algorithm was performed. Evolving the driver using this method initially required
-		the definition of a set of parameters, where the optimization lied effectively. Validation occurred through
-		exhaustively testing the configurations of the two approaches, comparing them along with artificial
-		intelligences provided by the platform and also State of the Art implementations.
+		describes a pilot during a race, whose proposed solutions are two different finite-state machines; while one
+		method treats the problem with a more partitioned approach, the other tries to generalize the possible
+		situations.	Furthermore, in order for the final controller to attain competitive status, i.e. parameter fine
+		tuning, the	incorporation of a genetic algorithm was performed. Evolving the driver using this method
+		initially required the definition of a set of parameters, where the optimization lied effectively. Validation
+		occurred through exhaustively testing the configurations of the two approaches, comparing them along with
+		artificial intelligences provided by the platform and also State of the Art implementations.
 		
 	\end{abstract}
 
@@ -72,35 +71,34 @@
 	\keywordlist
 	\contactlist
 	
-	\section{Topics}%
-	
-	Talk about:
-	
-	\begin{itemize}
-		\item How the problem appeared;
-		\item The approach chosen to solve it;
-		\item How we evolved it by applying a genetic algorithm;
-		\item How we improved the process of evolving through virus infection.
-	\end{itemize}
-	
-	Include:
-	\begin{itemize}
-		\item State-of-art exposure;
-		\item Model definition (theoretical outline);
-		\item Test results;
-		\item Results analysis;
-		\item Prospects;
-		\item Future works.
-	\end{itemize}
+%	\section{Topics}%
+%	
+%	Talk about:
+%	
+%	\begin{itemize}
+%		\item How the problem appeared;
+%		\item The approach chosen to solve it;
+%		\item How we evolved it by applying a genetic algorithm;
+%		\item How we improved the process of evolving through virus infection.
+%	\end{itemize}
+%	
+%	Include:
+%		\item State-of-art exposure;
+%		\item Model definition (theoretical outline);
+%		\item Test results;
+%		\item Results analysis;
+%		\item Prospects;
+%		\item Future works.
+%	\end{itemize}
 
 	\input{Introduction}
 	\input{TORCS_Environment}
-	\input{Related_Works}
-	\input{FSMDriver_ControllerStructure}
-	\input{Genetic_Algorithm}
-	\input{Methodology_Experiments}
-	\input{Analysis_Conclusion}
-	\input{Future_Works}
+	%\input{Related_Works}
+	\input{FSMDriver}
+	%\input{Genetic_Algorithm}
+	\input{Experimental_Results}
+	\input{Conclusions}
+	%\input{Future_Works}
 
 	%\section*{Acknowledgements}
 	
