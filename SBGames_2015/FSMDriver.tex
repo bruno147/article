@@ -45,13 +45,15 @@
 	
 	If the controller was currently in \emph{Straight Line}, it would be expected of him to simply go as fast as he
 	could, with no steering changes whatsoever; when in \emph{Approaching Curve} state, he would reposition himself
-	in relation to the track and recalibrate his speed in order to make better curves; or, when in situations of
-	\emph{Curve}, the pilot would reduce speed proportionally to the curvature of the curve, and then redirect
-	himself towards the sensor pointing the biggest distance value read - which represents the direction of the curve.
-	For the exception states, even though the expected deportment is well known, e.g. a stuck controller should
-	maneuver the car out of the current situation and proceed to normal race conduct, the implementations vary among
-	developers. The strategy chosen for the exception states was used on both proposals as a matter of regularity of
-	comparison, and is explained on the next subsection.
+	in relation to the track and recalibrate his speed in order to make better curves, which is done by steering the
+	car towards the direction of the sensor with the biggest read value and braking until a proportionally calculated
+	target speed is achieved; or, when in situations of \emph{Curve}, the pilot would stop braking while maintaining
+	the steering direction towards the sensor pointing the biggest distance value read - which represents the
+	direction of the curve, prepared by the approaching curve state. For the exception states, even though the
+	expected deportment is well known, e.g. a stuck controller should maneuver the car out of the current situation
+	and proceed to normal race conduct, the implementations vary among developers. The strategy chosen for the
+	exception states was used on both proposals as a matter of regularity of comparison, and is explained on the next
+	subsection.
 	
 	One big problem about this way of treating the matter is that the function responsible for choosing which state
 	is more appropriate for each situation would more than often be overcharged, and, in some cases, rather different
@@ -100,28 +102,61 @@
 	
 \subsection{Search for Parameter Values - Genetic Algorithm} \label{subsec:GA}
 	
-	Due to the quantity of parameters to be tuned and the defined granularity, the space search is enormous and it's necessary some space search algorithm. In this study was chosen a evolutionary algorithm.
+	Due to the quantity of parameters to be tuned and the defined granularity, the search space becomes enormous and
+	renders fundamental the use of a search algorithm, which optimizes the process of finding better configurations
+	by being more incisive and saving resources such as computational time and space. In the present study, an
+	evolutionary algorithm was chosen for this task.
 	
-	A genetic algorithm is a evolutionary algorithm inpired on nature, in special with the concept of natural selection introduced by Charles
-	Darwin\toDo{referencia}. The mais idea is that a set of solutions can be envolved like a population of a specie on the nature. Genetics algorithms applications are present at many areas such as control engineering at non-linear system identification, biomedics to develop legs mechanism to proteses and even economy to forecast the behavior of agents.
+	A genetic algorithm~\cite{GA} is an evolutionary algorithm inspired by nature, in special by the concept of
+	evolution through natural selection~\cite{Darwin}, whose main idea is that a set of solutions for a problem can
+	be evolved like the population of a generic species in nature. The applications of genetics algorithms are
+	present at many areas, extending from control engineering at non-linear system identification to biomedicine
+	prosthesis development and even economy to forecast the behavior of agents.
 	
-	A solution, called individual, can be represent in a strings of parameters, each individual is a string that contain the information necessary to evaluation.
+	In this context, a viable solution is called an individual and can be represented by a string of parameters; each
+	individual then becomes an array that contains the information necessary to evaluation. The first population is
+	instantiated randomly to its full extent, because the search space is too big for an initial attempt at a good
+	possibility. This population passes through a fitness function that indexes a score to each individual. This
+	function is responsible for assessing how good - or how adapted - the solution that is being evaluate is. After
+	evaluating the population separately, a group of individuals is chosen as the parents of the next set of
+	solutions, which will compose a new generation; there are countless ways of performing the selection of the
+	parents to the new generation of offspring, and this work gave preference to picking the higher individuals on the
+	scoring system, what is called Elitism\toDo{referencia para elitismo}. Each pair of parents is submitted to
+	crossover in order to generate two offspring solutions, and in the end of the process each offspring may
+	present mutation - everything according to predefined rates. \toDo{For this work, the crossover rate is 95\%,
+	while the mutation rate is 1\%, which are values proposed by Núnez-Letamendia, reference}.
 	
-	The first population is totaly randonly, because we don't have clue to where begin to search. This population pass through a fitness fuction that index a score to each individual. The fitness function  tells how good the solution that are being evaluate is. After evaluated each individual of the population, is time to choose the parents that will generate the next set of solutions, for this is picked individuals with the best fitness score of the generation. \toDo{melhor explicar, e fazer alguma referencia sobre o método}
+	For the Five-state FSM, 22 parameters required adjustment, which originated, in different quantities, from each
+	state separately and also the \emph{transition} function, as follows:
 	
-	For each two parents is generate two child solutions that are a crossover of parents.
+	\begin{itemize}
+		
+		\item \emph{Approach Curve} has 4 parameters;
+		
+		\item \emph{Transition Function} has 3 parameters;
+		
+		\item \emph{Straight Line} has 4 parameters;
+		
+		\item \emph{Out of Track} has 7 parameters;
+		
+		\item \emph{Stuck} has 4 parameters.
+		
+	\end{itemize}
 	
-	A randomly initial population is created, than, accordingly with the fitness function, is associated a score for each individual that represents how good the individual is.	
+	However, for the Three-state FSM, only 19 parameters demanded adjustment, which are divided as follows:
 	
-	For the model with 5 states, it was necessary adjust 22 parameters, each state has a different quantity, including the \emph{transition} function, as follows:
+	\begin{itemize}
+		
+		\item \emph{Inside Track} has 8 parameters;
+		
+		\item \emph{Out of Track} has 7 parameters;
+		
+		\item \emph{Stuck} has 4 parameters.
+		
+	\end{itemize}
 	
-	\emph{Approach Curve} has 4 parameters.
-	
-	\emph{Transition Function} has 3 parameters.
-	
-	\emph{Straight Line} has 4 parameters.
-	
-	\emph{Out of Track} has 7 parameters.
-	
-	\emph{Stuck} has 4 parameters.
+	Theoretically, as the search space for the latter case is smaller, finding a better controller was expected to
+	happen first for it, but only by effectively testing both architectures could such a result be achieved. The
+	source codes for both models presented in this section are available at the \emph{GitHub} repository provided in
+	the references~\cite{GitHub}. \toDo{Devemos fazer isso, certo? Reprodutibilidade.}
 	
