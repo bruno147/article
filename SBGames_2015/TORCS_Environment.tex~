@@ -34,7 +34,14 @@
 	the two and, in addition, some of the information about the racing execution remains hidden from the controllers,
 	such as the geometrical format of the track and its category. SCRC and TORCS communicate through UDP packages,
 	and each player receives information regarding the sensors of the car, some of which were already presented
-	earlier on this section.\toDo{colocar imagens ilustrativas}
+	earlier on this section. The figure 1 ilustrate the data avaliable at the torcs and client(controller) layer 
+	of abstraction.\toDo{colocar imagens ilustrativas}
+
+   	\begin{figure}[h]
+	\centering
+	\includegraphics[width=250pt]{Figure1}
+	\caption{\label{fig:Figure1}Avaliable data inside TORCS and at the client.}
+	\end{figure}
 	
 	A brief description of the sensors is as follows: the driver can use a set of sensors to acquire relative
 	position, speed, and car condition such as rpm, damage and gas. Useful information about the car during a
