@@ -81,7 +81,8 @@
 	\emph{Inside Track}, therefore, is how the car, desirably, will spend most part of the time. The controller
 	assumes a position of increasing the speed while steering towards the sensor with the biggest read value. This
 	state also brakes, if necessary, when approaching turns.
-	
+	\toDo{Mention inside track calculating a target speed based on how far the car is from the farthest edge of the track. This distance means the greater path in wich the car can head without any steer changes.}
+		
 	\emph{Out of Track} is when, for any unknown reason, the car is found outside of the track limits. In this case,
 	the proper behaviour is to try to return to the lane. In road tracks, the outside track normally has a different
 	terrain, sometimes dirt-based, meaning that skidding frequently occurs, and in an effort to avoid this, a control
