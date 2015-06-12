@@ -97,6 +97,8 @@
 	detected early, might indicate false positive, and when detected late, could lessen the efficiency of the
 	controller. Thusly, detecting \textit{Stuck} situations is crucial, and so is handling the car out of them.
 	
+	\toDo{Besides the states, there is also a learning module that is called whenever the Out of Track state is called. This module records both the speed and the position of the car when it leaves the track. Holding this information the controller is able to slow down in subsequent laps when approaching the critical point. (how is this done?) (specify how close to the critical point the brake process begin)}
+	
 	In conclusion, each state in this manner of dealing with the process becomes, ideally, an independent problem,
 	whose solution can be attacked separately. This way, they can all have individual sets of parameters susceptible
 	to improvement, which will be discussed in the next section.
