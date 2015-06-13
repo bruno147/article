@@ -79,9 +79,10 @@
 	\end{itemize}
 	
 	\emph{Inside Track}, therefore, is how the car, desirably, will spend most part of the time. The controller
-	assumes a position of increasing the speed while steering towards the sensor with the biggest read value. This
-	state also brakes, if necessary, when approaching turns.
-	\toDo{Mention inside track calculating a target speed based on how far the car is from the farthest edge of the track. This distance means the greater path in wich the car can head without any steer changes.}
+	calculates a \emph{target speed} based on how far the car is from the farthest edge of the track, then, it assumes
+	a position of increasing the speed until it reaches this velocity while driving towards the sensor with the
+	biggest read value. The distance of this method conveys the greater length the car may advance with little or
+	sometimes without significant steer changes This state also brakes, if necessary, when approaching turns.
 		
 	\emph{Out of Track} is when, for any unknown reason, the car is found outside of the track limits. In this case,
 	the proper behaviour is to try to return to the lane. In road tracks, the outside track normally has a different
@@ -97,7 +98,13 @@
 	detected early, might indicate false positive, and when detected late, could lessen the efficiency of the
 	controller. Thusly, detecting \textit{Stuck} situations is crucial, and so is handling the car out of them.
 	
-	\toDo{Besides the states, there is also a learning module that is called whenever the Out of Track state is called. This module records both the speed and the position of the car when it leaves the track. Holding this information the controller is able to slow down in subsequent laps when approaching the critical point. (how is this done?) (specify how close to the critical point the brake process begin)}
+	Besides the states, there is also a learning module that is called whenever the \emph{Out of Track} state is
+	requested. This module records both speed and position from the state of the car in the vicinity of the departure
+	from the track, and retaining these information allows the controller to slow down in subsequent laps when
+	approaching the critical points highlighted by the learning module. The implementation of this procedure consists
+	on replacing the speed recorded for the landmarked position by a slower one on future occurrences, which is done
+	by starting to break in these next occasions. For this work, the module described in this paragraph constitutes
+	the Online Learning method, concept introduced in Subsection~\ref{subsec:Related}.
 	
 	In conclusion, each state in this manner of dealing with the process becomes, ideally, an independent problem,
 	whose solution can be attacked separately. This way, they can all have individual sets of parameters susceptible
@@ -124,10 +131,10 @@
 	evaluating the population separately, a group of individuals is chosen as the parents of the next set of
 	solutions, which will compose a new generation; there are countless ways of performing the selection of the
 	parents to the new generation of offspring, and this work gave preference to picking the higher individuals on the
-	scoring system, what is called Elitism\toDo{referencia para elitismo}. Each pair of parents is submitted to
+	scoring system, what is called Elitism~\cite{ELITISM}. Each pair of parents is submitted to
 	crossover in order to generate two offspring solutions, and in the end of the process each offspring may
-	present mutation - everything according to predefined rates. \toDo{For this work, the crossover rate is 95\%,
-	while the mutation rate is 1\%, which are values proposed by Núnez-Letamendia, reference}.
+	present mutation - everything according to predefined rates. For this work, the crossover takes place in 95\% of
+	the reproduction, while the mutation rate assumes the rate of 1\%~\cite{RATES}.
 	
 	For the Five-state FSM, 22 parameters required adjustment, which originated, in different quantities, from each
 	state separately and also the \emph{transition} function, as follows:
@@ -161,5 +168,5 @@
 	Theoretically, as the search space for the latter case is smaller, finding a better controller was expected to
 	happen first for it, but only by effectively testing both architectures could such a result be achieved. The
 	source codes for both models presented in this section are available at the \emph{GitHub} repository provided in
-	the references~\cite{GitHub}. \toDo{Devemos fazer isso, certo? Reprodutibilidade.}
+	the references~\cite{GitHub}.
 	

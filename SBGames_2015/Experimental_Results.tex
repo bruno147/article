@@ -26,18 +26,18 @@
 	this evaluation process. Thus, in order to find the best set of parameters for a general track, the two
 	finite-state states were evolved in three different sets of tracks, one with 4 Dirt Tracks, one with 4 Road
 	Tracks and another with the 4 of each type. The evolution process for each set of tracks consisted on 600
-	generations of 30 individuals and culminated in one controller; in other words, At the end of the experiments,
+	generations of 30 individuals and culminated in one controller; in other words, at the end of the experiments,
 	there were six evolved controllers, one specific for Road Tracks for each model, one specific for Dirt Tracks for
-	each model, and also one evolved in a mixed manner for each model.
-	\toDo{As the stuck state is only triggred in very specific situations it was not evolved with the controller. It's parameters were hand tunned. (mention evolving stuck state separatedly in future wokrs?)}
+	each model, and also one evolved in a mixed manner for each model. Additionally, as the \emph{Stuck State} is only
+	triggered in very specific situations, it was not evolved with the controller and its parameters were hand tuned.
 	
-	\toDo{The learning module was turned off during evolution so it does not interfer in the parameters choice.}
-	
-	The validation occurred through testing the six produced pilots in a predefined set of tracks different from those
-	in which they were evolved, lest they would evidence too track-limited parameters. On behalf of comparison, the
-	results from the AUTOPIA controller were incorporated in the analysis, since it can be considered the State of
-	the Art, displaying one of the best performances for the SCR Championship, and should provide satisfactory basis
-	for appraisal.
+	Pursuing an unbiased choice of parameters, the Online Learning module described in Subsection~\ref{subsec:FSM3}
+	was turned off during the evolution progress as it seizes the responsibility for the behaviour of the car during
+	the race and could interfere with natural selection. The validation then occurred through testing the six produced
+	pilots in a predefined set of tracks different from those in which they were evolved, lest they would evidence
+	too track-limited parameters. On behalf of comparison, the results from the AUTOPIA controller were incorporated
+	in the analysis, since it can be considered the State of the Art, displaying one of the best performances for the
+	SCR Championship, and should provide satisfactory basis for appraisal.
 
 	Four road tracks, witch were used in evolution, are selected from the TORCS standard track set. They are \emph{Spring}, 
 	the longest track available in torcs with more curves than any other track, \emph{Wheel 2}, the most difficult track 
