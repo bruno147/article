@@ -3,7 +3,7 @@
 	The Open Racing Car Simulator (TORCS)~\cite{TORCS} is a widely used platform for benchmarking AI, renowned for
 	its	highly credible physics modeling engine and yet user-friendly interface for car racing simulation. One of
 	the	many other qualities of this open-source simulator is its portability, concerning multi-platform environments
-	- such as different operational systems and architectures - and multi-programming language ones alike.
+	- such as different operational systems and architectures - and multi-programming language ones alike.\toDo{ segundo o torcs.source forge: " You can also develop your own computer-controlled driver (also called a robot) in C or C++ ", o torcs só aceita c/c++ }
 
 \subsection{TORCS as platform, interface and environment} \label{subsec:TORCS}
 	
@@ -35,7 +35,7 @@
 	such as the geometrical format of the track and its category. SCRC and TORCS communicate through UDP packages,
 	and each player receives information regarding the sensors of the car, some of which were already presented
 	earlier on this section. The figure 1 ilustrate the data avaliable at the torcs and client(controller) layer 
-	of abstraction.
+	of abstraction. \toDo{ tambem temos algumas informacoes que estao do lado do torcs, exemplo: temos acesso ao fuel }
 
    	\begin{figure}[h]
 	\centering
@@ -48,7 +48,7 @@
 	race can be mined from the data provided by them; for example, there are two sets of sensors labeled
 	\emph{track} and \emph{trackpos} that inform the position of the racer according to a desired direction and
 	according to the track track axis, respectively, and these two sets can be combined to inform a approximated
-	location of the car.
+	location of the car. \toDo{ location with respect to lane, não em relação ao mapa total }
 	
 	The complete sensorial input information can be found at the Simulated Car Racing Championship Competition
 	Software Manual~\cite{SCRC}, within section 7.7. Noise can be incorporated to the aforementioned sensors,
@@ -57,7 +57,7 @@
 
 	Race tracks differ from each other concerning sensorial input if they are part of different group types, which
 	are categorized into \emph{Road}, \emph{Dirt} and \emph{Oval}. The races from the SCRC select the track types
-	randomly, and adopt the following structure:
+	randomly\toDo{ The tracks at SCRC are selected in a way unknown of public, nao necessariamente eh randomly }, a adopt the following structure:
 	
 		\begin{itemize}
 			
@@ -82,8 +82,8 @@
 
 \subsection{Related Works and State of the Art} \label{subsec:Related}
 	
-	By controller, let it be understood that the subject is the programming code that in fact controls the
-	car/driver/racer within racing environment. Some examples of awarded controllers and their driving methods
+	\toDo{trecho}By controller, let it be understood that the subject is the programming code that in fact controls the
+	car/driver/racer within racing environment.\toDo{ate aqui nao necessario, mas pode deixar } Some examples of awarded controllers and their driving methods
 	will be presented in this subsection. They are what can be called the State of the Art among TORCS, and it is
 	very common among them the incorporation of machine learning methods, along with other evolving techniques
 	using artificial intelligence. Instinctively, as the nature of the problem comprises evolution by experience,
@@ -94,10 +94,10 @@
 	
 	The current champion of the SCR Championship is the controller \emph{Mr. Racer}~\cite{MrRacer}, and it has
 	proven to be the State of the Art by winning at least the last three competitions that happened. The authors
-	of this implementation learn parameters offline through Covariance Matrix Adaptation Evolution Strategy
+	of this implementation learn\toDo{'ajust'} parameters offline through Covariance Matrix Adaptation Evolution Strategy
 	(CMA-ES), use regression and low-pass filtering to reduce noise impact, distinguish normal asphalted roads
 	from dirt-based ones for behavioral separation and implement an authentic opponent-handling method. Their
-	Online Learning consists on the track model selection to categorize into dirt or asphalt, choice of databased
+	Online Learning consists on the track model selection to categorize into dirt or asphalt\toDo{into dirt or road tracks}, choice of databased
 	sets of parameters that best fit the track and the tuning of a target speed for all its corners.
 	
 	Another renowned controller is \emph{AUTOPIA}~\cite{AUTOPIA}. According to the founders of the

@@ -3,6 +3,8 @@
 	Some of the main aspects discussed to outline a controller for TORCS were sufficed by the concept of finite state
 	machines (FSM)~\cite{Millington:2006:FSM}, the most important one being the goal of reaching an autonomous driving
 	behaviour in a car race.
+
+	\toDo{o quotation, definicao de fsm, deve estar aqui, fora do five-state FSM}
 	
 \subsection{Five-state FSM} \label{subsec:FSM5}
 	
@@ -121,12 +123,12 @@
 	evolution through natural selection~\cite{Darwin}, whose main idea is that a set of solutions for a problem can
 	be evolved like the population of a generic species in nature. The applications of genetics algorithms are
 	present at many areas, extending from control engineering at non-linear system identification to biomedicine
-	prosthesis development and even economy to forecast the behavior of agents.
+	prosthesis development and even economy to forecast the behavior of agents.\toDo{referencias sobre aplicacoes}
 	
-	In this context, a viable solution is called an individual and can be represented by a string of parameters; each
-	individual then becomes an array that contains the information necessary to evaluation. The first population is
+	\toDo{trecho}In this context, a viable solution is called an individual and can be represented by a string of parameters; each
+	individual then becomes an array that contains the information necessary to evaluation.\toDo{ate aqui, tem duas frases iguais} The first population is
 	instantiated randomly to its full extent, because the search space is too big for an initial attempt at a good
-	possibility. This population passes through a fitness function that indexes a score to each individual. This
+	possibility\toDo{, nao eh porque eh grande, mas simplesmente porque nao temos nenhuma dica inicial}. This population passes through a fitness function that indexes a score to each individual. This
 	function is responsible for assessing how good - or how adapted - the solution that is being evaluate is. After
 	evaluating the population separately, a group of individuals is chosen as the parents of the next set of
 	solutions, which will compose a new generation; there are countless ways of performing the selection of the
