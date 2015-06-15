@@ -10,12 +10,13 @@
 
 \subsection{Methodology} \label{subsec:Methodology}
 
-	Once defined the models and which of their parameters required tuning, the genetic algorithm was applied to each
-	one separately\toDo{, tornar claro que each one refere aos modelos, nao aos parametros}, in order to adjust their configurations for superior and competitive status. At the same time, the
-	goal was to find general and versatile controllers with good results for any track and specific ones that were
-	fittest to race in various tracks: road, dirt and oval alike. Therefore, due to the differences observed in the
-	parameters of controllers evolved on dirt and road tracks, the evolution process took place separately for those
-	two kinds of environments, which produced two contrasting sets of enhanced values for each model.
+	Once the models - and which of their parameters required tuning - have been defined, the genetic algorithm was
+	applied to each approach separately, in order to adjust their configurations for superior and competitive status.
+	At the same time, the goal was to find general and versatile controllers with good results for any track and
+	specific ones that were fittest to race in various tracks: road, dirt and oval alike. Therefore, due to the
+	differences observed in the parameters of controllers evolved on dirt and road tracks, the evolution process took
+	place separately for those two kinds of environments, which produced two contrasting sets of enhanced values for
+	each model.
 	
 	The \emph{metric} chosen to evaluate the generated controllers was the combined sum of the distance raced by the
 	car alone in the first 10.000 game cycles - also called \emph{game tics} - of a list of mixed tracks. This value

@@ -4,24 +4,24 @@
 	machines (FSM)~\cite{Millington:2006:FSM}, the most important one being the goal of reaching an autonomous driving
 	behaviour in a car race.
 
-	\toDo{o quotation, definicao de fsm, deve estar aqui, fora do five-state FSM}
-	
-\subsection{Five-state FSM} \label{subsec:FSM5}
-	
 	According to Mat Buckland in \emph{Programming Game AI By Example}~\cite{Buckland:2005:AI}:
 	
 	\begin{quotation}
 		
 		\emph{
-		``A finite state machine is a device, or a model of a device, which has a finite number of states it can be in
-		at any given time and can operate on input to either make transitions from one state to another or to cause
-		an output or action to take place. A finite state machine can only be in one state at any moment in time.''}
+			``A finite state machine is a device, or a model of a device, which has a finite number of states it can be in
+			at any given time and can operate on input to either make transitions from one state to another or to cause
+			an output or action to take place. A finite state machine can only be in one state at any moment in time.''}
 		
 	\end{quotation}
 	
 	This architecture was chosen in order to transform the problem of complex driving into smaller problems of
-	situations found within the racing environment. Initially, the design of the finite-state machine proposed
-	comprised the following states:
+	situations found within the racing environment, and the division performed for the problematic of this work is
+	described in the rest of this section.
+	
+\subsection{Five-state FSM} \label{subsec:FSM5}
+	
+	Initially, the design of the finite-state machine proposed comprised the following states:
 	
 	\begin{itemize}
 
@@ -125,18 +125,17 @@
 	present at many areas, extending from control engineering at non-linear system identification to biomedicine
 	prosthesis development and even economy to forecast the behavior of agents.\toDo{referencias sobre aplicacoes}
 	
-	\toDo{trecho}In this context, a viable solution is called an individual and can be represented by a string of parameters; each
-	individual then becomes an array that contains the information necessary to evaluation.\toDo{ate aqui, tem duas frases iguais} The first population is
-	instantiated randomly to its full extent, because the search space is too big for an initial attempt at a good
-	possibility\toDo{, nao eh porque eh grande, mas simplesmente porque nao temos nenhuma dica inicial}. This population passes through a fitness function that indexes a score to each individual. This
-	function is responsible for assessing how good - or how adapted - the solution that is being evaluate is. After
-	evaluating the population separately, a group of individuals is chosen as the parents of the next set of
-	solutions, which will compose a new generation; there are countless ways of performing the selection of the
-	parents to the new generation of offspring, and this work gave preference to picking the higher individuals on the
-	scoring system, what is called Elitism~\cite{ELITISM}. Each pair of parents is submitted to
-	crossover in order to generate two offspring solutions, and in the end of the process each offspring may
-	present mutation - everything according to predefined rates. For this work, the crossover takes place in 95\% of
-	the reproduction, while the mutation rate assumes the rate of 1\%~\cite{RATES}.
+	In this context, a viable solution is called an individual and can be represented by a string of parameters. The
+	first population is instantiated randomly to its full extent due to the lack of information concerning how to
+	effectively evaluate an individual. This population passes through a fitness function that indexes a score to
+	each individual, and this function is responsible for assessing how good - or how adapted - the solution that is
+	being evaluate is. After evaluating the population separately, a group of individuals is chosen as the parents of
+	the next set of solutions, which will compose a new generation; there are countless ways of performing the
+	selection of the parents to the new generation of offspring, and this work gave preference to picking the higher
+	individuals on the scoring system, what is called Elitism~\cite{ELITISM}. Each pair of parents is submitted to
+	crossover in order to generate two offspring solutions, and in the end of the process each offspring may present
+	mutation - everything according to predefined rates. For this work, the crossover takes place in 95\% of the
+	reproduction, while the mutation rate assumes the rate of 1\%~\cite{RATES}.
 	
 	For the Five-state FSM, 22 parameters required adjustment, which originated, in different quantities, from each
 	state separately and also the \emph{transition} function, as follows:
