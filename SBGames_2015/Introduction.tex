@@ -1,30 +1,32 @@
 \section{\textbf{Introduction}} \label{sec:Intro}
-	
+
 	Automation of day to day tasks is an endeavour that has moved a large amount of scientific resources in the
-	recent history. One specific example is target of studies around the globe by a lot of universities, companies
-	and industries, which is the automation of vehicles, more specifically, automobiles. The objective of such
+	recent history\gnramos{referencia?}. One specific example is target of studies around the globe by a lot of universities, companies
+	and industries\gnramos{trocar por target of research}, which is the automation of vehicles, more specifically, automobiles. The objective of such
 	attempts is the development of artificial intelligences capable of driving a car safely, with traffic law
 	enforcement, real-time decision making, efficiency and, in addition, resource economy - as with gas or even
-	time. The practical applications of such controllers in autonomous vehicles are truly numerous, for example, the
-	researches pursued by DARPA~\cite{DARPA}.
+	time\gnramos{referencia?}. The practical applications of such controllers in autonomous vehicles are truly numerous, for example, the
+	researches\gnramos{quais?} pursued by DARPA~\cite{DARPA}\gnramos{site nao e referencia! se quiser por o link, use nota de rodape}.
+
+	\gnramos{melhorar a contextualizacao do problema. acrescentar justificativas para pesquisa da solucao}
 
 	The Simulated Car Racing Championship (SCRC), using the platform TORCS (The Open Racing Car Simulator), has
-	brought an excellent environment for benchmarking AI approaches for the problem of autonomous car controllers.
-	Notwithstanding, the optimum behaviour of a controller is a complex matter in its full extent; for this purpose,
-	the strategy adopted to deal with it was to divide the problem into smaller portions, i.e., less complicated
-	subproblems, in order to implement a finite-state machine that admittedly covers all necessary behaviours. Later
+	brought an excellent environment for benchmarking AI approaches for the problem of autonomous car controllers\gnramos{referencia?}.
+	Notwithstanding, the optimum behaviour of a controller is a complex matter in its full extent\gnramos{confuso. encontrar o comportamento?}; for this purpose,
+	the strategy adopted to deal with it \gnramos{apresentar o que tem sido feito antes de mostrar a proposta} was to divide the problem into smaller portions, i.e., less complicated
+	subproblems, in order to implement a finite-state machine that admittedly covers all necessary behaviours \gnramos{referencia?}. Later
 	on this paper, each of those subproblems are treated as the states of the referenced finite-state machine, which
 	individually incorporate different but complementary parts of the integral behaviour.
-	
-	One way to enhance the performance of the created controllers is by comparing each and every possible set of
+
+	One way to enhance the performance of the created controllers is by comparing \gnramos{evaluating} each and every possible set of
 	parameters or configurations it could assume, but that choice is not always possible due to time and space
-	complexities. For that reason, although hand-coded methods might present satisfactory outcomes in questions of
-	such intricacy similar to the one discussed in this paper, they will hardly ever outperform the ones that are
+	complexities. For that reason, although hand-coded methods \gnramos{o que são?} might present satisfactory outcomes in questions of
+	such intricacy \gnramos{quais?} similar to the one discussed in this paper, they will hardly ever outperform the ones that are
 	computer-aided on account of the incisive and indefatigable pace that the latter perform the task, which results
-	in more possibilities tested. Considering this, after an initial structure of the controller was designed, a
+	in more possibilities tested\gnramos{referência? por que nao?}. Considering this, after an initial structure of the controller was designed, a
 	method of computer-aided fine tuning was assimilated to it, which was a genetic algorithm.
-	
-	Apart from this Introduction, this paper is structured as follows: Section~\ref{sec:Environment} introduces
+
+	Apart from this Introduction, \gnramos{trocar por The rest of} this  paper is structured as follows: Section~\ref{sec:Environment} introduces
 	TORCS, the working environment used in the context of this task, along with the competition, SCR Championship,
 	that currently represents the utmost metric to evaluate the performance of the controller proposed, and what is
 	already being done at this context in related works, highlighting the strategies that are standing out - State of
@@ -34,4 +36,4 @@
 	validation process occurred, through the methodology, the experiments and the results achieved, including their
 	correspondent analysis; Section~\ref{sec:Conclusions} provides conclusions about the acquired results, which
 	establish the comparison between the finite state machines with few and with moderate number of states, pointing
-	out prospects about what is yet to be done in future works to improve those results.
+	out prospects about what is yet to be done in future works to improve those results. \gnramos{excessivamente detalhado}
