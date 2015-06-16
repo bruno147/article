@@ -1,4 +1,4 @@
-\documentclass[a4paper]{sbgames}               % final
+\documentclass[a4paper]{sbgames}
 %\usepackage[scaled=.92]{helvet}
 \usepackage{times}
 \usepackage{graphicx}
@@ -14,93 +14,41 @@
 \usepackage{xcolor}
 \newcommand{\toDo}[1]{\textcolor{red}{#1}}
 
-%% Paper title.
 \title{Comparing the Performance of Finite-State Machines with Different Numbers of States on TORCS}
 
-%% Author and Affiliation (multiple authors). Use: and between authors
-
-\author{\textbf{Bruno H. F. Macedo}\\ \textit{University of Brasília}\\\textit{Faculty of Technogy} (FT)
-		\and \textbf{Gabriel F. P. Araujo}\\ \textit{University of Brasília}\\\textit{Faculty of Technogy} (FT)
-		\and \textbf{Gabriel S. Silva}\\ \textit{University of Brasília}\\\textit{Faculty of Technogy} (FT)
-		\and \textbf{Matheus C. Crestani}\\ \textit{University of Brasília}\\\textit{Faculty of Technogy} (FT)
-		\and \textbf{Yuri B. Galli}\\ \textit{University of Brasília}\\\textit{Faculty of Technogy} (FT)\\
-        \and \textbf{Guilherme N. Ramos}\\ \textit{University of Brasília}\\Professor at \textit{Department of Computer Science} (CIC)\\
+\author{Bruno H. F. Macedo\\Gabriel F. P. Araujo\\
+		\and Gabriel S. Silva\\Matheus C. Crestani\\\textit{University of Bras\'{i}lia}
+		\and Yuri B. Galli\\ Guilherme N. Ramos\\
 }
-\contactinfo{\{bhfmacedo,yurigalli\}@gmail.com \\
+
+\contactinfo{\{bhfmacedo\}@gmail.com \\
              gnramos@cic.unb.br \\
 }
-%% Keywords that describe your work.
-\keywords{finite-state machines, computer games, TORCS, SCRC, artificial intelligence, genetic algorithm, self-driving car}
 
-%% Start of the paper
-% Attention: As you need to insert EPS images in Postscript, 
-% you need to insert PDF images into PDFs. 
-% In the text, extensions cancbe omitted (latex use .eps, pdflatex get .pdf) 
-% To convert them: epstopdf myimage.eps
+\keywords{finite-state machine, computer games, TORCS, SCRC, artificial intelligence, genetic algorithm, self-driving car}
 \begin{document}
 
-%\teaser{
-%  \includegraphics[width=\linewidth]{sample.pdf}
-%  \caption{Optional image}
-%}
-
-%% The ``\maketitle'' command must be the first command after the
-%% ``\begin{document}'' command. It prepares and prints the title block.
-
-\maketitle
-
-%% Abstract section.
+	\maketitle
 
 	\begin{abstract}
 		
-		\toDo{Alterar cabecalho do programa para aceitar portugues}
-		
-		\toDo{As paginas do artigo sao numeradas de acordo com o ``journal'', caso seja aceito}
-		
 		This work presents two different approaches developed to control a self-driving car in the racing environment
-		simulated by TORCS. The problematic revolves around the representation of the complex behaviour that
-		describes a pilot during a race, whose proposed solutions are two different finite-state machines; while one
-		method treats the problem with a more partitioned approach, the other tries to generalize the possible
-		situations.	Furthermore, in order for the final controller to attain competitive status, i.e. parameter fine
-		tuning, the	incorporation of a genetic algorithm was performed. Evolving the driver using this method
-		initially required the definition of a set of parameters, where the optimization lied effectively. Validation
-		occurred through exhaustively testing the configurations of the two approaches, comparing them along with
-		artificial intelligences provided by the platform and also State of the Art implementations.
+		simulated by TORCS. The problematic is the understanding of the complex behaviour that a pilot assumes during
+		a race, and the proposals for dealing with it are two finite-state machines that reproduce this behaviour. The
+		evaluation of the methods proposed provided a comparison between finite-state machines with different numbers
+		of states, and by the experimental results it could be inferred that using fewer states with this technique
+		leads to improved performance in simulated races.
 		
 	\end{abstract}
 
-	%% The ``\keywordlist'' command prints out the keywords.
 	\keywordlist
 	\contactlist
 	
-%	\section{Topics}%
-%	
-%	Talk about:
-%	
-%	\begin{itemize}
-%		\item How the problem appeared;
-%		\item The approach chosen to solve it;
-%		\item How we evolved it by applying a genetic algorithm;
-%		\item How we improved the process of evolving through virus infection.
-%	\end{itemize}
-%	
-%	Include:
-%		\item State-of-art exposure;
-%		\item Model definition (theoretical outline);
-%		\item Test results;
-%		\item Results analysis;
-%		\item Prospects;
-%		\item Future works.
-%	\end{itemize}
-
 	\input{Introduction}
 	\input{TORCS_Environment}
-	%\input{Related_Works}
 	\input{FSMDriver}
-	%\input{Genetic_Algorithm}
 	\input{Experimental_Results}
 	\input{Conclusions}
-	%\input{Future_Works}
 
 	%\section*{Acknowledgements}
 	

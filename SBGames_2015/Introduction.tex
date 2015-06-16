@@ -1,38 +1,9 @@
 \section{\textbf{Introduction}} \label{sec:Intro}
 	
-	Automation of day to day tasks is an endeavour that has moved a large amount of scientific resources in the
-	recent history. One specific example is target of studies around the globe by a lot of universities, companies
-	and industries, which is the automation of vehicles, more specifically, automobiles. The objective of such
-	attempts is the development of artificial intelligences capable of driving a car safely, with traffic law
-	enforcement, real-time decision making, efficiency and, in addition, resource economy - as with gas or even
-	time. The practical applications of such controllers in autonomous vehicles are truly numerous, for example, the
-	researches pursued by DARPA~\cite{DARPA}.
+	Automation of day to day tasks is an endeavour that has moved a large amount of scientific resources in the recent history~\cite{INDUS}~\cite{APPLI}. One specific example is target of research around the globe by a lot of universities, companies	and industries, which is the automation of vehicles, more specifically, automobiles. The objective of such attempts is the development of artificial intelligences capable of driving a car safely~\cite{SAFE}, with traffic law enforcement, real-time decision making, efficiency and, in addition, resource economy - as with gas, pollution emission~\cite{AUTOM} or even time. The practical applications of such controllers in autonomous vehicles are numerous, for example, the researches pursued by DARPA~\footnote{http://www.darpa.mil/our-research}.
 
-	The Simulated Car Racing Championship (SCRC), using the platform TORCS (The Open Racing Car Simulator), has
-	brought an excellent environment for benchmarking AI approaches for the problem of autonomous car controllers.
-	Notwithstanding, the optimum behaviour of a controller is a complex matter in its full extent; for this purpose,
-	the strategy adopted to deal with it was to divide the problem into smaller portions, i.e., less complicated
-	subproblems, in order to implement a finite-state machine that admittedly covers all necessary behaviours. Later
-	on this paper, each of those subproblems are treated as the states of the referenced finite-state machine, which
-	individually incorporate different but complementary parts of the integral behaviour.
+	The Simulated Car Racing Championship (SCRC), using the platform TORCS (The Open Racing Car Simulator), has	brought an excellent environment for benchmarking AI approaches for the problem of autonomous car controllers~\cite{2009}. Even with the advent of computer simulations, finding the optimum behaviour of a car controller is a complex matter, so, many approaches have been suggested, such as heuristic algorithms~\cite{MrRacer} and modular and fuzzy architectures~\cite{AUTOPIA}. The strategy adopted in this work was to divide the problem into smaller portions, i.e., less complicated subproblems, in order to implement a finite-state machine that admittedly covers all necessary behaviours.
 	
-	One way to enhance the performance of the created controllers is by comparing each and every possible set of
-	parameters or configurations it could assume, but that choice is not always possible due to time and space
-	complexities. For that reason, although hand-coded methods might present satisfactory outcomes in questions of
-	such intricacy similar to the one discussed in this paper, they will hardly ever outperform the ones that are
-	computer-aided on account of the incisive and indefatigable pace that the latter perform the task, which results
-	in more possibilities tested. Considering this, after an initial structure of the controller was designed, a
-	method of computer-aided fine tuning was assimilated to it, which was a genetic algorithm.
+	One way to enhance the performance of the controllers created is by evaluating each and every possible set of parameters or configurations it could assume, but that choice is not always possible due to time and space complexities. Considering this, after an initial structure of the controller was designed, a method of computer-aided fine tuning was assimilated to it, which was a genetic algorithm.
 	
-	Apart from this Introduction, this paper is structured as follows: Section~\ref{sec:Environment} introduces
-	TORCS, the working environment used in the context of this task, along with the competition, SCR Championship,
-	that currently represents the utmost metric to evaluate the performance of proposed controllers for this
-	environment; the section also presents what is already being done at this context in related works, highlighting
-	the strategies that are standing out - State of the Art - and analyzing the characteristics responsible for it.
-	Section~\ref{sec:FSM} then explains the proposal of the two developed controllers, clarifying their behaviour and
-	structure, and briefly describing how they were augmented by the computer-aided method of a genetic algorithm.
-	Section~\ref{sec:Experiments} describes how the validation process occurred through the methodology, the
-	experiments and the results achieved, including their correspondent analysis. Section~\ref{sec:Conclusions}
-	provides conclusions about the results acquired, which establish the comparison between the finite state machines
-	with few and with moderate number of states, pointing out prospects about what is yet to be done in future works
-	to improve those results.
+	The rest of this Introduction is structured as follows: Section~\ref{sec:Environment} introduces TORCS, the working environment used in the problematic presented, along with the competition, SCR Championship, that currently represents the metric to evaluate the performance of controllers proposed for this environment; the section also presents what is already being done at this context in related works. Section~\ref{sec:FSM} then explains the proposal of the two developed controllers, clarifying their behaviour and structure, and briefly describing how they were augmented by the computer-aided method of a genetic algorithm. Section~\ref{sec:Experiments} describes how the validation process occurred through the methodology, the experiments and the results achieved, including their correspondent analysis. Section~\ref{sec:Conclusions} provides conclusions about the results acquired, which establish the comparison between the finite state machines with few and with moderate number of states, pointing out prospects about what might be done in future works to improve those results.
