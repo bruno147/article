@@ -13,28 +13,28 @@
 
 \usepackage{xcolor}
 \newcommand{\toDo}[1]{\textcolor{red}{#1}}
+\newcommand{\gnramos}[1]{\textcolor{blue}{#1}}
 
 %% Paper title.
 \title{Comparing the Performance of Finite-State Machines with Different Numbers of States on TORCS}
 
 %% Author and Affiliation (multiple authors). Use: and between authors
 
-\author{Bruno H. F. Macedo\\Gabriel F. P. Araujo\\ \textit{University of Brasília}\\ \textit{Technogy Faculty} (FT)\\
-        \and Gabriel S. Silva\\Matheus C. Crestani\\Yuri B. Galli\\ \textit{University of Brasília}\\
-        \textit{Technogy Faculty} (FT)\\
-        \and Guilherme N. Ramos\\ \textit{University of Brasília}\\Professor at
-        \textit{Department of Computer Science} (CIC)\\
+\author{Bruno H. F. Macedo\\Gabriel F. P. Araujo\\
+        \and Gabriel S. Silva\\Matheus C. Crestani\\\textit{University of Bras\'{i}lia}
+        \and Yuri B. Galli\\ Guilherme N. Ramos
 }
+
 \contactinfo{\{bhfmacedo,yurigalli\}@gmail.com \\
-             gnramos@cic.unb.br \\
+             gnramos@unb.br \\ \gnramos{so um contato - do autor correspondente}
 }
 %% Keywords that describe your work.
-\keywords{finite-state machines, computer games, TORCS, SCRC, artificial intelligence, genetic algorithm, self-driving car}
+\keywords{finite-state machine, computer games, TORCS, SCRC, artificial intelligence, genetic algorithm, self-driving car}
 
 %% Start of the paper
-% Attention: As you need to insert EPS images in Postscript, 
-% you need to insert PDF images into PDFs. 
-% In the text, extensions cancbe omitted (latex use .eps, pdflatex get .pdf) 
+% Attention: As you need to insert EPS images in Postscript,
+% you need to insert PDF images into PDFs.
+% In the text, extensions cancbe omitted (latex use .eps, pdflatex get .pdf)
 % To convert them: epstopdf myimage.eps
 \begin{document}
 
@@ -51,36 +51,38 @@
 %% Abstract section.
 
 	\begin{abstract}
-		
+
 		\toDo{Alterar cabecalho do programa para aceitar portugues}
-		
+		\gnramos{para que? (o texto é em Ingles - e poderia ser em inglês mais simples/objetivo) - to-do: \textbf{escrever 10 paginas}}
+
+		\gnramos{reescrever. abstract deveria ter $\pm$ 5 frases objetivas: 1) problema 2) proposta 3) mérito 4) validação 5) resultados}
 		This work presents two different approaches developed to control a self-driving car in the racing environment
 		simulated by TORCS. The problematic revolves around the representation of the complex behaviour that
-		describes a pilot during a race, whose proposed solutions are two different finite-state machines; while one
+		describes a pilot during a race, whose \gnramos{refere-se ao comportamento?} proposed solutions are two different finite-state machines; while one
 		method treats the problem with a more partitioned approach, the other tries to generalize the possible
-		situations.	Furthermore, in order for the final controller to attain competitive status, i.e. parameter fine
-		tuning, the	incorporation of a genetic algorithm was performed. Evolving the driver using this method
-		initially required the definition of a set of parameters, where the optimization lied effectively. Validation
-		occurred through exhaustively testing the configurations of the two approaches, comparing them along with
-		artificial intelligences provided by the platform and also State of the Art implementations.
-		
+		situations. Furthermore, in order for the final controller to attain competitive status, i.e. parameter fine
+		tuning \gnramos{explicacao desnecessaria}, the	incorporation of a genetic algorithm was performed\gnramos{``foi feita a incorporação de GA''? melhor ser objetivo: ``utilizou-se GA para'' }. Evolving the driver using this method
+		initially required the definition of a set of parameters, where the optimization lied effectively\gnramos{o que isso quer dizer? (lied effectively)}. Validation
+		occurred through exhaustively \gnramos{não foi exaustivo} testing the configurations of the two approaches, comparing them along with
+		artificial intelligences provided by the platform and also State of the Art implementations\gnramos{tantos detalhes não são necessários}.
+
 	\end{abstract}
 
 	%% The ``\keywordlist'' command prints out the keywords.
 	\keywordlist
 	\contactlist
-	
+
 %	\section{Topics}%
-%	
+%
 %	Talk about:
-%	
+%
 %	\begin{itemize}
 %		\item How the problem appeared;
 %		\item The approach chosen to solve it;
 %		\item How we evolved it by applying a genetic algorithm;
 %		\item How we improved the process of evolving through virus infection.
 %	\end{itemize}
-%	
+%
 %	Include:
 %		\item State-of-art exposure;
 %		\item Model definition (theoretical outline);
@@ -100,8 +102,8 @@
 	%\input{Future_Works}
 
 	%\section*{Acknowledgements}
-	
+
 	\bibliographystyle{sbgames}
 	\bibliography{Bibliography}
-	
+
 \end{document}
