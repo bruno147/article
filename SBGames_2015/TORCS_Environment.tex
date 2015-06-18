@@ -1,8 +1,34 @@
 \section{\textbf{The Simulation Environment}} \label{sec:Environment}
 
 	\toDo{1. Why simulation}
-	\toDo{2 .Why torcs as simulator}
+
+	Simulations has used in multiples researches, such as in aviation industries~\cite{aviation}, medical education~\cite{medical}, robotic disaster response~\cite{VRC}. The aviation industry uses simulator to ... Medical colleges uses simulators to teach and evaluate the students, how to ... The Defense Advanced Research Projects Agency (DARPA) chose a simulation as process to evaluate which teams would continue in the challenge. Therefore a couple of reasons why we used simulations in this work:
+	\begin{itemize}
+		\item control and operational management;
+		\item planning actions;
+		\item understanding the problem and how to react;
+		\item training and learning.
+	\end{itemize}
+
+	\toDo{2. Why TORCS as simulator}
+
+	The Open Racing Car Simulator (TORCS) is a modern, modular, multi-player, multi-agent car simulator. A platform that is a widely used for benchmarking AI due its high degree of modularity and portability, concerning multi-platform environments - such as different operational systems - and support to the programming languages C and C++. Artificial intelligent agents can be developed into TORCS, as modules, there are many possibles levels of abstraction which can be evolved solutions. For example, at the car level, some intelligent control system for each car components. At the driver level, mid-level control systems to complex driving agents could be implemented using information - simulation state (partial) - given by a low-level API provided by TORCS.~\cite{TORCS}
+
 	\toDo{3. How the simulation engine works}
+
+	The TORCS engine uses a discrete-time simulation, the discretisation is set to 0.002s of simulation time. The engine solve differencial equations with Euler method and all basic elements of the vehicular dynamics is handled. Wich are
+
+	\begin{itemize}
+		\item basic properties of the vehicular system;
+		\item mechanical details;
+		\item dynamic and static friction;
+		\item aerodynamic model.
+	\end{itemize}
+
+	Mass, rotational inertia of the car, engine, wheels and others components are included in the model of the vehicular system. The types of different suspension, links and differentials in the mechanical model. The profile for different ground types with each dynamic and static friction are included too. The aerodynamic includes slipstreaming and ground effects. Nevertheless the simulation engine can be replaced or easily modified owing the modularity of the TORCS.
+
+
+
 	The Open Racing Car Simulator (TORCS) is a platform that is a widely used for benchmarking AI, renowned for its highly credible physics modeling engine and yet user-friendly interface for car racing simulation~\cite{TORCS}. One of the	many other qualities of this open-source simulator is its portability, concerning multi-platform environments - such as different operational systems and architectures - and support to the programming languages C and C++.
 
 \subsection{TORCS} \label{subsec:TORCS}
