@@ -14,6 +14,15 @@
 \usepackage{xcolor}
 \newcommand{\toDo}[1]{\textcolor{red}{#1}}
 
+\newcommand{\insertPicture}[1]{\textcolor{green}{#1}:
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=150pt]{defaultPicture.jpg}
+		\caption{\label{Label}Proper picture.}
+	\end{figure}
+	\\
+	}
+
 \title{Comparing the Performance of Finite-State Machines with Different Numbers of States on TORCS}
 
 \author{Bruno H. F. Macedo\\Gabriel F. P. Araujo\\
