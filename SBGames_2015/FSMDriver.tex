@@ -49,7 +49,7 @@
 	could, with no steering changes whatsoever; when in \emph{Approaching Curve} state, he would reposition himself
 	in relation to the track and recalibrate his speed in order to make better curves, which is done by steering the
 	car towards the direction of the sensor with the biggest read value and braking until a proportionally calculated
-	target speed is achieved; or, when in situations of \emph{Curve}, the pilot would stop braking while maintaining
+	target speed is achieved;\toDo{approaching curve does not implements the farthest sensor policy, this is done in the curve state. Approaching curve in fact moves the car to the opposite side of the curve proportionally to turn's curvature, if there is a critical turn to left the car will position itself to the right, in order to gain speed in the turn. A target position (trackpos sensor) is defined and steer is set to achieve this goal} or, when in situations of \emph{Curve}, the pilot would stop braking while maintaining
 	the steering direction towards the sensor pointing the biggest distance value read - which represents the
 	direction of the curve, prepared by the approaching curve state. For the exception states, even though the
 	expected deportment is well known, e.g. a stuck controller should maneuver the car out of the current situation
@@ -81,16 +81,18 @@
 		
 	\end{itemize}
 	
+	\toDo{provide picture showing the fartherst sensor in a turn}		
 	\emph{Inside Track}, therefore, is how the car, desirably, will spend most part of the time. The controller
 	calculates a \emph{target speed} based on how far the car is from the farthest edge of the track, then, it assumes
 	a position of increasing the speed until it reaches this velocity while driving towards the sensor with the
 	biggest read value. The distance of this method conveys the greater length the car may advance with little or
-	sometimes without significant steer changes This state also brakes, if necessary, when approaching turns.
-		
+	sometimes without significant steer changes This state also brakes, if necessary, when approaching turns. \toDo{brake is not triggred by turns. The target speed is proportional to the greatest sensor value wich means the farther the controller is from the edge the quicker it moves. Brake is triggred by driving in a speed higher than the target one.}.
+	
+	\toDo{provide picture showing the desired return angle}	
 	\emph{Out of Track} is when, for any unknown reason, the car is found outside of the track limits. In this case,
 	the proper behaviour is to try to return to the lane. In road tracks, the outside track normally has a different
 	terrain, sometimes dirt-based, meaning that skidding frequently occurs, and in an effort to avoid this, a control
-	system to brake when the car begins skidding above a threshold was implemented.
+	system to brake when the car begins skidding above a threshold was implemented.\toDo{the controller also tries to return to the track in a "friendly" angle. There were defined a max and a min return angle so the car does not found itself in tricky situations (a picture would help, for real)}
 	
 	\emph{Stuck} represents any given situation that the car is unable to progress in the race. This is a delicate
 	state, because it presents itself as difficult to identify and also due to its impact to the performance of the

@@ -59,7 +59,7 @@
 	
 \subsection{Results} \label{subsec:Results}
 	
-	\toDo{present table}
+\toDo{TABLE DOES NOT FIT IN A SINGLE COLUMN!}
 	
 	\begin{table}[h]
 	\renewcommand{\arraystretch}{1.3}
@@ -81,11 +81,19 @@
 	\end{tabular} 
 	\end{table}
 	
-	\toDo{is the fitness graphic among generations appropriate here?}
+	\toDo{split table in time and ticks table}
 	
 \subsection{Analysis} \label{subsec:Analysis}
 	
+	\toDo{review this section and add more details, just throwing ideas}
 	%needs review
-	In general the three states controller overperformed by far the five states one. FSM3 presented better results in all the tested tracks. One of the causes of this overwhelming difference in performance is the complexity of the transition function. The FSM5 presents a very complex transition that takes in account the sensors variance to decide if the car is in a straight line, approaching the turn or in the turn. On the other hand, the FSM3 has only a single state for handling normal driving situations and it is very easy to say if the controller is inside or outside the track only by checking the track sensor. 
+	In general the three states controller outperformed by far the five states one. FSM3 presented better results in all the tested tracks. One of the causes of this overwhelming difference in performance may be the complexity of the transition function. The FSM5 presents a very complex transition that takes in account the sensors variance to decide if the car is in a straight line, approaching a turn or in a turn. On the other hand, the FSM3 has only a single state for handling normal driving situations and it is very easy to say if the controller is inside or outside the track only by checking the track sensor.
 	
+	As expected, the controller evolved only in road tracks is the fastest one. This tracks provides an environment susceptible to high speeds since its curves are smoother than the dirt tracks ones, the friction experimented by the car is higher in road tracks allowing it to brake without losing control. As the friction is higher steering is more accurate in road tracks. No critical skidding. Result was an aggressive driver with high base speed.
 	
+	Dirt tracks provides a more difficult environment for the pilot to fit in. Suddenly brakes result in unwanted behavior more often, skidding is way more common in this situation . The driver evolved here tends to drive in a low speed so it can keep itself inside the boundaries of the track. Speed driving results in high damage and even \toDo{change it please} "death". The result obtained was a very careful driver with a low base speed, and an early brake policy (car starts to brake far before the turn). This passive driving achieved the smallest distance covered both for the FSM3 and FSM5.
+	
+	\toDo{find better names than "dirt controller", "mixed controller", "road controller"}
+	The driver evolved in a mix set of tracks combines characteristics from both. It drives in a considerable speed as the first one, but also has the preventive brake policy from the second one. This behavior achieved better results than the "dirt behavior" in all the tracks tested and outperformed the "road behavior" in all the dirt tracks. \emph{The "mixed controller" performed better than the "dirt controller" even in dirt tracks.} One of the reasons is that the "mixed driver" tries to reach higher speeds even though this means leaving the track in some turns. The time spent trying to get back to the track is compensated by the speed of the car. In addition, the "mixed" is better than the "road" in dirt tracks. The aggressive behavior of the "road driver" makes it take several damage when leaving the track and hitting walls, this results in premature ending of the race (max damage reached).
+	
+	\toDo{still missing lots of information!}
