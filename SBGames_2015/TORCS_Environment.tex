@@ -16,7 +16,7 @@
 		
 	\end{itemize}
 	
-	Simulations represent just an approximated model of the systems they try to imitate, but in most cases the effects of the estimates adopted in the attempt to do this do not come to the point that the model becomes invalid. For example, a simulation that reproduces a surgery environment may fail to accurately determine the tension of the skin of a patient it wants to make an incision, but that does not mean that the whole process is compromised by just this approximation. Similarly, car racing simulations also incorporate flawed modeling, regarding friction, gravity, trajectory lines, and so on, but resorting to them may save some spare parts that would most likely be jeopardized in real-life tests. So, new studies, new researches and new automation methods shall be evaluated through simulations and avoid costs in the development process.
+	Simulations represent just an approximated model of the systems they try to imitate, but in most cases the effects of the estimates adopted in the attempt to do this do not come to the point that the model becomes invalid. For example, a simulation that reproduces a surgery environment may fail to accurately determine the tension of the skin of a patient into whom it wants to make an incision, but that does not mean that the whole process is compromised by just this approximation. Similarly, car racing simulations also incorporate flawed modeling - regarding friction, gravity, trajectory lines, and so on - but resorting to them may save some spare parts that would most likely be jeopardized in real-life tests. So, new studies, new researches and new automation methods are able to be evaluated through simulations and avoid costs in the development process.
 	
 \subsection{TORCS} \label{subsec:TORCS}
 
@@ -46,12 +46,15 @@
 
 	The Simulated Car Racing Championship (SCRC) is an example of a well-known competition which utilizes TORCS as interface~\cite{SCR}. Being an event joining three competitions held at major scientific conferences, such as \emph{IEEE Congress on Evolutionary Computation}~\footnote{http://www.cec2015.org/}, \emph{Genetic and Evolutionary Computation Conference}~\footnote{http://www.sigevo.org/gecco-2015/} and \emph{IEEE Conference on Computational Intelligence and Games}~\footnote{http://www.ieee-cig.org/}, it is an accepted metric of evaluation in the fields of Evolutionary Computation and Computational Intelligence regarding Games.
 	
-	In the SCRC, some of the information about the racing execution remains hidden from the controllers, such as the geometrical format of the track and its category. The communication between this championship and TORCS is made through a client-server interface, with each player receiving information from the server regarding the sensors of the car, and in return providing actuator values that determine how the controller is supposed to drive the car. Figure~\ref{Fig:1} illustrates the data available at the TORCS and client - controller - layer of abstraction.
+	In the SCRC, some of the information about the racing execution remains hidden from the controllers, such as the geometrical format of the track and its category. The communication between this championship and TORCS is made through a client-server interface, with each player receiving information from the server regarding the sensors of the car, and in return providing actuator values that determine how the controller is supposed to drive the car. Figure~\ref{Fig:Comm} illustrates the data available at the TORCS and client - controller - layer of abstraction.
 
    	\begin{figure}[h]
+   		
 		\centering
-		\includegraphics[width=250pt]{Figure1}
-		\caption{\label{Fig:1}Available data inside TORCS and at the client.}
+		\includegraphics[width=250pt]{Figure1.jpg}
+		\caption{Available data inside TORCS and at the client}
+		\label{Fig:Comm}
+		
 	\end{figure}
 	
 	The complete sensorial input information can be found at the Simulated Car Racing Championship Competition Software Manual~\cite{SCRC}. Noise can be introduced in the sensors, option that is present during the actual competition.
