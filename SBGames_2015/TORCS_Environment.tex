@@ -38,7 +38,7 @@
 
 	Mass, rotational inertia of the car, engine, wheels, and other components, are included in the model of the vehicular system. The types of different suspension, links, and differentials, in the mechanical model. The profile for different ground types with each dynamic and static friction are also included. The aerodynamics modeling includes slipstreaming and ground effects. Nevertheless, the simulation engine can be replaced or easily modified as a result of the modularity of TORCS.
 	
-	TORCS is a computer simulation that serves both as an ordinary car racing game and as a research platform, making it possible for everyone to create a pilot through coding. The interface with this platform occurs by means of a sensor-based interaction system in which the developer is able to interpret received parameters of the car - such as speed in X, Y and even Z axes - and control the car through programming its actuators, some of which are acceleration and steering.
+	TORCS is a computer game that serves both as an ordinary car racing game and as a research platform, making it possible for everyone to create a pilot through coding. The interface with this platform occurs by means of a sensor-based interaction system in which the developer is able to interpret received parameters of the car - such as speed in X, Y and even Z axes - and control the car through programming its actuators, some of which are acceleration and steering.
 	
 	Another credibility factor for this platform is its non-punctual cars, which interact with each other in the races by a life-like collision system. Nevertheless, TORCS is still a simulator, and its limitations, along with the defined racing environment and the modeled car, are more than likely to affect any results obtained. This is an inherited characteristic of any real-life problem simulation, what in academia is denominated \emph{reality gap}~\cite{RG}, and it stems from the simplifications made concerning the car models, the technical features of the tracks, and so forth.
 
@@ -65,8 +65,16 @@
 
 \subsection{Related Works and State of the Art} \label{subsec:Related}
 	
-	It is very common among some of the SCRC awarded controllers the incorporation of machine learning in their driving methods, along with other evolving techniques using artificial intelligence. As the nature of the problematic presented comprises evolution by experience, learning procedures tend to enhance performance and competitiveness. Essentially, there are two ways of evolving controllers: Online Learning and Offline Learning, the first meaning that improvements are achieved during the actual race execution time and the latter that it is done after it, on the account of the developers themselves and with their own resources by analyzing the data gathered.
+	It is very common among some of the SCRC awarded controllers the incorporation of machine learning in their driving methods, along with other evolving techniques using artificial intelligence. As the nature of the problematic presented comprises evolution by experience, learning procedures tend to enhance performance and competitiveness. Essentially, there are two ways of evolving learning solutions: Online Learning and Offline Learning.
+
+	According to Tom Mitchel in \emph{Machine Learning}~\cite{Mitcchel:ML}:
+
+	\begin{quotation} \itshape
+
+		``Systems that learn by moving about the real environment and observing the results are typically called online systems, whereas those that earn solely by simulating actions within an internal model are called ofline systems.''
 	
+	\end{quotation}
+
 	The current champion of the SCR Championship is the controller \emph{Mr. Racer}~\cite{MrRacer}, and it has proven to be the State of the Art by winning the last three competitions that happened from 2011 to 2013. The authors of this implementation employ several heuristics and black-box optimization methods in order to reproduce the mechanisms to which human racing drivers resort, doing so by means of a modular structure. \emph{Mr. Racer} uses a Covariance Matrix Adaptation Evolution Strategy (CMA-ES), to evolve parameters offline.
 	
 	According to the founders of the competition~\cite{SCRC} and the authors of \emph{Mr. Racer} themselves, \emph{AUTOPIA}~\cite{AUTOPIA} is another competitive controller, with the potential to even be the best one available. \emph{AUTOPIA} implements a modular Fuzzy Architecture, whose division contains gear, steering and speed control; and it is optimized by means of a genetic algorithm for Offline Learning, and by means of landmarking the lane exit points for further speed reduction for Online Learning.
