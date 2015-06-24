@@ -69,7 +69,7 @@
 	
 \subsection{Five-State FSM} \label{subsec:FSM5}
 
-	The first method was named ``Five-State FSM'', naturally because it is a finite state machine with five states. The real first model of the finite-state machine did not have an \emph{Approaching Curve} state, but, as the demeanour of \emph{Straight Line} and \emph{Curve} were so different from one another, a preparation had to be established so as to smoothen the transitions between them. Figure~\ref{Fig:2} represents the states diagram of the Five-State FSM.
+	The first method was named ``Five-State FSM'', naturally because it is a finite state machine with five states. The real first model of the finite-state machine did not have an \emph{Approaching Curve} state, but, as the demeanour of \emph{Straight Line} and \emph{Curve} were so different from one another, a preparation had to be established so as to smoothen the transitions between them. Figure~\ref{Fig:FSM5Diagram} represents the states diagram of the Five-State FSM.
 	
 	\begin{figure}[h]
 		
@@ -129,11 +129,11 @@
 		
 	\end{itemize}
 	
-	However, for the Three-state FSM, only 19 parameters demanded adjustment, which are divided as follows:
+	However, for the Three-state FSM, only 17 parameters demanded adjustment, which are divided as follows:
 	
 	\begin{itemize}
 		
-		\item \emph{Inside Track} has 8 parameters;
+		\item \emph{Inside Track} has 6 parameters;
 		
 		\item \emph{Out of Track} has 7 parameters;
 		
@@ -142,4 +142,3 @@
 	\end{itemize}
 	
 	Theoretically, as the search space for the latter case is smaller, finding a better controller was expected to happen first for it, but only by effectively testing both architectures could such a result be achieved. The source codes for both models presented in this section are available at the \emph{GitHub} repository provided in the references~\cite{GitHub}.
-	
