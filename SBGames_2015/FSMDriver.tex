@@ -46,9 +46,17 @@
 	
 \subsubsection{Normal Behavior}
 	
-	If a controller using the first method was currently in \emph{Straight Line}, it would be expected of him to simply go as fast as he could, with no steering changes whatsoever. When in \emph{Approaching Curve} state, he would reposition himself proportionally to the curvature of the approaching curve in order to achieve higher speeds once inside it. For example, if there is a sharp left turn nearby, the controller sets a target steer that the car needs to obtain before entering it, while bringing the car further to the right of the lane; that way, when the left turn comes, the car can proceed with a less abrupt change of steer, which results in a higher speed. Otherwise, when in situations of \emph{Curve}, the pilot would stop braking while maintaining the steering direction towards the sensor pointing the biggest distance value read - which represents the direction of the curve, prepared by the approaching curve state.
+	If a controller using the first method was currently in \emph{Straight Line}, it would be expected of him to simply go as fast as he could, with no steering changes whatsoever. When in \emph{Approaching Curve} state, he would reposition himself proportionally to the curvature of the approaching curve in order to achieve higher speeds once inside it. For example, if there is a sharp left turn nearby, the controller sets a target steer that the car needs to obtain before entering it, while bringing the car further to the right of the lane; that way, when the left turn comes, the car can proceed with a less abrupt change of steer, which results in a higher speed. Otherwise, when in situations of \emph{Curve}, the pilot would stop braking while maintaining the steering direction towards the sensor pointing the biggest distance value read - which represents the direction of the curve, prepared by the approaching curve state. Figure~\ref{Fig:FSensor} exhibits a car receiving information from the sensors, with the biggest vector being the direction of the curve to be entered.
 	
-	\insertPicture{Farthest sensor in a turn}		
+	\begin{figure}[h]
+		
+		\centering
+		\includegraphics[width=250pt]{FarthestSensor}
+		\caption{Sensorial input indicating a curve through the biggest value received}
+		\label{Fig:FSensor}
+		
+	\end{figure}
+	
 	\emph{Inside Track}, therefore, is how the car, desirably, will spend most part of the time, if the second method is being employed. The controller calculates a \emph{target speed} based on how far the car is from the farthest edge of the track, then, it assumes a position of increasing the speed until it reaches this velocity while driving towards the sensor with the biggest read value. The distance of this method conveys the greater length the car may advance with little or sometimes without significant steer changes. This state also brakes, if necessary, in situations that the car assumes a speed higher than the one calculated to be the target.
 	
 \subsubsection{Exception Behavior}

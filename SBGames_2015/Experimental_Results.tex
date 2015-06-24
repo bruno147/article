@@ -1,58 +1,22 @@
 \section{Experimental Results} \label{sec:Experiments}
 
-	A veil was put over the Five-state FSM from the very beginning of the experimentation phase, which was its great
-	dependency towards the transition function. Early superficial assessments of the performance of this first model
-	indicated an overcharge concerning this function, which was verified by considerable changes in behaviour derived
-	from adjustments in its parameters. For that reason, a second model with less states - the Three-state FSM - was
-	designed regarding this characteristic and releasing part of the performance burden from the transition function,
-	and the results from the comparison of these architectures are described and analyzed in the succeeding
-	subsections.
+	A veil was put over the Five-state FSM from the very beginning of the experimentation phase, which was its great dependency towards the transition function. Early superficial evaluations of the performance of this first model indicated an overcharge concerning this function, which was verified by considerable changes in behaviour derived from adjustments in its parameters. For that reason, a second model with less states - the Three-state FSM - was designed regarding this characteristic and releasing part of the performance burden from the transition function, and the results from the comparison of these architectures are described and analyzed in the succeeding subsections.
 
 \subsection{Methodology} \label{subsec:Methodology}
 
-	Once the models - and which of their parameters required tuning - have been defined, the genetic algorithm was
-	applied to each approach separately, in order to adjust their configurations for superior and competitive status.
-	At the same time, the goal was to find general and versatile controllers with good results for any track and
-	specific ones that were fittest to race in various tracks: road, dirt and oval alike. Therefore, due to the
-	differences observed in the parameters of controllers evolved on dirt and road tracks, the evolution process took
-	place separately for those two kinds of environments, which produced two contrasting sets of enhanced values for
-	each model.
+	Once the models - and which of their parameters required tuning - had been defined, the genetic algorithm was applied to each approach separately, in order to adjust their configurations for superior and competitive status. At the same time, the goal was to find general and versatile controllers with good results for any track and specific ones that were fittest to race in various tracks: road, dirt and oval alike. Therefore, due to the differences observed in the parameters of controllers evolved on dirt and road tracks, the evolution process took place separately for those two kinds of environments, which produced two contrasting sets of enhanced values for each model.
 	
-	The \emph{metric} chosen to evaluate the generated controllers was the combined sum of the distance raced by the
-	car alone in the first 10.000 game cycles - also called \emph{game tics} - of a list of mixed tracks. This value
-	will henceforth be called the \emph{fitness} of the controller, as it was used to determine whether he would
-	remain in the evolution process.
+	The \emph{metric} chosen to evaluate the generated controllers was the combined sum of the distance raced by the car alone in the first 10.000 game cycles - also called \emph{game tics} - in a list of mixed tracks. This value will henceforth be called the \emph{fitness} of the controller, as it was used to determine whether he would remain in the evolution process.
 	
-	The experiments concerning Oval Tracks would repeatedly provide inconclusive results, so they were neglected in
-	this evaluation process. Thus, in order to find the best set of parameters for a general track, the two
-	finite-state states were evolved in three different sets of tracks, one with 4 Dirt Tracks, one with 4 Road
-	Tracks and another with the 4 of each type. The evolution process for each set of tracks consisted on 600
-	generations of 30 individuals and culminated in one controller; in other words, at the end of the experiments,
-	there were six evolved controllers, one specific for Road Tracks for each model, one specific for Dirt Tracks for
-	each model, and also one evolved in a mixed manner for each model. Additionally, as the \emph{Stuck State} is only
-	triggered in very specific situations, it was not evolved with the controller and its parameters were hand tuned.
+	The experiments concerning Oval Tracks would repeatedly provide inconclusive results, so they were neglected in this evaluation process. Thus, in order to find the best set of parameters for a general track, the two finite-state states were evolved in three different sets of tracks, one with 4 Dirt Tracks, one with 4 Road Tracks and another with the 4 of each type. The evolution process for each set of tracks consisted on 600 generations of 30 individuals and culminated in one controller; in other words, at the end of the experiments, there were six evolved controllers, one specific for Road Tracks for each model, one specific for Dirt Tracks for each model, and also one evolved in a mixed manner for each model. Additionally, as the \emph{Stuck State} is only triggered in very specific situations, it was not evolved with the controller and its parameters were hand tuned.
 	
-	Pursuing an unbiased choice of parameters, the Online Learning module described in Subsection~\ref{subsec:FSM3}
-	was turned off during the evolution progress as it seizes the responsibility for the behaviour of the car during
-	the race and could interfere with natural selection. The validation then occurred through testing the six produced
-	pilots in a predefined set of tracks different from those in which they were evolved, lest they would evidence
-	too track-limited parameters. On behalf of comparison, the results from the AUTOPIA controller were incorporated
-	in the analysis, since it can be considered the State of the Art, displaying one of the best performances for the
-	SCR Championship, and should provide satisfactory basis for appraisal.
+	Pursuing an unbiased choice of parameters, the Online Learning module described in Subsection~\ref{subsec:FSM3} was turned off during the evolution progress as it seizes the responsibility for the behaviour of the car for itself during the race and could interfere with natural selection. The validation then occurred through testing the six produced pilots in a predefined set of tracks different from those in which they were evolved, avoiding the evidence of too track-limited parameters. On behalf of comparison, the results from the AUTOPIA controller were incorporated in the analysis, since it can be considered the State of the Art, displaying one of the best performances for the SCR Championship, and should provide satisfactory basis for appraisal.
 
-	Four road tracks, witch were used in evolution, are selected from the TORCS standard track set. They are \emph{Spring}, 
-	the longest track available in torcs with more curves than any other track, \emph{Wheel 2}, the most difficult track 
-	with their close and hard curves, \emph{E-Track 3}, a fast track with curves that will get dexterity of the controller, 
-	\emph{Forza}, this is a fast track and the pattern of their curves are usually found in others tracks.
+	The four Road Tracks used in the evolution process were chosen from the TORCS standard track set, which are \emph{Spring}, the longest track available on TORCS with more curves than any other track, \emph{Wheel 2}, the most difficult track with sharp and hard curves, \emph{E-Track 3}, a fast track with turns that put to test the dexterity of the controller, and \emph{Forza}, a track considered to be raced fast and whose curve pattern is usually found in others tracks.
 
-	Six road tracks are selected for evaluate the controllers, they are available in TORCS too, were used in 2008 competitions 
-	and were used for evaluate the \emph{Autopia} controller (referencia autopia-2009). Ruudskogen, Street-1 and D-Speedway were 
-	used at IEEE World Congress on Computational Intelligence; and CG Speedway 1, E-Track3 and B-Speedway were used 
-	at Computational Intelligence and Games Symposium. (texto copiado da referencia autopia-2009)
+	Six Road Tracks were picked to evaluate the controllers, they are also available in TORCS and were used both in the competitions of 2008 and to evaluate the \emph{AUTOPIA} controller~\cite{AUTOPIA2009}. \emph{Ruudskogen}, \emph{Street-1} and \emph{D-Speedway} were used at the \emph{IEEE World Congress on Computational Intelligence}; and \emph{CG Speedway 1}, \emph{E-Track3} and \emph{B-Speedway} were used at the \emph{Computational Intelligence and Games Symposium - CIG}.
 
-	Four dirt tracks are selected from the TORCS standard track set. They are \emph{Dirt2, Mixed1, Mixed2, Dirt6}. 
-	\emph{Dirt2} is a track difficult with close curves, \emph{Mixed1} is a easy track with few curves, \emph{Mixed2} have many 
-	curves with medium diffitulty, \emph{Dirt6} is the longest dirt track available with hard curves.
+	Four Dirt Tracks were selected from the TORCS standard track set, which were \emph{Dirt2}, \emph{Mixed1}, \emph{Mixed2}, \emph{Dirt6}. \emph{Dirt2} is a difficult track with close curves, while \emph{Mixed1} is an easy one with few curves, also, \emph{Mixed2} has many turns with medium difficulty, and \emph{Dirt6} is the longest Dirt Track available, presenting hard curves.
 	% the set of tracks was defined by autopia
 	% tracks image as in the autopia's article
 	% explain warm up stage
