@@ -13,14 +13,21 @@
 	Pursuing an unbiased choice of parameters, the Online Learning module described in Subsection~\ref{subsec:FSM3} was turned off during the evolution progress as it seizes the responsibility for the behaviour of the car for itself during the race and could interfere with natural selection. The validation then occurred through testing the six produced pilots in a predefined set of tracks different from those in which they were evolved, avoiding the evidence of too track-limited parameters. On behalf of comparison, the results from the AUTOPIA controller were incorporated in the analysis, since it can be considered the State of the Art, displaying one of the best performances for the SCR Championship, and should provide satisfactory basis for appraisal.
 
 	The four Road Tracks used in the evolution process were chosen from the TORCS standard track set, which are \emph{Spring}, the longest track available on TORCS with more curves than any other track, \emph{Wheel 2}, the most difficult track with sharp and hard curves, \emph{E-Track 3}, a fast track with turns that put to test the dexterity of the controller, and \emph{Forza}, a track considered to be raced fast and whose curve pattern is usually found in others tracks.
-
-	Six Road Tracks were picked to evaluate the controllers, they are also available in TORCS and were used both in the competitions of 2008 and to evaluate the \emph{AUTOPIA} controller~\cite{AUTOPIA2009}. \emph{Ruudskogen}, \emph{Street-1} and \emph{D-Speedway} were used at the \emph{IEEE World Congress on Computational Intelligence}; and \emph{CG Speedway 1}, \emph{E-Track3} and \emph{B-Speedway} were used at the \emph{Computational Intelligence and Games Symposium - CIG}.
+	
+	\toDo{fix the following two paragraphs}
+	
+	Once the evolution is over the six resultant controllers were tested in the evaluation set of tracks, different from those where they were evolved. Six Road Tracks were picked to evaluate the controllers, they are also available in TORCS and were used both in the competitions of 2008 and to evaluate the \emph{AUTOPIA} controller~\cite{AUTOPIA2009}. \emph{Ruudskogen}, \emph{Street-1} and \emph{D-Speedway} were used at the \emph{IEEE World Congress on Computational Intelligence}; and \emph{CG Speedway 1}, \emph{E-Track3} and \emph{B-Speedway} were used at the \emph{Computational Intelligence and Games Symposium - CIG}.
 
 	Four Dirt Tracks were selected from the TORCS standard track set, which were \emph{Dirt2}, \emph{Mixed1}, \emph{Mixed2}, \emph{Dirt6}. \emph{Dirt2} is a difficult track with close curves, while \emph{Mixed1} is an easy one with few curves, also, \emph{Mixed2} has many turns with medium difficulty, and \emph{Dirt6} is the longest Dirt Track available, presenting hard curves.
+	  
 	
 \subsection{Results} \label{subsec:Results}
 	
-\toDo{TABLE DOES NOT FIT IN A SINGLE COLUMN!}
+	
+	\toDo{needs review}
+	Taking the distance covered in 100,000 game ticks \ref{tbl:dist covered} displays how the evolved controllers performed against AUTOPIA.
+	In order to have a more in-depth comparison \ref{tbl:time raced} was built displaying the time elapsed for 10 laps for each of the previous tracks tested. The \itshape{Berniw Hist4} bot provided by the TORCS distribution was also used. \toDo{mention SCRC?}
+	The bot has a full view of the track shape and does not use the sensors provided by SCR which gives it some advantage, since it knows all the informations about the track. Our controller has only the information that comes from sensors. 
 	
 	\begin{table*}[t]
 	\renewcommand{\arraystretch}{1.3}
@@ -42,11 +49,8 @@
 	\end{tabular} 
 	\end{table*}
 
-	\toDo{needs review}
-	In order to have a more in-depth comparison \ref{tbl:time raced road} and \ref{tbl:time raced dirt} were built displaying the time elapsed for 10 laps for each of the previous tracks tested. The \itshape{Berniw Hist4} bot provided by the TORCS distribution was also used. \toDo{mention SCRC?}
-	The bot has a full view of the track shape and does not use the sensors provided by SCR.
 	
-	\begin{table}[h]
+	\begin{table*}[t]
 	\renewcommand{\arraystretch}{1.3}
 	\caption{Time elapsed racing alone for 10 laps}
 	\label{tbl:time raced}
@@ -65,7 +69,7 @@
 	\hline AUTOPIA & \toDo{?} & \toDo{?} & \toDo{?} & 339.3 & 742.4 & 796.5 \\
 	\hline 
 	\end{tabular} 
-	\end{table}
+	\end{table*}
 	
 	
 	
