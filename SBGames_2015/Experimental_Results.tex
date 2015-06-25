@@ -41,8 +41,31 @@
 	\hline 
 	\end{tabular} 
 	\end{table}
+
+	\toDo{explain new table}
 	
-	\toDo{split table in time and ticks table}
+	\begin{table}[h]
+	\renewcommand{\arraystretch}{1.3}
+	\caption{Time elapsed racing alone for 10 laps}
+	\label{tbl:time raced}
+	\centering
+	\begin{tabular}{c||c||c||c||c||c||c}
+	\hline
+	\bfseries Driver & \bfseries Street-1 & \bfseries D-speedway & \bfseries CG-speedway & \bfseries Dirt-1 & \bfseries Dirt-3 & \bfseries Dirt-4 \\ 
+	\hline
+	\hline FSM3(road) & 1086.3 & 607.4 & 495.0 & - & 1150.1 & 1756.4 \\
+	\hline FSM3(dirt) & - & 840.0 & 1274.8 & 597.3 & 1089.4 & 1307.5 \\
+	\hline FSM3(mixed) & 1216.50 & 572.60 & 613.77& 530.0 & 842.9 & 1005.9 \\
+	\hline FSM5(road) & - & - & 816.6 & - &	- & - \\
+	\hline FSM5(dirt) & - & - & - & - &	- & - \\
+	\hline FSM5(mixed) & - & - & - & - & - & - \\
+	\hline Bot* & 1143.77 & 656.24 & 605.76 & 460.95 & 872.97 & 1127.45 \\
+	\hline AUTOPIA & \toDo{?} & \toDo{?} & \toDo{?} & 339.3 & 742.4 & 796.5 \\
+	\hline 
+	\end{tabular} 
+	\end{table}
+	
+	
 	
 \subsection{Analysis} \label{subsec:Analysis}
 	
