@@ -1,13 +1,16 @@
 \section{Conclusions} \label{sec:Conclusions}
 
-	% Provide an introduction for the subsection(s)
+	This paper proposed two approaches developed to control a car during a race in a simulated computational environment, the game platform TORCS. The models of both of these controllers were described, explained, enhanced by means of a genetic algorithm, compared and then tested together with a State of the Art controller - AUTOPIA. It was implied before the testing phase that a finite state machine too burdened in the process of transition between states might lose performance, which was corroborated by the experimental results of the comparison of the two models detailed. \toDo{Comparar melhor os controladores.}
 	
+	The evolution procedure adopted towards the controllers culminated in three characteristic behaviors. The controller evolved on road tracks became a fast driver, whose hastiness resulted in a careless attitude in general; in other words, it was only good for races in road tracks. The one evolved on dirt tracks turned out to be too careful in contrast, limitedly determining its speeds and, in efficiency terms, inferior. The controller evolved on a mixed set of tracks inherited characteristics from both the previous ones, becoming swift but not too hasty, prudent but not too slow. The latter surpassed the performance of the road-evolved drivers even on road tracks, and did not lose by far on road tracks in comparison to drivers evolved solely in it.
+		
 \subsection{Conclusions} \label{subsec:Conclusions}
 
 	% Text for Conclusions
 
 \subsection{Future Works} \label{subsec:Future}
 	
+	\toDo{Falar melhor dos trabalhos futuros.}
 	Since at the SCRC the controller is allowed to perform a warm-up before the race it is possible to acquire the track data, not only mapping critical section such as sharp curves and points where the car go out the track to improve the result of the controller at the race itself. Also a warp-up stage would supply the information about environment where the car is, including the type of track,road or dirt, which determine a set of parameters best fitted to which occasion. 
 		
 	One important task to be accomplish is the opponent treatment, routines to reduce collisions, avoid the controller to be surpassed and surpass the opponents is a fundamental issue. Ignoring the opponent would make the driver to face unexpected collisions ending stuck, considering the worst event.
