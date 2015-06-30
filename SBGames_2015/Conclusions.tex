@@ -15,7 +15,11 @@
 \subsection{Future Works} \label{subsec:Future}
 	
 	One characteristic that has been marked as a deficiency in the controllers presented in this paper is the lack of endurance. In order to prevent this from affecting the general performance of the controllers developed, more robust techniques must be integrated into their model. Ways of treating this matter range from harsher brake policies to drive planning intensification, which are already being taken into account for future proposals.
-		
+	
+	Anti-lock Breaking System (ABS) filter is commonly used in the racing environment \toDo{find reference} and was not implemented in the proposed controller. The Traction Control System (TCS) \toDo{find reference} could also be implemented by applying filters to the acceleration actuator This policies minimize skidding and increase the stability when speed needs to be adjusted in a turn.
+	
+	The driver uses some parameters that are necessarily greater than others. A model based on fuzzy logic \toDo{reference} could simply solve this ordering issue.
+	
 	Another important task to be accomplished is the opponent treatment in real-time races. Routines to reduce collisions, i.e., avoiding being overtaken and also being concerned about overtaking the opponents is a fundamental issue. Ignoring adjacent cars usually causes the driver to face unexpected collisions, ending up stuck, considering a worst case scenario. Many of the renowned developers for TORCS already incorporate such treatment in their controllers, and neglecting this necessity renders any driver less robust to unexpected race events, and also reduces its performance.
 	
 	
