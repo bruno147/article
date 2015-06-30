@@ -14,9 +14,9 @@
 
 	The four Road Tracks used in the evolution process were chosen from the TORCS standard track set, which are \emph{Spring}, the longest track available on TORCS with more curves than any other track, \emph{Wheel 2}, the most difficult track with sharp and hard curves, \emph{E-Track 3}, a fast track with turns that put to test the dexterity of the controller, and \emph{Forza}, a track considered to be raced fast and whose curve pattern is usually found in others tracks.
 	
-	Once the evolution process was finished, the six resultant controllers were tested in the evaluation set of tracks, different from those where they were evolved. Three Road Tracks were picked to evaluate the controllers, they are also available on TORCS and were used both in the competitions of 2008 and to evaluate the \emph{AUTOPIA} controller~\cite{AUTOPIA2009}. \emph{Street-1} and \emph{D-Speedway} were used at the \emph{IEEE World Congress on Computational Intelligence}; and \emph{CG Speedway 1} was used at the \emph{Computational Intelligence and Games Symposium - CIG}.
-
-	Four Dirt Tracks were selected from the TORCS standard track set, which were \emph{Dirt2}, \emph{Mixed1}, \emph{Mixed2}, \emph{Dirt6}. \emph{Dirt2} is a difficult track with close curves, while \emph{Mixed1} is an easy one with few curves, also, \emph{Mixed2} has many turns with medium difficulty, and \emph{Dirt6} is the longest Dirt Track available, presenting hard curves.
+	Also four Dirt Tracks were selected to be used in evolution from the TORCS standard track set, which were \emph{Dirt2}, \emph{Mixed1}, \emph{Mixed2}, \emph{Dirt6}. \emph{Dirt2} is a difficult track with close curves, while \emph{Mixed1} is an easy one with few curves, also, \emph{Mixed2} has many turns with medium difficulty, and \emph{Dirt6} present hard curves.
+	
+	Once the evolution process was finished, the six resultant controllers were tested in the evaluation set of tracks, different from those where they were evolved. Three Road Tracks were picked to evaluate the controllers, they are also available on TORCS and were used both in the competitions of 2008 and to evaluate the \emph{AUTOPIA} controller~\cite{AUTOPIA2009}. \emph{Street-1} and \emph{D-Speedway} were used at the \emph{IEEE World Congress on Computational Intelligence}; and \emph{CG Speedway 1} was used at the \emph{Computational Intelligence and Games Symposium - CIG}. This set also contained three Dirt Tracks, which were \emph{Dirt1}, \emph{Dirt3}, \emph{Dirt4}. \emph{Dirt1} has smooth curves and allows the controller to perform in high speed, while \emph{Dirt3} is an easy one with few curves, also, \emph{Dirt4} has many turns with medium difficulty and is the longest Dirt Track available.
 	  
 	
 \subsection{Results} \label{subsec:Results}
@@ -87,6 +87,8 @@
 \subsubsection{Comparing the Three-State FSM to AUTOPIA} \label{subsubsec:CompAUTOPIA}
 
 	Once the Three-State FSM was demonstrated to be more suitable to competitive environments due to its superior performance regarding the Five-State FSM, it was compared to the renowned controller AUTOPIA. Using the distance covered after racing alone in Road Tracks for 10 000 game tics as metric, the Three-State FSMs evolved in Road Tracks and in mixed tracks were able to overcome AUTOPIA in 1 of the 3 tracks tested, as displayed in the bold values in Table~\ref{tbl:dist covered}. The road-evolved Three-State FSM was the controller that got closer to this State of the Art approach using the ``distance raced'', which comes to endorse the assumption of it being a competitive proposal.
+	
+	
 	
 	However, while racing alone for 10 laps and computing the time elapsed as metric, AUTOPIA outperformed every controller proposed, just as can be seen in Table~\ref{tbl:time raced}. These results can be used to infer that the Five-State and the Three-State FSMs have a great deal of improvement to achieve when it comes to endurance. The Five-State FSM received total loss and did not complete almost every test performed, ending only one race using this metric. The Three-State FSM, on the other hand, completed practically all the tracks, but did not surpass AUTOPIA in either of them. In order to enhance the endurance feature in the controllers proposed, more robust behavior concerning situations in which the car might crash must be taken into account.	
 	
