@@ -88,7 +88,7 @@
 	
 	Figure~\ref{Fig:FSM5Diagram} instantiates the relations between the states through two-headed arrows connecting a state to every other one, which is done because, from a particular state, the controller can assume any other in a following instant.
 	
-	In order to decide wich state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}
+	In order to decide wich state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}.
 	
 	One big problem about this approach is that the function responsible for choosing which state is more appropriate for each situation would more than often be overcharged, and, in some cases, rather different sets of parameters received by it would result in the same classification among the states. Thus, in order to minimize the dependency of the driving performance in relation to the function in charge of the transition between states, a project decision was made to reduce the number of states.
 	
