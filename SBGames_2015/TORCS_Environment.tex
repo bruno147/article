@@ -40,11 +40,11 @@
 	
 	Another credibility factor for this platform is its non-punctual cars that interact with each other in the races by a life-like collision system. Still, TORCS is still a simulator, and its limitations, along with the defined racing environment and the modeled car, are more than likely to affect any results obtained. This is an inherited characteristic of any real-life problem simulation, what in academia is denominated \emph{reality gap}~\cite{RG}, and it stems from the simplifications made concerning the car models, the technical features of the tracks, and so forth.
 	
-	The SCRC interface occurs in a way that TORCS allows the controller to have a full view of the environment including its exact location inside the track, the geometry and friction and also the exact location of all the other cars. In order to separate the controller logic from the simulator, the SCR interface was designed~\cite{2009}. This interface limits the information received by the controller, and the communication between this championship and TORCS is made through a client-server interface, with each player receiving information from the server regarding the sensors of the car, and in return providing actuator values that determine how the controller is supposed to drive the car.
+	The SCR interface occurs in a way that TORCS allows the controller to have a full view of the environment including its exact location inside the track, the geometry and friction and also the exact location of all the other cars. In order to separate the controller logic from the simulator, the SCR interface was designed~\cite{2009}. This abstraction limits the information received by the controller, and the communication between it and TORCS is made through a client-server interface, with each player receiving information from the server regarding the sensors of the car, and in return providing actuator values that determine how the controller is supposed to drive the car.
 
 \subsection{The SCR Championship} \label{subsec:SCRC}
 
-	The Simulated Car Racing Championship (SCRC) is an example of a well-known competition which utilizes TORCS as interface~\cite{SCR}. Being an event joining three competitions held at major scientific conferences, such as \emph{IEEE Congress on Evolutionary Computation}~\footnote{http://www.cec2015.org/}, \emph{Genetic and Evolutionary Computation Conference}~\footnote{http://www.sigevo.org/gecco-2015/} and \emph{IEEE Conference on Computational Intelligence and Games}~\footnote{http://www.ieee-cig.org/}, it is an accepted metric of evaluation in the fields of Evolutionary Computation and Computational Intelligence regarding games in general.
+	The Simulated Car Racing Championship (SCRC) is an example of a well-known competition which utilizes TORCS as simulator~\cite{SCR}. Being an event joining three competitions held at major scientific conferences, such as \emph{IEEE Congress on Evolutionary Computation}~\footnote{http://www.cec2015.org/}, \emph{Genetic and Evolutionary Computation Conference}~\footnote{http://www.sigevo.org/gecco-2015/} and \emph{IEEE Conference on Computational Intelligence and Games}~\footnote{http://www.ieee-cig.org/}, it is an accepted metric of evaluation in the fields of Evolutionary Computation and Computational Intelligence regarding games in general.
 
    	\begin{figure}[h]
    		
@@ -59,21 +59,3 @@
 	
 	The reason why TORCS presents itself as a satisfactory AI benchmark, in combination with SCRC, is because even	though there are multiple possibilities on how the sensorial input received from the server can be translated into the behavior of the actuators, they can all be compared in a race, which has a robust and steady scoring and evaluational system. In other words, there are many different approaches concerning how to teach the racer encoded by the developers to drive in a racing competition only with the information given by the sensors, and the metric to that issue is the performance on the race itself.
 
-\subsection{Related Works and State of the Art} \label{subsec:Related}
-	
-	It is very common among some of the SCRC awarded controllers the incorporation of machine learning in their driving methods, along with other evolving techniques using artificial intelligence~\cite{2009}. As the nature of the problematic presented comprises evolution by experience, learning procedures tend to enhance performance and competitiveness. Essentially, there are two ways of evolving learning solutions: Online Learning and Offline Learning.
-
-	According to Tom Mitchel in \emph{Machine Learning}~\cite{Mitcchel:ML}:
-
-	\begin{quotation} \itshape
-
-		``Systems that learn by moving about the real environment and observing the results are typically called online systems, whereas those that earn solely by simulating actions within an internal model are called ofline systems.''
-	
-	\end{quotation}
-
-	The current champion of the SCR Championship is the controller \emph{Mr. Racer}~\cite{MrRacer}, and it has proven to be the State of the Art by winning the last three competitions that happened from 2011 to 2013. The authors of this implementation employ several heuristics and black-box optimization methods in order to reproduce the mechanisms to which human racing drivers resort, doing so by means of a modular structure. \emph{Mr. Racer} uses a Covariance Matrix Adaptation Evolution Strategy (CMA-ES), to evolve parameters offline.
-	
-	According to the founders of the competition~\cite{SCRC} and the authors of \emph{Mr. Racer} themselves, \emph{AUTOPIA}~\cite{AUTOPIA} is another competitive controller, with the potential to even be the best one available. \emph{AUTOPIA} implements a modular Fuzzy Architecture, whose division contains gear, steering and speed control; and it is optimized by means of a genetic algorithm for Offline Learning, and by means of landmarking the lane exit points for further speed reduction for Online Learning.
-	
-	These and other controller exemplifications~\cite{SCRC} served as criteria for the analysis and development of the approach presented in this paper. Elements incorporated and adapted from them feature modularity, Offline Learning through genetic algorithms, Online Learning through landmarking and choosing sets of parameters for different categories of tracks, etc.
-	

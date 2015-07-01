@@ -4,6 +4,8 @@
 		
 \subsection{Conclusions} \label{subsec:Conclusions}
 
+	A veil was put over the Five-State FSM from the very beginning of the experimentation phase, which was its great dependency towards the transition function. Early superficial evaluations of the performance of this first model indicated an overcharge concerning this function, which was verified by considerable changes in behaviour derived from adjustments in its parameters. For that reason, a second model with less states - the Three-State FSM - was designed regarding this characteristic and releasing part of the performance burden from the transition function.
+		
 	The finite state machine with less states achieved a superior overall performance in the tests carried out, in relation to the one with more states. The simplifications fashioned in the transition function of the former were inferred to be the reason for this improvement, along with its intricate relation with the number of parameters that were target of fine tuning in the evaluation and validation process.
 	
 	The evolution procedure adopted concerning the controllers culminated in three characteristic behaviors. The controller evolved on road tracks became a fast driver, whose hastiness resulted in a careless attitude in general; in other words, it was only good for races in road tracks. The one evolved on dirt tracks turned out to be too careful in contrast, limitedly determining its speeds and, in efficiency terms, inferior. The controller evolved on a mixed set of tracks inherited characteristics from both the previous ones, becoming swift but not too hasty, prudent but not too slow. The latter surpassed the performance of the dirt-evolved drivers even on dirt tracks, and did not lose by far on road tracks in comparison to drivers evolved solely in them.
@@ -16,9 +18,9 @@
 	
 	One characteristic that has been marked as a deficiency in the controllers presented in this paper is the lack of endurance. In order to prevent this from affecting the general performance of the controllers developed, more robust techniques must be integrated into their model. Ways of treating this matter range from harsher brake policies to drive planning intensification, which are already being taken into account for future proposals.
 	
-	Anti-lock Breaking System (ABS) filter is commonly used in the racing environment \toDo{find reference} and was not implemented in the proposed controller. The Traction Control System (TCS) \toDo{find reference} could also be implemented by applying filters to the acceleration actuator This policies minimize skidding and increase the stability when speed needs to be adjusted in a turn.
+	Anti-lock Breaking System (ABS) filter is commonly used in the racing environment~\cite{5593318} and was not implemented in the proposed controller. The Traction Control System (TCS)~\cite{5593318} could also be implemented by applying filters to the acceleration actuator This policies minimize skidding and increase the stability when speed needs to be adjusted in a turn.
 	
-	The driver uses some parameters that are necessarily greater than others. A model based on fuzzy logic \toDo{reference} could simply solve this ordering issue.
+	The driver uses some parameters that are necessarily greater than others. A model based on fuzzy logic \cite{DIEGO} could simply solve this ordering issue.
 	
 	Another important task to be accomplished is the opponent treatment in real-time races. Routines to reduce collisions, i.e., avoiding being overtaken and also being concerned about overtaking the opponents is a fundamental issue. Ignoring adjacent cars usually causes the driver to face unexpected collisions, ending up stuck, considering a worst case scenario. Many of the renowned developers for TORCS already incorporate such treatment in their controllers, and neglecting this necessity renders any driver less robust to unexpected race events, and also reduces its performance.
 	
