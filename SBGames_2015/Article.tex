@@ -30,24 +30,20 @@
 		\and Yuri B. Galli\\ Guilherme N. Ramos\\
 }
 
-\contactinfo{\{bhfmacedo\}@gmail.com \\
-             gnramos@cic.unb.br \\
-}
+\contactinfo{gnramos@unb.br}
 
-\keywords{finite-state machine, computer games, TORCS, SCRC, artificial intelligence, genetic algorithm, self-driving car}
+\keywords{finite-state machine, computer games, machine learning,  genetic algorithm, TORCS, simulated car racing}
 \begin{document}
 
 	\maketitle
 
 	\begin{abstract}
-		
-		This work presents two different approaches developed to control a self-driving car in the racing environment simulated by TORCS. The problematic is the understanding of the behavior that a pilot assumes during a race, and the proposals for dealing with it are two finite-state machines that reproduce this behavior. The evaluation of the methods proposed provided a comparison between finite state machines in which the one with fewer states led to improved performance in simulated races from TORCS.
-		
+		Autonomous vehicles have many practical applications, but the development of such controllers is a difficult task. This work presents a finite state-machine model with evolved parameters as a suitable solution for a self-driving car, and the comparison of two different configurations in The Open Racing Car Simulator. This approach enables a clear division of behaviors in states, providing an easy way to test different configurations and simplifying the search for better controllers by allowing changes in selected states. A 5-state and a 3-state drivers were evolved through genetic algorithm and compared to each other and to AUTOPIA, the current state of the art controller. Results provide insights on controller configuration and showed that the proposed model has potential for racing, even surpassing  one of AUTOPIA's results.
 	\end{abstract}
 
 	\keywordlist
 	\contactlist
-	
+
 	\input{Introduction}
 	\input{TORCS_Environment}
 	\input{Related_Works}
@@ -56,8 +52,8 @@
 	\input{Conclusions}
 
 	%\section*{Acknowledgements}
-	
+
 	\bibliographystyle{sbgames}
 	\bibliography{Bibliography}
-	
+
 \end{document}
