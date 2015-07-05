@@ -1,0 +1,263 @@
+\section{FSMDriver}\label{sec:3}%
+Driving a car can be intuitively divided into several behaviors, and thus provide a straightforward implementation as a finite-state machine model. Such model's configuration parameters can be optimized through a genetic algorithm, and the TORCS/SCR platform provides a standard measure of driver quality, and its sensor/actuator interface enable it to be readily replaced by actual robotic prototypes (or other more advanced models) for further testing. This work proposes to use these ideas for evolving a controller for a car, the FSMDriver, as one more step towards autonomous vehicles.
+
+\newcommand{\state}[1]{\texttt{#1}}%
+\newcommand{\SL}{\state{Straight Line}}%
+\newcommand{\C}{\state{Curve}}%
+\newcommand{\OT}{\state{Out of Track}}%
+\newcommand{\St}{\state{Stuck}}%
+\newcommand{\AC}{\state{Approaching Curve}}%
+\newcommand{\IT}{\state{Inside Track}}%
+
+\subsection{Driving Behaviors}%
+A \state{State} in the FSM model considered here defines a racing behavior, deciding the driver's output according to the given sensor input as defined by SCR's API. The FSM implements a transition function that, at every game tick, analyses the input and decides which state is appropriate, triggering a change if necessary. The state then processes the input and defines the proper output.
+
+The next step for implementing the FSM model is defining its states. Intuitively, \state{Driving}~could be a definite solution but it obviously involves several distinct situations which should be divided, simplifying the development.
+
+Considering the testing environment, it is clear that two antagonistic situations that require specific behaviors: \state{Racing}, for situations where the car is within track limits, facing the right direction; and \state{Recovery}, for when the car is outside track limits or facing the right direction, or unable to move.
+
+These can be further divided into two more specific behaviors for implementation:
+\begin{description}
+	\item[\SL:] for racing straight ahead;
+	\item[\C:] for racing through a curve;
+	\item[\OT:] for recovering from leaving the track or facing the wrong direction; and
+	\item[\St:] for recovering from being unable to move forward.
+\end{description}
+
+Each of these states implements its behavior as follows. \SL~ attempts to go as fast as possible parallel to the track axis by accelerating at full throttle, and changing gears according to RPM thresholds. \C~steers towards the direction towards the track sensor with the largest reading (see Figure~\ref{Fig:FSensor}) with 60\% throttle, braking in case it starts to slide in the X axis. \OT~ attempts to return to the track, facing the right direction, adjusting its speed and steering according to its current orientation concerning the track (see Figure~\ref{Fig:Angle}). \St~ tries to get unstuck by using the reverse gear and hard steering.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=250pt]{FarthestSensor}
+	\caption{Sensor input in curve.}
+	\label{Fig:FSensor}
+\end{figure}
+
+\begin{figure}%[h]
+		\centering
+		\includegraphics[width=250pt]{ReturnAngle}
+		\caption{Angle between car and track axis.}
+		\label{Fig:Angle}
+\end{figure}
+
+\subsection{FSDMDriver5}
+
+Initial tests showed that transitioning from \SL~to \C~was too swift, hampering performance because the car consistently entered curves at such high speeds that the controller was unable to turn and exited the track, so the additional behavior \AC~was implemented. \AC~ positions the driver towards the outside of the incoming curve and tries to race at a speed proportional to the curvature, so less braking would be necessary in \C. Thus, a 5-state FSMDriver (FSMDriver5) model (illustrated in Figure~\ref{Fig:FSM5Diagram}) was ready for testing.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.45\textwidth]{FiveStateFSM}
+	\caption{States diagram of the Five-State FSM}
+	\label{Fig:FSM5Diagram}
+\end{figure}
+
+
+The transitions \gnramos{Inserir descricao das transicoes, disposição de sensores e pseudocodigo}%
+% In order to decide which state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}.
+
+Initially, random configurations were set and manually adjusted until an acceptable behavior was achieved, i.e. sucha a configuration in which a car could successfully complete a race. In the beginning, the \state{Recovery} states (\OT~and \St) were constantly triggered, and therefore were first to be adjusted for improved behavior. Eventually their settings were such that the \state{Racing} behaviors could be focused on. These too were manually and arbitrarily set through trial and error, considering the driver's quantitative performance racing (time and damage) and its qualitative skill (visual analysis of tests).
+
+After several iterations, this model performed better performance than some of the less capable robots available in TORCS,showcasing the FSM model's potential for controlling a car. However, testing also revealed that the transitions between states required were the bottleneck for improved racing. Not only some of the triggers needed a more detailed analysis to avoid eventual erratic behavior, but the sheer number parameters considered for transitioning, each with its triggers (see Figure~\ref{Fig:FSM5Diagram}), and their impact on the model's behavior during a complete race caused the whole model to be thought over.
+
+Analyzing FSMDriver's transitions occurrences within a race, it was clear that the \state{Recovery} behavior had two distinct situations, which were acceptably handled by the current configuration, and that the major issue was frequent triggering between the \state{Racing} states, which inevitably resulted in the car leaving the track and jeopardizing its performance.
+
+\subsection{FSMDriver3}%
+To reduce the model's complexity, and considering the intuitive division of behaviors proposed, a new model considering the defined \state{Recovery} behaviors were maintained and the \state{Racing} behaviors were joined into a new state called \IT, as shown in Figure~\ref{Fig:FSM3Diagram}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.45\textwidth]{ThreeStateFSM}
+	\caption{States diagram of the Three-State FSM}
+	\label{Fig:FSM3Diagram}
+\end{figure}
+
+
+% Figure~\ref{Fig:FSM5Diagram} instantiates the relations between the states through two-headed arrows connecting a state to every other one, which is done because, from a particular state, the controller can assume any other in a following instant.
+
+% In order to decide which state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}.
+
+% One big problem about this approach is that the function responsible for choosing which state is more appropriate for each situation would more than often be overcharged, and, in some cases, rather different sets of parameters received by it would result in the same classification among the states. Thus, in order to minimize the dependency of the driving performance in relation to the function in charge of the transition between states, a project decision was made to reduce the number of states.
+
+% In addition, the angles - with relation to the car axis - of all the 19 range finder sensors were chosen in a manner that included as much information of the track as possible. For instance, if all the angles were to be initialized pointing only to one side of car, the data concerning the other side would be neglected. For the Three-State FSM, the angles were instantiated using steps of 10 degrees, which resulted in angles ranging from -90 to +90 degrees, 0 meaning the direction that indicates the front of the car.
+
+
+% The states are now be implemented
+
+% Considering TORCS as test bed,The initial FSM was composed of four states:
+% \begin{description}
+%	\item[\state{}]
+
+%	Straight Line: the controller commands the car to full
+% throttle with maximum acceleration straight ahead, ad-
+% justing the steering to stay in the middle of the track.
+% • Curve: the controller handles curves based on the posi-
+% tion of the car and the angle between the direction of the
+% axes of the car and the track axis, adjusting the steering,
+% gear, and clutch actuators to keep it moving as fast as
+% possible within track limits while trying to avoid damage
+% (by crashing into another car or wall).
+% • Out of Track: the controller tries to return to the track
+% as fast as possible by steering in an arbitrary angle
+% (with relation to the track’s axis of track). Due to low
+% friction outside of the track, accelerating and braking are
+% proportional to the sideway speed of the car to minimize
+% skidding.
+% • Stuck: the controller takes drastic measures to try to
+% recover, using reverse gear and hard steering to try to
+% get back on track in this worst case scenario.
+% \end{description}
+
+% According to Mat Buckland in \emph{Programming Game AI By Example}~\cite{Buckland:2005:AI}:
+
+% \begin{quotation} \itshape
+
+%	``A finite state machine is a device, or a model of a device, which has a finite number of states it can be in at any given time and can operate on input to either make transitions from one state to another or to cause an output or action to take place. A finite state machine can only be in one state at any moment in time.''
+
+% \end{quotation}
+
+% An architecture following this guideline was chosen in order to transform the problem of complex driving into smaller problems that describe the situations found within the racing environment.
+
+% \subsection{The Design of the Behavior States}
+
+% Initially, the design of the finite state machine proposed comprised the following states:
+
+% \begin{itemize}
+
+% \item \emph{Straight Line};
+
+% \item \emph{Approaching Curve};
+
+% \item \emph{Curve};
+
+% \item \emph{Out of Track};
+
+% \item \emph{Stuck}.
+
+% \end{itemize}
+
+% Essentially, for this first method, normal behavior covered \emph{Straight Line}, \emph{Approaching Curve} and \emph{Curve}, as the controller was located inside the track boundaries, whereas exception behavior consisted of \emph{Out of Track} and \emph{Stuck}, situations in which recovery actions are expected.
+
+% The main difference between the method described and the second one is the way they deal with normal behavior, while one separates it into \emph{Straight Line}, \emph{Approaching Curve} and \emph{Curve}, the other treats it as a unique conduct in the form of the \emph{Inside Track} state. Therefore, the modified finite-state machine was composed by only three states, which were:
+
+% \begin{itemize}
+
+%	\item \emph{Inside Track};
+
+%	\item \emph{Out of Track};
+
+%	\item \emph{Stuck}.
+
+% \end{itemize}
+
+% \subsubsection{Normal Behavior}
+
+% If a controller using the first method was currently in \emph{Straight Line}, it would be expected of him to simply go as fast as he could, maitaining itself parallel to the track axis. When in \emph{Approaching Curve} state, he would reposition himself and achieve a certain calculated target speed proportionally to the curvature of the approaching curve in order to achieve higher speeds once inside of it. For example, if there is a sharp left turn nearby, the controller sets a target steer that the car needs to obtain before entering it, while bringing the car further to the right of the lane; that way, when the left turn comes, the car can proceed with a less abrupt change in steering, which as a consequence results in a higher speed. Otherwise, when in situations of \emph{Curve}, the pilot would stop braking while maintaining the steering direction towards the sensor pointing the biggest distance value read - which represents the direction of the curve, prepared by the approaching curve state. Figure~\ref{Fig:FSensor} exhibits a car receiving information from the sensors, with the biggest vector being the direction of the curve to be entered.
+
+% \begin{figure}[h]
+
+%	\centering
+%	\includegraphics[width=250pt]{FarthestSensor}
+%	\caption{Sensorial input indicating a curve through the biggest value received}
+%	\label{Fig:FSensor}
+
+% \end{figure}
+
+% \emph{Inside Track}, therefore, is how the car, desirably, will spend most part of the time, if the second method is being employed. The controller calculates a \emph{target speed} based on how far the car is from the farthest edge of the track, then, it assumes a position of adjusting the speed until it reaches this velocity while driving towards the sensor with the biggest read value. The distance of this method conveys the greater length the car may advance with little or sometimes without significant steering changes. This state also brakes, if necessary, in situations that the car assumes a speed higher than the one calculated to be the target.
+
+% \subsubsection{Exception Behavior}
+
+
+% \emph{Out of Track} is when, for any reason, the car is found outside of the track limits. In this case, the proper behavior is to try to return to the lane. Since there are many ways that a car may be out of the track, reentering it in an efficient way might require possible different angles as well, so, every time the car exceeds the inside boundaries of the lane, a proper returning angle is calculated. In road tracks, the outside track normally has a different terrain, sometimes dirt-based, meaning that skidding frequently occurs, and in an effort to avoid this, a control system to brake when the car begins skidding above a threshold was implemented. Figure~\ref{Fig:Angle} demonstrates a car returning from outside of the track with a certain angle.
+
+% \begin{figure}[h]
+
+%		\centering
+%		\includegraphics[width=250pt]{ReturnAngle}
+%		\caption{Angle between car and track axis.}
+%		\label{Fig:Angle}
+
+% \end{figure}
+
+% Furthermore, the \emph{Stuck} state represents any given situation that the car is unable to progress in the race. This is a delicate state, because it presents itself as difficult to identify and also due to its impact to the performance of the controller. In order to detect \emph{Stuck} circumstances, the speed of the car is monitored throughout the race, during every game tick, if it lingers with a low speed for a determined period, then it is considered stranded, or stuck. This state activates the reverse gear of the car and turns it until its front is directed towards the correct axis of the track. The reason why \emph{Stuck} is a sensitive state is because, when detected early, might indicate false positive, and, when detected late, could lessen the efficiency of the controller. Thusly, detecting \textit{Stuck} situations is crucial, and so is handling the car out of them.
+
+% \subsection{Five-State FSM} \label{subsec:FSM5}
+
+% The first conceived method was named ``Five-State FSM'', naturally because it is a finite state machine with five states. The real first model of the finite-state machine did not have an \emph{Approaching Curve} state, but, as the implementation of \emph{Straight Line} and \emph{Curve} were so different from one another, a preparation had to be established so as to smoothen the transitions between them. Figure~\ref{Fig:FSM5Diagram} represents the states diagram of the Five-State FSM.
+
+% \begin{figure}[h]
+
+%	\centering
+%	\includegraphics[width=250pt]{FiveStateFSM}
+%	\caption{States diagram of the Five-State FSM}
+%	\label{Fig:FSM5Diagram}
+
+% \end{figure}
+
+% Figure~\ref{Fig:FSM5Diagram} instantiates the relations between the states through two-headed arrows connecting a state to every other one, which is done because, from a particular state, the controller can assume any other in a following instant.
+
+% In order to decide wich state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}.
+
+% One big problem about this approach is that the function responsible for choosing which state is more appropriate for each situation would more than often be overcharged, and, in some cases, rather different sets of parameters received by it would result in the same classification among the states. Thus, in order to minimize the dependency of the driving performance in relation to the function in charge of the transition between states, a project decision was made to reduce the number of states.
+
+% In addition, the angles - with relation to the car axis - of all the 19 range finder sensors were chosen in a manner that included as much information of the track as possible. For instance, if all the angles were to be initialized pointing only to one side of car, the data concerning the other side would be neglected. For the Three-State FSM, the angles were instantiated using steps of 10 degrees, which resulted in angles ranging from -90 to +90 degrees, 0 meaning the direction that indicates the front of the car.
+
+% \subsection{Three-State FSM} \label{subsec:FSM3}
+
+% The finite state machine with less states was designed from a derivation of the previous one, by adapting the normal behavior and simplifying it to form the denominated Three-State FSM. The exception behavior remained the same, since it should not affect the car as much if the adaptation was well performed. Figure~\ref{Fig:FSM3Diagram} shows the modified states diagram of the Three-State FSM.
+
+% \begin{figure}[h]
+
+%	\centering
+%	\includegraphics[width=230pt]{ThreeStateFSM}
+%	\caption{States diagram of the Three-State FSM}
+%	\label{Fig:FSM3Diagram}
+
+% \end{figure}
+
+% Just as the diagram of the Five-State FSM portrayed, there is no restriction of order concerning the states for the Three-State FSM. Figure~\ref{Fig:FSM3Diagram} then displays this relation, which is the possibility of assuming an arbitrary state after any other.
+
+% The transition function in this architecture is simplier than the previous one. It only checks one range finder since it is very easy to say whether the car is inside or outside the track.
+
+% Besides the states, there is also a learning module that is called whenever the \emph{Out of Track} state is requested. This module records both speed and position from the state of the car in the proximity of the departure from the track, and retaining these pieces of information allows the controller to slow down in subsequent laps when approaching the segments highlighted by the learning module. The implementation of this procedure consists on replacing the speed recorded from the landmarked position by a slower one on future occurrences.
+
+% In order to maximize the efficiency of the information received from the track, the vector of sensors in the Three-State FSM was initialized according to a normal distribution, i.e., the sensors are more densely distributed in front of car and less on the sides.
+
+% Each state in the two ways described to deal with the process becomes, ideally, an independent problem, whose solution can be attacked separately. This way, they can all have individual sets of parameters susceptible to improvement.
+
+% \subsection{Search for Parameter Values - Genetic Algorithm} \label{subsec:GA}
+
+% Due to the quantity of parameters to be tuned and the defined granularity, the search space becomes enormous and renders fundamental the use of a search algorithm. This technique optimizes the process of finding better configurations by being more incisive and saving resources such as computational time and space. In the present study, an evolutionary algorithm was chosen for this task.
+
+% Genetic Algorithms~\cite{GA} are evolutionary algorithms inspired by nature, in special by the concept of evolution through natural selection~\cite{Darwin}, whose main idea is that a set of solutions for a problem can be evolved like the population of a generic species in nature. The applications of genetics algorithms are present in many areas, extending from control engineering for non-linear systems identification~\cite{GACTRL} to biomedicine prosthesis development~\cite{GABIO} and even economy to forecast the behavior of agents~\cite{GAECO}.
+
+% In this context, a solution is called an individual and was represented by a string of parameters. The first population was instantiated randomly to its full extent since there are no clues concerning how good an initial set of predefined parameters can be. This population passes through a fitness function that indexes a score to each individual, and this function is responsible for assessing how good - or how adapted - the solution that is being evaluated is. After evaluating the population, a group of individuals is chosen as the parents of the next set of solutions, which would compose a new generation; there are countless ways of performing the selection of the parents to the new generation of offspring, and this work gave preference to picking the higher individuals on the scoring system, what is called Elitism~\cite{ELITISM}. Each pair of parents was submitted to crossover in order to generate two offspring solutions, and in the end of the process each offspring might have presented mutation - everything according to predefined rates. The crossover took place in 95\% of the reproduction, while the mutation rate assumed the rate of 1\%~\cite{RATES}.
+
+% For the Five-State FSM, 22 parameters required adjustment, which originated, in different quantities, from each state separately and also the \emph{transition} function, as follows:
+
+% \begin{itemize}
+
+%	\item \emph{Transition Function} has 3 parameters;
+
+%	\item \emph{Approaching Curve} has 4 parameters;
+
+%	\item \emph{Straight Line} has 4 parameters;
+
+%	\item \emph{Out of Track} has 7 parameters;
+
+%	\item \emph{Stuck} has 4 parameters.
+
+% \end{itemize}
+
+% However, for the Three-State FSM, only 17 parameters demanded adjustment, which are divided as follows:
+
+% \begin{itemize}
+
+%	\item \emph{Inside Track} has 6 parameters;
+
+%	\item \emph{Out of Track} has 7 parameters;
+
+%	\item \emph{Stuck} has 4 parameters.
+
+% \end{itemize}
+
+%  The source codes for both models presented in this section are available at the \emph{GitHub} repository provided in the references~\cite{GitHub}.
