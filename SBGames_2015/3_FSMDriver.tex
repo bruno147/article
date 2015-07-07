@@ -52,12 +52,35 @@ Initial tests showed that transitioning from \SL~to \C~was too swift, hampering 
 \end{figure}
 
 
-The transitions \gnramos{Inserir descricao das transicoes, disposição de sensores e pseudocodigo}%
+\toDo{review paragraph}%
+Dividing \state{Racing} in three other states crops up the need of a more elaborated transition function. There are 19 range finders available in SCR~\cite{SCR} which directions are defined by the driver, those sensors provide the distance between the car axis and the edge of the track. When the car is out the track's boundaries they read $-1$ value. For the Five-State driver those directions were arbitrary settled from $-90$ to $90$ degrees in a $10$ degree step, the $0$ degree direction pointing toward the car axis, see Figure~\ref{Fig:FSM5Sensors}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=250pt]{FSM5Sensors}
+	\caption{FSMDriver5 range finders.}
+	\label{Fig:FSM5Sensors}
+\end{figure}
+
+Through several observations it was concluded that farther from a curve the car is the greater the difference among the frontal and lateral sensors is. As the car approaches a turn this difference starts to drop until it reaches a minimum value, when the car is taking the turn. The variance among the range finders was taken into account for telling which state of the \state{Racing} behavior would better fit with the current segment of the track, as shown in Algorithm \ref{alg:FSMDriver5}.
+
+\toDo{finish this}
+\begin{algorithm}[h]%
+\caption{FSMDriver5 Transition}%
+\label{alg:FSMDriver5}%
+\begin{algorithmic}
+	\IF{$variance < MAX_STRAIGHTLINE_VAR$ or ($variance < MIN_STRAIGHTLINE_VAR$ and
+   	the current state is not $StraightLine$)}
+   		\STATE $state \Leftarrow StraightLine$
+   	\ENDIF
+   	\ELSE \IF {}
+\end{algorithmic}
+\end{algorithm}
 % In order to decide which state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}.
 
 Initially, random configurations were set and manually adjusted until an acceptable behavior was achieved, i.e. such a configuration in which a car could successfully complete a race. In the beginning, the \state{Recovery} states (\OT~and \St) were constantly triggered, and therefore were first to be adjusted for improved behavior. Eventually their settings were such that the \state{Racing} behaviors could be focused on. These too were manually and arbitrarily set through trial and error, considering the driver's quantitative performance racing (time and damage) and its qualitative skill (visual analysis of tests).
 
-After several iterations, this model performed better performance than some of the less capable robots available in TORCS,showcasing the FSM model's potential for controlling a car. However, testing also revealed that the transitions between states required were the bottleneck for improved racing. Not only some of the triggers needed a more detailed analysis to avoid eventual erratic behavior, but the sheer number parameters considered for transitioning, each with its triggers (see Figure~\ref{Fig:FSM5Diagram}), and their impact on the model's behavior during a complete race caused the whole model to be thought over.
+After several iterations, this model performed better than some of the less capable robots available in TORCS,showcasing the FSM model's potential for controlling a car. However, testing also revealed that the transitions between states required were the bottleneck for improved racing. Not only some of the triggers needed a more detailed analysis to avoid eventual erratic behavior, but the sheer number parameters considered for transitioning, each with its triggers (see Figure~\ref{Fig:FSM5Diagram}), and their impact on the model's behavior during a complete race caused the whole model to be thought over.
 
 Analyzing FSMDriver's transitions occurrences within a race, it was clear that the \state{Recovery} behavior had two distinct situations, which were acceptably handled by the current configuration, and that the major issue was frequent triggering between the \state{Racing} states, which inevitably resulted in the car leaving the track and jeopardizing its performance.
 
@@ -73,7 +96,14 @@ To reduce the model's complexity, and considering the intuitive division of beha
 
 \IT~implements a very straightforward idea, get to an arbitrary target speed towards the largest open space inside track limits. The target speed is proportional to the largest sensor reading, and braking is activated if the current speed is greater than the target. Gear changing works based on RPM threshold as before. Overall, this implementation works for straight lines as well as curves.
 
-\gnramos{Inserir descricao da disposição de sensores}%
+\toDo{review}
+In order to have a more detailed view of upcoming track segments the initialization of the range finders changed in the Three-State FSM. Here a normal distribution was applied in this intuit, focusing sensorial information ahead the car, as shown in Figure~\ref{Fig:FSM3Sensors}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=250pt]{FSM3Sensors}
+	\caption{FSMDriver3 range finders.}
+	\label{Fig:FSM3Sensors}
+\end{figure}
 
 The transition function can then be reimplemented in a simpler fashion, as shown in Algorithm \ref{alg:FSMDriver3}:
 
@@ -105,18 +135,19 @@ In order to apply a genetic algorithm to the task of evolving the drivers' param
 
 FSMDriver5 has, overall, 22 parameters from states and the transition function:
 
-\gnramos{Completar dados abaixo, e também para o FSMDriver3}
+\toDo{in progress}
 \begin{description}
 	\item[Transition:] \ %
 	\begin{description}
-		\item[nome do param1] utilidade do param1
-		\item[nome do param2] utilidade do param2
-		\item[nome do param3] utilidade do param3
+		\item[MAX_STRAIGHTLINE_VAR] upper boundary for classifying a straight line
+		\item[MIN_STRAIGHTLINE_VAR] lower boundary for classifying a straight line
+		\item[MAX_APPROACHIN_VAR] upper boundary for classifying an approaching curve
+		\item[MIN_APPROACHIN_VAR] lower boundary for classifying an approaching curve
 	\end{description}
 	\item[Approaching Curve:] \ %
 	\begin{description}
-		\item[nome do param1] utilidade do param1
-		\item[nome do param2] utilidade do param2
+		\item[TARGET_POS] desired percentage position
+		\item[BASE_SPEED] lowest speed allowed during turns
 		\item[nome do param3] utilidade do param3
 		\item[nome do param4] utilidade do param4
 	\end{description}
