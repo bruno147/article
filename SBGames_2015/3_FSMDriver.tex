@@ -24,7 +24,7 @@ These can be further divided into two more specific behaviors for implementation
 	\item[\St:] for recovering from being unable to move forward.
 \end{description}
 
-Each of these states implements its behavior as follows. \SL~ attempts to go as fast as possible parallel to the track axis by accelerating at full throttle, and changing gears according to RPM thresholds. \C~steers towards the direction towards the track sensor with the largest reading (see Figure~\ref{Fig:FSensor}) with 60\% throttle, braking in case it starts to slide in the X axis. \OT~ attempts to return to the track, facing the right direction, adjusting its speed and steering according to its current orientation concerning the track (see Figure~\ref{Fig:Angle}). \St~ tries to get unstuck by using the reverse gear and hard steering.
+Each of these states implements its behavior as follows. \SL~ attempts to go as fast as possible parallel to the track axis by accelerating at full throttle, which improve the performance to track's variance, and changing gears according to RPM thresholds. \C~steers towards the direction towards the track sensor with the largest reading (see Figure~\ref{Fig:FSensor}) with 60\% throttle, since it indicates at each state iteration a retiline path to exit the curve, braking in case it starts to slide in the X axis. \OT~ attempts to return to the track, facing the right direction, adjusting its speed and steering according to its current orientation concerning the track (see Figure~\ref{Fig:Angle}). \St~ tries to get unstuck by using the reverse gear and hard steering.
 
 \begin{figure}[h]
 	\centering
@@ -69,11 +69,21 @@ Through several observations it was concluded that the farther from a curve the 
 \caption{FSMDriver5 Transition}%
 \label{alg:FSMDriver5}%
 \begin{algorithmic}
-	\IF{$variance < MAX\_STRAIGHTLINE\_VAR$ \OR ($variance < MIN\_STRAIGHTLINE\_VAR$ \AND
+    \IF{car is stuck}
+        \STATE $state \Leftarrow Stuck$
+    \ELSE
+	\IF{($variance < MAX\_STRAIGHTLINE\_VAR$) \OR ($variance < MIN\_STRAIGHTLINE\_VAR$ \AND
    	the current state is not $StraightLine$)}
    		\STATE $state \Leftarrow StraightLine$
-   	\ENDIF
-%	\ELSE \IF {}
+	\ENDIF
+	\ELSIF{($variance >MAX\_APPROACHING\_CURVE\_VAR$ \AND current state is not curve)
+         \OR ($variance > MIN\_APPROACHING\_CURVE\_VAR$ \AND current state is not Approaching Curve)}
+		\STATE $state \Leftarrow Approaching Curve$
+	\ELSIF{$variance>0$}
+		\STATE $state \Leftarrow Curve$
+	\ELSE
+		\STATE $state \Leftarrow Out Of Track$
+	\ENDIF
 \end{algorithmic}
 \end{algorithm}
 % In order to decide which state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}.
