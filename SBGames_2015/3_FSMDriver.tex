@@ -52,7 +52,6 @@ Initial tests showed that transitioning from \SL~to \C~was too swift, hampering 
 \end{figure}
 
 
-\toDo{reviewed paragraph, please evaluate }%Dividing \state{Racing} into three other states also reduces the need of a more elaborated transition function. Esta frase foi realocada no texto devido à falta de contextualização %
 There are 19 range finders available in SCR~\cite{SCR} whose directions are defined by the driver, and these sensors provide the distance between the car axis and the edge of the track. When the car is outside of the track's boundaries, they read $-1$ value. For the Five-State driver, those directions were arbitrarily settled from $-90$ to $90$ degrees in a $10$ degree step, the $0$ degree direction pointing toward the car axis, see Figure~\ref{Fig:FSM5Sensors}.
 
 \begin{figure}[h]
@@ -64,7 +63,7 @@ There are 19 range finders available in SCR~\cite{SCR} whose directions are defi
 
 Through several observations it was concluded that the farther from a curve the car is, the greater the difference among the frontal and lateral sensors is. As the car approaches a turn this difference starts to drop until it reaches a minimum value, when the car is taking the turn. The variance among the range finders was taken into account for telling which state of the \state{Racing} behavior would better fit with the current segment of the track, as shown in Algorithm \ref{alg:FSMDriver5}.
 
-\toDo{finish this}
+
 \begin{algorithm}[h]%
 \caption{FSMDriver5 Transition}%
 \label{alg:FSMDriver5}%
@@ -106,7 +105,6 @@ To reduce the model's complexity, and considering the intuitive division of beha
 
 \IT~implements a very straightforward idea, get to an arbitrary target speed towards the largest open space inside track limits. The target speed is proportional to the largest sensor reading, and braking is activated if the current speed is greater than the target. Gear changing works based on RPM threshold as before. Overall, this implementation works for straight lines as well as curves.
 
-\toDo{review}
 In order to have a more detailed view of upcoming track segments the initialization of the range finders changed in the Three-State FSM. Here a normal distribution was applied in this intuit, focusing sensorial information ahead the car, as shown in Figure~\ref{Fig:FSM3Sensors}.
 \begin{figure}[h]
 	\centering
@@ -115,7 +113,7 @@ In order to have a more detailed view of upcoming track segments the initializat
 	\label{Fig:FSM3Sensors}
 \end{figure}
 
-Dividing \state{Racing} into three other states reduces the need of a more elaborated transition function. The transition function can then be reimplemented in a simpler fashion, as shown in Algorithm \ref{alg:FSMDriver3}:
+The transition function can then be reimplemented in a simpler fashion, as shown in Algorithm \ref{alg:FSMDriver3}:
 
 \begin{algorithm}[h]%
 \caption{FSMDriver3 Transition}%
@@ -145,45 +143,43 @@ In order to apply a genetic algorithm to the task of evolving the drivers' param
 
 FSMDriver5 has, overall, 22 parameters from states and the transition function:
 
-\toDo{in progress}
 \begin{description}
 	\item[Transition:] \ %
 	\begin{description}
-		\item[MAX\_STRAIGHTLINE\_VAR] upper boundary for classifying a straight line
-		\item[MIN\_STRAIGHTLINE\_VAR] lower boundary for classifying a straight line
-		\item[MAX\_APPROACHIN\_VAR] upper boundary for classifying an approaching curve
-		\item[MIN\_APPROACHIN\_VAR] lower boundary for classifying an approaching curve
+		\item[MAX\_STRAIGHTLINE\_VAR] upper boundary for classifying a straight line.
+		\item[MIN\_STRAIGHTLINE\_VAR] lower boundary for classifying a straight line.
+		\item[MAX\_APPROACHIN\_VAR] upper boundary for classifying an approaching curve.
+		\item[MIN\_APPROACHIN\_VAR] lower boundary for classifying an approaching curve.
 	\end{description}
 	\item[Approaching Curve:] \ %
 	\begin{description}
-		\item[TARGET\_POS] desired percentage position
-		\item[BASE\_SPEED] lowest speed allowed during turns
-		\item[nome do param3] utilidade do param3
-		\item[nome do param4] utilidade do param4
+		\item[TARGET\_POS] desired percentage position.
+		\item[BASE\_SPEED] lowest speed allowed during turns.
+		\item[MAX\_STEERING] maximum allowed steering value.
 	\end{description}
 	\item[Straight Line:] \ %
 	\begin{description}
-		\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears
-		\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears
+		\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears.
+		\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears.
 		\item[AVERAGE\_RPM] threshlod to decrease high gears
-		\item[HIGH\_RPM] threshlod to delimit the change of high gears
+		\item[HIGH\_RPM] threshlod to delimit the change of high gears.
 	\end{description}
 	\item[Out of Track:] \ %
 	\begin{description}
-		\item[MAX\_SKIDDING] defines the threshold to start to break to avoid skidding
-		\item[NEGATIVE\_ACCEL\_PERCENT] dictate how much to release the acceleration pedal to avoid to skidding, its defined with the axis speed of car
-		\item[VELOCITY\_GEAR\_4] threshold to change the gear to 4
-		\item[VELOCITY\_GEAR\_3] threshold to change the gear to 3
-		\item[VELOCITY\_GEAR\_2] threshold to change the gear to 2
-		\item[MAX\_RETURN\_ANGLE] upper boundary to angle of return to track
-		\item[MIN\_RETURN\_ANGLE] lower boundary to angle of return to track
+		\item[MAX\_SKIDDING] defines the threshold to start to break to avoid skidding.
+		\item[NEGATIVE\_ACCEL\_PERCENT] dictate how much to release the acceleration pedal to avoid to skidding, its defined with the axis speed of car.
+		\item[VELOCITY\_GEAR\_4] threshold to change the gear to 4.
+		\item[VELOCITY\_GEAR\_3] threshold to change the gear to 3.
+		\item[VELOCITY\_GEAR\_2] threshold to change the gear to 2.
+		\item[MAX\_RETURN\_ANGLE] upper boundary to angle of return to track.
+		\item[MIN\_RETURN\_ANGLE] lower boundary to angle of return to track.
 	\end{description}
 	\item[Stuck:] \ %
 	\begin{description}
-		\item[STUCK\_SPEED] defines the threshold to monitorate if its in stuck
+		\item[STUCK\_SPEED] defines the threshold to monitorate if its in stuck.
 		\item[MINIMUM\_DISTANCE\_RACED] just to avoid to enter in stuck at the beginning of race when the car is stopped.
-		\item[MAXIMUM\_NUMBER\_OF\_TICKS\_STUCK] utilidade do param3
-		\item[MAXIMUM\_NUMBER\_OF\_TICKS\_IN\_SLOW\_SPEED] utilidade do param4
+		\item[MAXIMUM\_NUMBER\_OF\_TICKS\_STUCK] maximum number of ticks in which reverse gear is allowed.
+		\item[MAXIMUM\_NUMBER\_OF\_TICKS\_IN\_SLOW\_SPEED] maximum number of ticks in low speed before stuck is triggered.
 	\end{description}
 \end{description}
 
@@ -192,12 +188,12 @@ FSMDriver3, on the other hand, has the same 11 for \OT~and \St~ as FSMDriver5, p
 \begin{description}
 	\item[Inside Track:] \ %
 	\begin{description}
-		\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears
-		\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears
+		\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears.
+		\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears.
 		\item[AVERAGE\_RPM] threshlod to decrease high gears
-		\item[HIGH\_RPM] threshlod to increase high gears
-		\item[SPEED\_FACTOR] utilidade do param5
-		\item[BASE\_SPEED] utilidade do param6
+		\item[HIGH\_RPM] threshlod to increase high gears.
+		\item[SPEED\_FACTOR] proportionality between highest value read by range finders and TARGET\_SPEED.
+		\item[BASE\_SPEED] lowest speed allowed.
 	\end{description}
 \end{description}
 
