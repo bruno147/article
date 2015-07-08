@@ -42,7 +42,7 @@ Each of these states implements its behavior as follows. \SL~ attempts to go as 
 
 \subsection{FSMDriver5}
 
-Initial tests showed that transitioning from \SL~to \C~was too swift, hampering performance because the car consistently entered curves at such high speeds that the controller was unable to turn and exited the track, so the additional behavior \AC~was implemented. \AC~ positions the driver towards the outside of the incoming curve and tries to race at a speed proportional to the curvature, so less braking would be necessary in \C. Thus, a 5-state FSMDriver (FSMDriver5) model (illustrated in Figure~\ref{Fig:FSM5Diagram}) was ready for testing.
+Initial tests showed that transitioning from \SL~to \C~was too swift, hampering performance because the car consistently entered curves at such high speeds that the controller was unable to turn and exited the track, so the additional behavior \AC~was implemented. \AC~positions the driver towards the outside of the incoming curve and tries to race at a speed proportional to the curvature, so less braking would be necessary in \C. Thus, a 5-state FSMDriver (FSMDriver5) model (illustrated in Figure~\ref{Fig:FSM5Diagram}) was ready for testing.
 
 \begin{figure}[h]
 	\centering
@@ -52,8 +52,8 @@ Initial tests showed that transitioning from \SL~to \C~was too swift, hampering 
 \end{figure}
 
 
-\toDo{review paragraph}%
-Dividing \state{Racing} in three other states crops up the need of a more elaborated transition function. There are 19 range finders available in SCR~\cite{SCR} which directions are defined by the driver, those sensors provide the distance between the car axis and the edge of the track. When the car is out the track's boundaries they read $-1$ value. For the Five-State driver those directions were arbitrary settled from $-90$ to $90$ degrees in a $10$ degree step, the $0$ degree direction pointing toward the car axis, see Figure~\ref{Fig:FSM5Sensors}.
+\toDo{reviewed paragraph, please evaluate }%Dividing \state{Racing} into three other states also reduces the need of a more elaborated transition function. Esta frase foi realocada no texto devido à falta de contextualização %
+There are 19 range finders available in SCR~\cite{SCR} whose directions are defined by the driver, and these sensors provide the distance between the car axis and the edge of the track. When the car is outside of the track's boundaries, they read $-1$ value. For the Five-State driver, those directions were arbitrarily settled from $-90$ to $90$ degrees in a $10$ degree step, the $0$ degree direction pointing toward the car axis, see Figure~\ref{Fig:FSM5Sensors}.
 
 \begin{figure}[h]
 	\centering
@@ -62,7 +62,7 @@ Dividing \state{Racing} in three other states crops up the need of a more elabor
 	\label{Fig:FSM5Sensors}
 \end{figure}
 
-Through several observations it was concluded that farther from a curve the car is the greater the difference among the frontal and lateral sensors is. As the car approaches a turn this difference starts to drop until it reaches a minimum value, when the car is taking the turn. The variance among the range finders was taken into account for telling which state of the \state{Racing} behavior would better fit with the current segment of the track, as shown in Algorithm \ref{alg:FSMDriver5}.
+Through several observations it was concluded that the farther from a curve the car is, the greater the difference among the frontal and lateral sensors is. As the car approaches a turn this difference starts to drop until it reaches a minimum value, when the car is taking the turn. The variance among the range finders was taken into account for telling which state of the \state{Racing} behavior would better fit with the current segment of the track, as shown in Algorithm \ref{alg:FSMDriver5}.
 
 \toDo{finish this}
 \begin{algorithm}[h]%
@@ -105,7 +105,7 @@ In order to have a more detailed view of upcoming track segments the initializat
 	\label{Fig:FSM3Sensors}
 \end{figure}
 
-The transition function can then be reimplemented in a simpler fashion, as shown in Algorithm \ref{alg:FSMDriver3}:
+Dividing \state{Racing} into three other states reduces the need of a more elaborated transition function. The transition function can then be reimplemented in a simpler fashion, as shown in Algorithm \ref{alg:FSMDriver3}:
 
 \begin{algorithm}[h]%
 \caption{FSMDriver3 Transition}%
@@ -131,7 +131,7 @@ Initially, configurations resembling FSMDriver5's parameters were set and manual
 With the finished models\footnote{Code available at \url{https://github.com/bruno147/fsmdriver}}, the issue at hand became to set the models' parameter to such values as to maximize their performance, a large combinatorial problem to which a well known tool was applied.
 
 \subsection{Evolving Parameters}%
-In order to apply a genetic algorithm to the task of evolving the drivers' parameters, a model of the solution must be defined. In this context, a solution is called an individual and was represented by a string of parameters\gnramos{bits? floats?}.
+In order to apply a genetic algorithm to the task of evolving the drivers' parameters, a model of the solution must be defined. In this context, a solution is called an individual and was represented by a string of bit parameters, that internally to the algorithm are interpreted as float numbers.
 
 FSMDriver5 has, overall, 22 parameters from states and the transition function:
 
