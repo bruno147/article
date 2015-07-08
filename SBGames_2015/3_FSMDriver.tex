@@ -163,10 +163,10 @@ FSMDriver5 has, overall, 22 parameters from states and the transition function:
 	\end{description}
 	\item[Straight Line:] \ %
 	\begin{description}
-		\item[LOW\_GEAR\_LIMIT] utilidade do param1
-		\item[LOW\_RPM] utilidade do param2
-		\item[AVERAGE\_RPM] utilidade do param3
-		\item[HIGH\_RPM] utilidade do param4
+		\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears
+		\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears
+		\item[AVERAGE\_RPM] threshlod to decrease high gears
+		\item[HIGH\_RPM] threshlod to delimit the change of high gears
 	\end{description}
 	\item[Out of Track:] \ %
 	\begin{description}
@@ -180,24 +180,24 @@ FSMDriver5 has, overall, 22 parameters from states and the transition function:
 	\end{description}
 	\item[Stuck:] \ %
 	\begin{description}
-		\item[stuck_speed] defines the threshold to monitorate if its in stuck
-		\item[minimum_distance_raced] just to avoid to enter in stuck at the beginning of race when the car is stopped.
-		\item[maximum_number_of_ticks_stuck] utilidade do param3
-		\item[maximum_number_of_ticks_in_slow_speed] utilidade do param4
+		\item[STUCK\_SPEED] defines the threshold to monitorate if its in stuck
+		\item[MINIMUM\_DISTANCE\_RACED] just to avoid to enter in stuck at the beginning of race when the car is stopped.
+		\item[MAXIMUM\_NUMBER\_OF\_TICKS\_STUCK] utilidade do param3
+		\item[MAXIMUM\_NUMBER\_OF\_TICKS\_IN\_SLOW\_SPEED] utilidade do param4
 	\end{description}
 \end{description}
 
-FSMDriver3, on the other hand, has the same 11 for \t~and \St~ as FSMDriver5, plus 6 more:
+FSMDriver3, on the other hand, has the same 11 for \OT~and \St~ as FSMDriver5, plus 6 more:
 
 \begin{description}
 	\item[Inside Track:] \ %
 	\begin{description}
-		\item[nome do param1] utilidade do param1
-		\item[nome do param2] utilidade do param2
-		\item[nome do param3] utilidade do param3
-		\item[nome do param4] utilidade do param4
-		\item[nome do param5] utilidade do param5
-		\item[nome do param6] utilidade do param6
+		\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears
+		\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears
+		\item[AVERAGE\_RPM] threshlod to decrease high gears
+		\item[HIGH\_RPM] threshlod to delimit the change of high gears
+		\item[SPEED\_FACTOR] utilidade do param5
+		\item[BASE\_SPEED] utilidade do param6
 	\end{description}
 \end{description}
 
