@@ -163,27 +163,27 @@ FSMDriver5 has, overall, 22 parameters from states and the transition function:
 	\end{description}
 	\item[Straight Line:] \ %
 	\begin{description}
-		\item[nome do param1] utilidade do param1
-		\item[nome do param2] utilidade do param2
-		\item[nome do param3] utilidade do param3
-		\item[nome do param4] utilidade do param4
+		\item[LOW\_GEAR\_LIMIT] utilidade do param1
+		\item[LOW\_RPM] utilidade do param2
+		\item[AVERAGE\_RPM] utilidade do param3
+		\item[HIGH\_RPM] utilidade do param4
 	\end{description}
 	\item[Out of Track:] \ %
 	\begin{description}
-		\item[nome do param1] utilidade do param1
-		\item[nome do param2] utilidade do param2
-		\item[nome do param3] utilidade do param3
-		\item[nome do param4] utilidade do param4
-		\item[nome do param5] utilidade do param5
-		\item[nome do param6] utilidade do param6
-		\item[nome do param7] utilidade do param7
+		\item[MAX\_SKIDDING] defines the threshold to start to break to avoid skidding
+		\item[NEGATIVE\_ACCEL\_PERCENT] dictate how much to release the acceleration pedal to avoid to skidding, its defined with the axis speed of car
+		\item[VELOCITY\_GEAR\_4] threshold to change the gear to 4
+		\item[VELOCITY\_GEAR\_3] threshold to change the gear to 3
+		\item[VELOCITY\_GEAR\_2] threshold to change the gear to 2
+		\item[MAX\_RETURN\_ANGLE] upper boundary to angle of return to track
+		\item[MIN\_RETURN\_ANGLE] lower boundary to angle of return to track
 	\end{description}
 	\item[Stuck:] \ %
 	\begin{description}
-		\item[nome do param1] utilidade do param1
-		\item[nome do param2] utilidade do param2
-		\item[nome do param3] utilidade do param3
-		\item[nome do param4] utilidade do param4
+		\item[stuck_speed] defines the threshold to monitorate if its in stuck
+		\item[minimum_distance_raced] just to avoid to enter in stuck at the beginning of race when the car is stopped.
+		\item[maximum_number_of_ticks_stuck] utilidade do param3
+		\item[maximum_number_of_ticks_in_slow_speed] utilidade do param4
 	\end{description}
 \end{description}
 
