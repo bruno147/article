@@ -24,45 +24,43 @@ These can be further divided into two more specific behaviors for implementation
 	\item[\St:] for recovering from being unable to move forward.
 \end{description}
 
-Each of these states implements its behavior as follows. \SL~ attempts to go as fast as possible parallel to the track axis by accelerating at full throttle, which improve the performance to track's variance, and changing gears according to RPM thresholds. \C~steers towards the direction towards the track sensor with the largest reading (see Figure~\ref{Fig:FSensor}) with 60\% throttle, since it indicates at each state iteration a retiline path to exit the curve, braking in case it starts to slide in the X axis. \OT~ attempts to return to the track, facing the right direction, adjusting its speed and steering according to its current orientation concerning the track (see Figure~\ref{Fig:Angle}). \St~ tries to get unstuck by using the reverse gear and hard steering.
+Each of these states implements its behavior as follows. \SL~ attempts to go as fast as possible parallel to the track axis by accelerating at full throttle, and changing gears according to RPM thresholds. \C~steers towards the direction towards the track sensor with the largest reading (see Figure~\ref{Fig:FSensor}) with 60\% throttle, braking in case it starts to slide in the X axis. \OT~ attempts to return to the track, facing the right direction, adjusting its speed and steering according to its current orientation concerning the track (see Figure~\ref{Fig:Angle}). \St~ tries to get unstuck by using the reverse gear and hard steering.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=250pt]{FarthestSensor}
+	\includegraphics[width=.45\textwidth]{img/FarthestSensor}
 	\caption{Sensor input in curve.}
 	\label{Fig:FSensor}
 \end{figure}
 
 \begin{figure}%[h]
 		\centering
-		\includegraphics[width=250pt]{ReturnAngle}
+		\includegraphics[width=.45\textwidth]{img/ReturnAngle}
 		\caption{Angle between car and track axis.}
 		\label{Fig:Angle}
 \end{figure}
 
 \subsection{FSMDriver5}
 
-Initial tests showed that transitioning from \SL~to \C~was too swift, hampering performance because the car consistently entered curves at such high speeds that the controller was unable to turn and exited the track, so the additional behavior \AC~was implemented. \AC~positions the driver towards the outside of the incoming curve and tries to race at a speed proportional to the curvature, so less braking would be necessary in \C. Thus, a 5-state FSMDriver (FSMDriver5) model (illustrated in Figure~\ref{Fig:FSM5Diagram}) was ready for testing.
+Initial tests showed that transitioning from \SL~to \C~was too swift, hampering performance because the car consistently entered curves at such high speeds that the controller was unable to turn and exited the track, so the additional behavior \AC~was implemented. \AC~ positions the driver towards the outside of the incoming curve and tries to race at a speed proportional to the curvature, so less braking would be necessary in \C. Thus, a 5-state FSMDriver (FSMDriver5) model (illustrated in Figure~\ref{Fig:FSM5Diagram}) was ready for testing.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.45\textwidth]{FiveStateFSM}
+	\includegraphics[width=.45\textwidth]{img/FiveStateFSM}
 	\caption{FSMDriver5 state diagram.}
 	\label{Fig:FSM5Diagram}
 \end{figure}
 
-
-There are 19 range finders available in SCR~\cite{SCR} whose directions are defined by the driver, and these sensors provide the distance between the car axis and the edge of the track. When the car is outside of the track's boundaries, they read $-1$ value. For the Five-State driver, those directions were arbitrarily settled from $-90$ to $90$ degrees in a $10$ degree step, the $0$ degree direction pointing toward the car axis, see Figure~\ref{Fig:FSM5Sensors}.
+The range sensors were arbitrarily configured at every $10$ degrees from $-90$ to $90$ relative to the car's front axis (that is, a uniform distribution from the left to the right of the car), as illustrated in Figure~\ref{Fig:FSM5Sensors}.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=250pt]{FSM5Sensors}
+	\includegraphics[width=.45\textwidth]{img/FSM5Sensors}
 	\caption{FSMDriver5 range finders.}
 	\label{Fig:FSM5Sensors}
 \end{figure}
 
-Through several observations it was concluded that the farther from a curve the car is, the greater the difference among the frontal and lateral sensors is. As the car approaches a turn this difference starts to drop until it reaches a minimum value, when the car is taking the turn. The variance among the range finders was taken into account for telling which state of the \state{Racing} behavior would better fit with the current segment of the track, as shown in Algorithm \ref{alg:FSMDriver5}.
-
+Sensor readings provide an idea of location in the track, in this setting, the difference between frontal and lateral sensors is larger when driving in a straight line than in a curve. Thus, the transition function considers the variance of readings from range finders to define the current state of the \state{Racing} behavior, as described in Algorithm~\ref{alg:FSMDriver5}.
 
 \begin{algorithm}[h]%
 \caption{FSMDriver5 Transition}%
@@ -85,11 +83,16 @@ Through several observations it was concluded that the farther from a curve the 
 	\ENDIF
 \end{algorithmic}
 \end{algorithm}
+
+\gnramos{mudar MAX\_STRAIGHTLINE\_VAR para MAX\_SL\_VAR e MAX\_APPROACHING\_CURVE\_VAR para MAX\_AC\_VAR}%
+
 % In order to decide which state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}.
+
+%The Five-State FSM presents a very complex transition function that takes into account the variance of the sensorial input to decide if the car is in a straight line, approaching a turn or in a turn
 
 Initially, random configurations were set and manually adjusted until an acceptable behavior was achieved, i.e. such a configuration in which a car could successfully complete a race. In the beginning, the \state{Recovery} states (\OT~and \St) were constantly triggered, and therefore were first to be adjusted for improved behavior. Eventually their settings were such that the \state{Racing} behaviors could be focused on. These too were manually and arbitrarily set through trial and error, considering the driver's quantitative performance racing (time and damage) and its qualitative skill (visual analysis of tests).
 
-After several iterations, this model performed better than some of the less capable robots available in TORCS,showcasing the FSM model's potential for controlling a car. However, testing also revealed that the transitions between states required were the bottleneck for improved racing. Not only some of the triggers needed a more detailed analysis to avoid eventual erratic behavior, but the sheer number parameters considered for transitioning, each with its triggers (see Figure~\ref{Fig:FSM5Diagram}), and their impact on the model's behavior during a complete race caused the whole model to be thought over.
+After several iterations, this model performed better performance than some of the less capable robots available in TORCS,showcasing the FSM model's potential for controlling a car. However, testing also revealed that the transitions between states required were the bottleneck for improved racing. Not only some of the triggers needed a more detailed analysis to avoid eventual erratic behavior, but the sheer number parameters considered for transitioning, each with its triggers (see Figure~\ref{Fig:FSM5Diagram}), and their impact on the model's behavior during a complete race caused the whole model to be thought over.
 
 Analyzing FSMDriver's transitions occurrences within a race, it was clear that the \state{Recovery} behavior had two distinct situations, which were acceptably handled by the current configuration, and that the major issue was frequent triggering between the \state{Racing} states, which inevitably resulted in the car leaving the track and jeopardizing its performance.
 
@@ -98,22 +101,23 @@ To reduce the model's complexity, and considering the intuitive division of beha
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.45\textwidth]{ThreeStateFSM}
+	\includegraphics[width=.4\textwidth]{img/ThreeStateFSM}
 	\caption{FSMDriver3 state diagram.}
 	\label{Fig:FSM3Diagram}
 \end{figure}
 
 \IT~implements a very straightforward idea, get to an arbitrary target speed towards the largest open space inside track limits. The target speed is proportional to the largest sensor reading, and braking is activated if the current speed is greater than the target. Gear changing works based on RPM threshold as before. Overall, this implementation works for straight lines as well as curves.
 
-In order to have a more detailed view of upcoming track segments the initialization of the range finders changed in the Three-State FSM. Here a normal distribution was applied in this intuit, focusing sensorial information ahead the car, as shown in Figure~\ref{Fig:FSM3Sensors}.
+In order to have more detailed information on track segment straight ahead, which will guide the movement, the range finders are concentrated in front of the car, as shown in Figure~\ref{Fig:FSM3Sensors}, contrasting with FSMDriver5's equidistant distribution.
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=250pt]{FSM3Sensors}
+	\includegraphics[width=.45\textwidth]{img/FSM3Sensors}
 	\caption{FSMDriver3 range finders.}
 	\label{Fig:FSM3Sensors}
 \end{figure}
 
-The transition function can then be reimplemented in a simpler fashion, as shown in Algorithm \ref{alg:FSMDriver3}:
+The transition function can then be reimplemented in a simpler fashion, as shown in Algorithm~\ref{alg:FSMDriver3}:
 
 \begin{algorithm}[h]%
 \caption{FSMDriver3 Transition}%
@@ -125,7 +129,7 @@ The transition function can then be reimplemented in a simpler fashion, as shown
         \IF{car is within track limits}
             \STATE $state \Leftarrow Inside Track$
         \ELSE
-            \STATE $state \Leftarrow Out Of Track$
+            \STATE $state \Leftarrow Outside Track$
         \ENDIF
     \ENDIF
     \IF{the current state is not $state$}
@@ -138,66 +142,71 @@ Initially, configurations resembling FSMDriver5's parameters were set and manual
 
 With the finished models\footnote{Code available at \url{https://github.com/bruno147/fsmdriver}}, the issue at hand became to set the models' parameter to such values as to maximize their performance, a large combinatorial problem to which a well known tool was applied.
 
-\subsection{Evolving Parameters}%
-In order to apply a genetic algorithm to the task of evolving the drivers' parameters, a model of the solution must be defined. In this context, a solution is called an individual and was represented by a string of bit parameters, that internally to the algorithm are interpreted as float numbers.
+\subsection{Offline Learning: Evolving Parameters}%
+In order to apply a genetic algorithm to the task of evolving the drivers' parameters, a model of the solution must be defined. In this context, a solution is called an individual and was represented by a string of bits, which compose the floating point parameters of the models.
 
 FSMDriver5 has, overall, 22 parameters from states and the transition function:
 
+\gnramos{Completar dados abaixo, e também para o FSMDriver3}
+
+\state{Transition}:%
 \begin{description}
-	\item[Transition:] \ %
-	\begin{description}
-		\item[MAX\_STRAIGHTLINE\_VAR] upper boundary for classifying a straight line.
-		\item[MIN\_STRAIGHTLINE\_VAR] lower boundary for classifying a straight line.
-		\item[MAX\_APPROACHIN\_VAR] upper boundary for classifying an approaching curve.
-		\item[MIN\_APPROACHIN\_VAR] lower boundary for classifying an approaching curve.
-	\end{description}
-	\item[Approaching Curve:] \ %
-	\begin{description}
-		\item[TARGET\_POS] desired percentage position.
-		\item[BASE\_SPEED] lowest speed allowed during turns.
-		\item[MAX\_STEERING] maximum allowed steering value.
-	\end{description}
-	\item[Straight Line:] \ %
-	\begin{description}
-		\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears.
-		\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears.
-		\item[AVERAGE\_RPM] threshlod to decrease high gears.
-		\item[HIGH\_RPM] threshlod to delimit the change of high gears.
-	\end{description}
-	\item[Out of Track:] \ %
-	\begin{description}
-		\item[MAX\_SKIDDING] defines the threshold to start to break to avoid skidding.
-		\item[NEGATIVE\_ACCEL\_PERCENT] dictate how much to release the acceleration pedal to avoid to skidding, its defined with the axis speed of car.
-		\item[VELOCITY\_GEAR\_4] threshold to change the gear to 4.
-		\item[VELOCITY\_GEAR\_3] threshold to change the gear to 3.
-		\item[VELOCITY\_GEAR\_2] threshold to change the gear to 2.
-		\item[MAX\_RETURN\_ANGLE] upper boundary to angle of return to track.
-		\item[MIN\_RETURN\_ANGLE] lower boundary to angle of return to track.
-	\end{description}
-	\item[Stuck:] \ %
-	\begin{description}
-		\item[STUCK\_SPEED] defines the threshold to monitorate if its in stuck.
-		\item[MINIMUM\_DISTANCE\_RACED] just to avoid to enter in stuck at the beginning of race when the car is stopped.
-		\item[MAXIMUM\_NUMBER\_OF\_TICKS\_STUCK] maximum number of ticks in which reverse gear is allowed.
-		\item[MAXIMUM\_NUMBER\_OF\_TICKS\_IN\_SLOW\_SPEED] maximum number of ticks in low speed before stuck is triggered.
-	\end{description}
+	\item[MAX\_STRAIGHTLINE\_VAR] upper boundary for classifying a straight line.
+	\item[MIN\_STRAIGHTLINE\_VAR] lower boundary for classifying a straight line.
+	\item[MAX\_APPROACHIN\_VAR] upper boundary for classifying an approaching curve.
+	\item[MIN\_APPROACHIN\_VAR] lower boundary for classifying an approaching curve.
 \end{description}
 
-FSMDriver3, on the other hand, has the same 11 for \OT~and \St~ as FSMDriver5, plus 6 more:
-
+\AC:%
 \begin{description}
-	\item[Inside Track:] \ %
-	\begin{description}
-		\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears.
-		\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears.
-		\item[AVERAGE\_RPM] threshlod to decrease high gears.
-		\item[HIGH\_RPM] threshlod to increase high gears.
-		\item[SPEED\_FACTOR] proportionality between highest value read by range finders and TARGET\_SPEED.
-		\item[BASE\_SPEED] lowest speed allowed.
-	\end{description}
+	\item[TARGET\_POS] desired percentage position.
+	\item[BASE\_SPEED] lowest speed allowed during turns.
+	\item[MAX\_STEERING] maximum allowed steering value.
 \end{description}
 
-The GA also requires a fitness function to evaluate the solutions, this work will consider the distance raced, which is also the standard metric for SCR.
+\SL:%
+\begin{description}
+	\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears.
+	\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears.
+	\item[AVERAGE\_RPM] threshlod to decrease high gears
+	\item[HIGH\_RPM] threshlod to delimit the change of high gears.
+\end{description}
 
+\OT:%
+\begin{description}
+	\item[MAX\_SKIDDING] defines the threshold to start to break to avoid skidding.
+	\item[NEGATIVE\_ACCEL\_PERCENT] dictate how much to release the acceleration pedal to avoid to skidding, its defined with the axis speed of car.
+	\item[VELOCITY\_GEAR\_4] threshold to change the gear to 4.
+	\item[VELOCITY\_GEAR\_3] threshold to change the gear to 3.
+	\item[VELOCITY\_GEAR\_2] threshold to change the gear to 2.
+	\item[MAX\_RETURN\_ANGLE] upper boundary to angle of return to track.
+	\item[MIN\_RETURN\_ANGLE] lower boundary to angle of return to track.
+\end{description}
+\St:%
+\begin{description}
+	\item[STUCK\_SPEED] defines the threshold to monitorate if its in stuck.
+	\item[MINIMUM\_DISTANCE\_RACED] just to avoid to enter in stuck at the beginning of race when the car is stopped.
+	\item[MAXIMUM\_NUMBER\_OF\_TICKS\_STUCK] maximum number of ticks in which reverse gear is allowed.
+	\item[MAXIMUM\_NUMBER\_OF\_TICKS\_IN\_SLOW\_SPEED] maximum number of ticks in low speed before stuck is triggered.
+\end{description}
 
-%The first population was instantiated randomly to its full extent since there are no clues concerning how good an initial set of predefined parameters can be. This population passes through a fitness function that indexes a score to each individual, and this function is responsible for assessing how good - or how adapted - the solution that is being evaluated is. After evaluating the population, a group of individuals is chosen as the parents of the next set of solutions, which would compose a new generation; there are countless ways of performing the selection of the parents to the new generation of offspring, and this work gave preference to picking the higher individuals on the scoring system, what is called Elitism~\cite{ELITISM}. Each pair of parents was submitted to crossover in order to generate two offspring solutions, and in the end of the process each offspring might have presented mutation - everything according to predefined rates. The crossover took place in 95\% of the reproduction, while the mutation rate assumed the rate of 1\%~\cite{RATES}.
+FSMDriver3, on the other hand, has the same 11 for \OT~and \St~ as FSMDriver5, and 6 additional:
+
+\IT:%
+\begin{description}
+	\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears.
+	\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears.
+	\item[AVERAGE\_RPM] threshlod to decrease high gears
+	\item[HIGH\_RPM] threshlod to increase high gears.
+	\item[SPEED\_FACTOR] proportionality between highest value read by range finders and TARGET\_SPEED.
+	\item[BASE\_SPEED] lowest speed allowed.
+\end{description}
+
+The GA also requires a fitness function to evaluate the solutions, this work will consider the distance raced, which is also the standard metric for SCR. This means that the GA has to communicate with the test platform, calling  TORCS and simulating races with the drivers, and processing the results. The simulation is run through operating system calls and the results communicated through shared memory\footnote{Code available at \url{https://github.com/bruno147/driver-ga}}.
+\gnramos{+ Informacao sobre a metrica}
+
+\subsection{Online Learning: Staying in Track}%
+
+An online learning module was included to improve performance, in an attempt to reduce damage and time loss for racing out of the track. Whenever the driver enters \OT, the speed and location of this occurrence are recorded and used in the \state{Racing} states. This information is used to slow down the driver in subsequent laps when approaching the recorded places, trying to remain inside the track.
+
+\gnramos{+ Informacao sobre o modulo de aprendizado}
