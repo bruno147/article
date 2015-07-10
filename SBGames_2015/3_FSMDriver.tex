@@ -69,26 +69,25 @@ Sensor readings provide an idea of location in the track, in this setting, the d
     \IF{car is stuck}
         \STATE $state \Leftarrow Stuck$
     \ELSE
-	\IF{($variance < MAX\_STRAIGHTLINE\_VAR$) \OR ($variance < MIN\_STRAIGHTLINE\_VAR$ \AND
-   	the current state is not $StraightLine$)}
-   		\STATE $state \Leftarrow StraightLine$
-	\ENDIF
-	\ELSIF{($variance >MAX\_APPROACHING\_CURVE\_VAR$ \AND current state is not curve)
-         \OR ($variance > MIN\_APPROACHING\_CURVE\_VAR$ \AND current state is not Approaching Curve)}
-		\STATE $state \Leftarrow Approaching Curve$
-	\ELSIF{$variance>0$}
-		\STATE $state \Leftarrow Curve$
-	\ELSE
-		\STATE $state \Leftarrow Out Of Track$
+		\IF{$variance$ is in $StraightLine$ thresholds \AND
+		the current state is not $StraightLine$}
+			\STATE $state \Leftarrow StraightLine$
+		\ELSIF{$variance$ is not in $ApproachingCurve$ thresholds \AND
+		current state is not $Curve$}
+			\STATE $state \Leftarrow ApproachingCurve$
+		\ELSIF{$variance$ is in $ApproachingCurve$ thresholds \AND
+		current state is not $ApproachingCurve$}
+			\STATE $state \Leftarrow ApproachingCurve$
+		\ELSIF{$variance > 0$}
+			\STATE $state \Leftarrow Curve$
+		\ELSE
+			\STATE $state \Leftarrow Out Of Track$
+		\ENDIF
 	\ENDIF
 \end{algorithmic}
 \end{algorithm}
 
-\gnramos{mudar MAX\_STRAIGHTLINE\_VAR para MAX\_SL\_VAR e MAX\_APPROACHING\_CURVE\_VAR para MAX\_AC\_VAR}%
-
-% In order to decide which state should be active at each moment a transition function was defined. It would take into account the covariance among the range finders. See Figure~\ref{Fig:FSensor}.
-
-%The Five-State FSM presents a very complex transition function that takes into account the variance of the sensorial input to decide if the car is in a straight line, approaching a turn or in a turn
+The variance is computed as follows: \gnramos{como é calculada?}
 
 Initially, random configurations were set and manually adjusted until an acceptable behavior was achieved, i.e. such a configuration in which a car could successfully complete a race. In the beginning, the \state{Recovery} states (\OT~and \St) were constantly triggered, and therefore were first to be adjusted for improved behavior. Eventually their settings were such that the \state{Racing} behaviors could be focused on. These too were manually and arbitrarily set through trial and error, considering the driver's quantitative performance racing (time and damage) and its qualitative skill (visual analysis of tests).
 
@@ -145,68 +144,17 @@ With the finished models\footnote{Code available at \url{https://github.com/brun
 \subsection{Offline Learning: Evolving Parameters}%
 In order to apply a genetic algorithm to the task of evolving the drivers' parameters, a model of the solution must be defined. In this context, a solution is called an individual and was represented by a string of bits, which compose the floating point parameters of the models.
 
-FSMDriver5 has, overall, 22 parameters from states and the transition function:
+FSMDriver5 has, overall, 22 parameters implemented in states and the transition function. The function considers 4 threshold values defining 2 intervals, one for identifying the variance levels for \SL~ (\texttt{MIN\_STRAIGHTLINE\_VAR} and \texttt{MAX\_STRAIGHTLINE\_VAR} and another for \AC~(\texttt{MIN\_APPROACHING\_CURVE\_VAR} and \texttt{MIN\_APPROACHING\_CURVE\_VAR}). \SL~ also considers 4 threshold values, one for changing gears (\texttt{LOW\_GEAR\_LIMIT}), and 3 for identifying RPM values that indicate when to increase/decrease gear (\texttt{LOW\_RPM}, \texttt{AVERAGE\_RPM}, and \texttt{HIGH\_RPM}).
 
-\gnramos{Completar dados abaixo, e também para o FSMDriver3}
+\AC~has 3 parameters, a desired position \gnramos{em relacao a que?} (\texttt{TARGET\_POS}), a lower speed threshold (\texttt{BASE\_SPEED}) and a maximum steering value (\texttt{MAX\_STEERING}). \OT considers 7 parameters two angle thresholds for returning to the track inter (\texttt{MIN\_RETURN\_ANGLE} and \texttt{MAX\_RETURN\_ANGLE}), 3 speed thresholds for changing gears (\texttt{VELOCITY\_GEAR\_2}, \texttt{VELOCITY\_GEAR\_3}, and \texttt{VELOCITY\_GEAR\_4}), a breaking threshold to avoid skidding (\texttt{MAX\_SKIDDING}) defines the threshold to start breaking to avoid skidding and, finally, a value for defining this decelerating intensity (\texttt{NEGATIVE\_ACCEL\_PERCENT}), defined with the axis speed of car.
 
-\state{Transition}:%
-\begin{description}
-	\item[MAX\_STRAIGHTLINE\_VAR] upper boundary for classifying a straight line.
-	\item[MIN\_STRAIGHTLINE\_VAR] lower boundary for classifying a straight line.
-	\item[MAX\_APPROACHIN\_VAR] upper boundary for classifying an approaching curve.
-	\item[MIN\_APPROACHIN\_VAR] lower boundary for classifying an approaching curve.
-\end{description}
+\St has 4 parameters, one for defining a starting distance before considering the car stuck (\texttt{MINIMUM\_DISTANCE\_RACED}), one for tracking the speed \texttt{STUCK\_SPEED}, and two for defining game ticks thresholds for actions' duration in order to trigger a transition to this state (\texttt{MAXIMUM\_NUMBER\_OF\_TICKS\_STUCK} and \texttt{MAXIMUM\_NUMBER\_OF\_TICKS\_IN\_SLOW\_SPEED}).
 
-\AC:%
-\begin{description}
-	\item[TARGET\_POS] desired percentage position.
-	\item[BASE\_SPEED] lowest speed allowed during turns.
-	\item[MAX\_STEERING] maximum allowed steering value.
-\end{description}
-
-\SL:%
-\begin{description}
-	\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears.
-	\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears.
-	\item[AVERAGE\_RPM] threshlod to decrease high gears
-	\item[HIGH\_RPM] threshlod to delimit the change of high gears.
-\end{description}
-
-\OT:%
-\begin{description}
-	\item[MAX\_SKIDDING] defines the threshold to start to break to avoid skidding.
-	\item[NEGATIVE\_ACCEL\_PERCENT] dictate how much to release the acceleration pedal to avoid to skidding, its defined with the axis speed of car.
-	\item[VELOCITY\_GEAR\_4] threshold to change the gear to 4.
-	\item[VELOCITY\_GEAR\_3] threshold to change the gear to 3.
-	\item[VELOCITY\_GEAR\_2] threshold to change the gear to 2.
-	\item[MAX\_RETURN\_ANGLE] upper boundary to angle of return to track.
-	\item[MIN\_RETURN\_ANGLE] lower boundary to angle of return to track.
-\end{description}
-\St:%
-\begin{description}
-	\item[STUCK\_SPEED] defines the threshold to monitorate if its in stuck.
-	\item[MINIMUM\_DISTANCE\_RACED] just to avoid to enter in stuck at the beginning of race when the car is stopped.
-	\item[MAXIMUM\_NUMBER\_OF\_TICKS\_STUCK] maximum number of ticks in which reverse gear is allowed.
-	\item[MAXIMUM\_NUMBER\_OF\_TICKS\_IN\_SLOW\_SPEED] maximum number of ticks in low speed before stuck is triggered.
-\end{description}
-
-FSMDriver3, on the other hand, has the same 11 for \OT~and \St~ as FSMDriver5, and 6 additional:
-
-\IT:%
-\begin{description}
-	\item[LOW\_GEAR\_LIMIT] threshlod to bound low gears.
-	\item[LOW\_RPM] threshlod of rpm to delimit the change of low gears.
-	\item[AVERAGE\_RPM] threshlod to decrease high gears
-	\item[HIGH\_RPM] threshlod to increase high gears.
-	\item[SPEED\_FACTOR] proportionality between highest value read by range finders and TARGET\_SPEED.
-	\item[BASE\_SPEED] lowest speed allowed.
-\end{description}
+FSMDriver3, on the other hand, has the same 11 for \OT~and \St~ as FSMDriver5, and 6 additional for \IT. There is one for changing gears (\texttt{LOW\_GEAR\_LIMIT}), 3 for identifying RPM values that indicate when to increase/decrease gear (\texttt{LOW\_RPM}, \texttt{AVERAGE\_RPM}, and \texttt{HIGH\_RPM}), one for defining a ratio between car speed and range finder reading for setting the target speed (\texttt{SPEED\_FACTOR}), and a minimal speed value \gnramos{para que?} (\texttt{BASE\_SPEED}).
 
 The GA also requires a fitness function to evaluate the solutions, this work will consider the distance raced, which is also the standard metric for SCR. This means that the GA has to communicate with the test platform, calling  TORCS and simulating races with the drivers, and processing the results. The simulation is run through operating system calls and the results communicated through shared memory\footnote{Code available at \url{https://github.com/bruno147/driver-ga}}.
-\gnramos{+ Informacao sobre a metrica}
 
 \subsection{Online Learning: Staying in Track}%
+An online learning module was included in FSMDriver3 trying to improve its performance, in an attempt to reduce damage and time loss for racing out of the track. Whenever the driver enters \OT, the speed and location of this occurrence are recorded and used in the \state{Racing} state. If the speed is over an arbitrary value (85 km/h \gnramos{é km/h?}), the model assumes the driver has left the track due to excessive speed and uses this information to slow down the driver in subsequent laps when approaching the recorded places, trying to remain inside the track.
 
-An online learning module was included to improve performance, in an attempt to reduce damage and time loss for racing out of the track. Whenever the driver enters \OT, the speed and location of this occurrence are recorded and used in the \state{Racing} states. This information is used to slow down the driver in subsequent laps when approaching the recorded places, trying to remain inside the track.
-
-\gnramos{+ Informacao sobre o modulo de aprendizado}
+This behavior does not interfere with the breaking actions in the model, but does affect the driver's performance and, thus, with the offline learning process. Though FSMDriver5 can also learn where it leaves the track, the differences in implementation of the \state{Racing} states are such that slowing down before the target places implies on excessive additional complexity.
