@@ -1,29 +1,11 @@
 \section{Experimental Results}\label{sec:4}%
+The drivers were developed for testing in TORCS\footnote{\url{http://sourceforge.net/projects/torcs/}} (v1.3.6) and SCR\footnote{\url{http://sourceforge.net/projects/cig/files/SCR\%20Championship/Server\%20Linux/}} (v2.1), since it provides an advanced simulation environment which provides complex situations, and enables objective metrics for direct comparison to exiting results. The standard the car model for racing is \emph{car1-trb1}~\cite{SCR}.
 
-\gnramos{It is important to mention that before each result displayed in that section a warm-up stage was held for 5 laps in each track. -> por conta do modulo de aprendizado, e é assim que o scr  funciona e autopia tambem aprende. o site da competição de 2015 diz que warmup é 5 voltas http://cs.adelaide.edu.au/~optlog/SCR2015/}
+Once the FSMDriver models had been defined, a genetic algorithm was applied to each, aiming to improve their performances by changing their control parameters' values. During this stage, the learning module was disabled in FSMDriver3 in order to not interfere with the learning. The module is enabled for the next stage where the drivers' performance is evaluated by racing them in selected tracks, emulating the qualifying stage of SCR. Also as per the competition, before each qualifying race a warm-up stage is held in order for the controllers to adapt themselves to the track. This lasts for 5 laps, conforming to the stipulated 2015 championship rules\footnote{\url{http://cs.adelaide.edu.au/~optlog/SCR2015/}}.
 
-The drivers were developed for testing in TORCS\footnote{\url{http://sourceforge.net/projects/torcs/}} (v1.3.6) and
-SCR\footnote{\url{http://sourceforge.net/projects/cig/files/SCR\%20Championship/Server\%20Linux/}} (v2.1), since it provides an advanced simulation environment which provides complex situations, and enables objective metrics for direct comparison to exiting results. The standard the car model for racing is \emph{car1-trb1}~\cite{SCR}, and the qualifying tests the distance covered in 10.000 game ticks (approximately, 200 seconds of actual game time).
+Since it is unknown which tracks will be used during the SCR Championship, a more general and versatile controller is desirable and, thus, the controllers were evolved considering their performance in several tracks types. Three basic driver profiles were desired: a \emph{road driver}, which would perform well in road tracks, a \emph{dirt driver} for dirt roads and a \emph{mixed driver}, which should perform well in both types.
 
-Once the FSMDriver models had been defined, a genetic algorithm was applied to each, aiming to improve their performances by changing their control parameters' values. During this stage, the learning module was disabled.
-
-The experiments presented here focused on the qualifying stage, so all tests were done on solo drivers. Since it is unknown which tracks will be used during the SCR Championship, a more general and versatile controller is desirable and, thus, the controllers were evolved considering their performance in several tracks types. Three basic driver profiles were desired: a \emph{road driver}, which would perform well in road tracks, a \emph{dirt driver} for dirt roads and a \emph{mixed driver}, which should perform well in both types.
-
-The Genetic Algorithm used standard configurations from literature \gnramos{inserir *boas* referencias que indicam os valores, prencher tabela - boas referencias são livros e artigos cientificos de periodicos - nao de conferencias}, population size of 30, generations ?, mutation probability ?, crossover ?  \gnramos{justificar a quantidade de geracoes e, assim, o tamanho da populacao (ou vice versa). explicar a selecao e o crossover} % 616 generations, calculated using ~\cite{218485} formula, of 30 individuals
-The fitness function in this case is the sum of distances covered in all tracks, considering 10.000 game ticks per track.
-
-\gnramos{aqui GA. elitismo: 4 melhores são separados e mantidos a cada geração.}
-\gnramos{10 melhores (de 30) reproduzem. 26 vezes, 1 par é selecionado aleatoriamente,}
-\gnramos{e geram 2 individuos, repete 13 vezes -> 26, + 4 melhores = 30. crossover é }
-\gnramos{em um ponto aleatorio e há swap.}
-\gnramos{chance de crossover: 95\%}
-\gnramos{chance de mutação: 1\% -> mutação é, a cada bit, testa a probabilidade e troca.}
-
-\gnramos{arbitrariamente 30 individuos o que, conforme ~\cite{218485} leva a 616 gerações -> por que?}
-
-
-
-% In this context, a solution is called an individual and was represented by a string of parameters. The first population was instantiated randomly to its full extent since there are no clues concerning how good an initial set of predefined parameters can be. This population passes through a fitness function that indexes a score to each individual, and this function is responsible for assessing how good - or how adapted - the solution that is being evaluated is. After evaluating the population, a group of individuals is chosen as the parents of the next set of solutions, which would compose a new generation; there are countless ways of performing the selection of the parents to the new generation of offspring, and this work gave preference to picking the higher individuals on the scoring system, what is called Elitism~\cite{ELITISM}. Each pair of parents was submitted to crossover in order to generate two offspring solutions, and in the end of the process each offspring might have presented mutation - everything according to predefined rates. The crossover took place in 95\% of the reproduction, while the mutation rate assumed the rate of 1\%~\cite{RATES}.
+The Genetic Algorithm used standard configurations from literature, the population size is arbitrarily set as 30~\cite{RATES}, which leads to 616 generations for moderate problem complexity the optimal population size for problems coded as bitstrings~\cite{218485}.\gnramos{qual das formulas?} Selection is done through elitism by keeping the best 4 individuals from a generation unchanged, and the other 26 are generated from the best 10 individuals' reproduction~\cite{ELITISM}. This step is done by randomly choosing a pair from the top 10 that are cloned with a 5\% chance or generate a pair of offspring with a 95\% probability~\cite{RATES}. These offspring are produced through crossover by partitioning the parents' bitstrings at a random position and swapping them. Finally, mutation (flipping) is applied to every bit in every individual of these 26 with a 1\% probability~\cite{RATES}.
 
 For the \emph{road profile}, four road tracks were selected from the standard TORCS distribution list to compose the training set in the evolution process. The tracks were arbitrarily selected for certain features, which might lead to better drivers: \emph{Spring}, the longest track available; \emph{Wheel 2}, with many sharp curves; \emph{E-Track 3}, a fast track with sharp curves; and \emph{Forza}, a fast circuit with smoother curves.
 
@@ -80,7 +62,7 @@ The best solutions evolved for each profile where then evaluated in a set of six
 \end{tabular}
 \end{table*}
 
-Table~\ref{tbl:ticks} presents the results for these tests for each FSMDriver model and profile. It also includes, for direct comparison with the current state of the art, results for AUTOPIA in three of the same tracks for the same 10.000 game ticks metric, as presented in~\cite{AUTOPIA2009}. The `*' symbol indicates that the driver does not have data available for the track.
+Table~\ref{tbl:ticks} presents the results for these tests for each FSMDriver model and profile. The fitness function in this case is the sum of distances covered in all tracks, considering 10.000 game ticks per track, as per the SCR rules. The table also includes, for direct comparison with the current state of the art, results for AUTOPIA in three of the same tracks for the same 10.000 game ticks metric, as presented in~\cite{AUTOPIA2009}. The `*' symbol indicates that the driver does not have data available for the track.
 
 Considering the 5-states FSMDriver in road tracks, it is clear that the road and mixed profiles have better results than dirt, as expected. However, in \emph{CG Speedway 1} they are practically the same. \gnramos{por que?} Looking at the results for dirt tracks, all profiles have similar performances except for the dirt profile in Dirt 1 \gnramos{por que?}
 
@@ -88,7 +70,9 @@ Considering the 3-states FSMDriver in road tracks, it is also clear that the roa
 
 Comparing the results with AUTOPIA, the road FSMDriver3 was about 11.7\% better in \emph{Street 1}. By itself this does not imply that FSMDriver3 is a better approach, specially since AUTOPIA had better results in two of the three tracks compared, it still is an impressive result for this simpler approach to driving.
 
-In order to learn more about FSMDriver's potential, a new set of tests using the distance raced in 10 laps as metric was done, and the results are shown in Table~\ref{tbl:time}, where the `\textdagger'~symbol int Table~\ref{tbl:time} indicates that the driver does not complete the 10 laps required, and the `*' symbol indicates that the driver does not have data available for the track. Results for AUTOPIA in three of the same tracks for the same 10 laps metric, as presented in~\cite{AUTOPIA}, and the table also includes results for the robot \emph{Berniw Hist4}, provided in with the TORCS distribution. \gnramos{por que esse?}
+In order to learn more about FSMDriver's potential, a new set of tests using the distance raced in 10 laps as metric was done, and the results are shown in Table~\ref{tbl:time}, where the `\textdagger'~symbol int Table~\ref{tbl:time} indicates that the driver does not complete the 10 laps required, and the `*' symbol indicates that the driver does not have data available for the track. Results for AUTOPIA in three of the same tracks for the same 10 laps metric, as presented in~\cite{AUTOPIA}.
+
+Table~\ref{tbl:time} also includes results for the robot \emph{Berniw Hist4}, provided in with the TORCS distribution. This was not included in the previous tests because you can only configure a race with the available robots to run for a given amount of laps (not game ticks). This robot was chosen to provide insights on the controllers performance compared to a robot's, having already been compared to AUTOPIA~\cite{AUTOPIA}. \emph{Berniw Hist4} does not, however, use the standard car \emph{car1-trb1}, it uses the \emph{TZ2}.
 
 \begin{table*}[t]
 	% \renewcommand{\arraystretch}{1.3}
@@ -112,11 +96,9 @@ In order to learn more about FSMDriver's potential, a new set of tests using the
 
 Looking at results for FSMDriver5, only the road profile completed 10 laps in \emph{CG Speedway 1}, all other instances had excessive damage. FSMDriver3, on the other hand, completed all track in at least 2 configurations. Considering road tracks, the road profile had better performance in two of the three tracks, and the dirt profile did not complete one but was significantly slower in two of the tracks. Considering the Dirt tracks, again the mixed profile's performance was significantly better than the others.
 
-\gnramos{aleatoriamente um hist4, porque tem resultado contra AUTOPIA. não dá para botar bot correndo por ticks, dai não tem na tabela 1.Autopia nao compara contra bots com mesmo carro}
 Considering the robot \emph{Berniw Hist4}, it can be seen that FSMDriver3 is a slightly better driver, despite the ``handicap'' of using SCR's interface for driving and not having access to additional information from the simulator (such as track layout). This means that the proposed model has quickly achieved an intermediate level performance in TORCS. AUTOPIA's results are around 12\%-35\% better than FSMDriver's best results, implying that its configuration is better suited for longer races.
 
 This is likely due to lack of endurance, resulting from careless driving. Since dirt profile tends to drive slower, it drives farther on this longer test.
-
 
 
 
