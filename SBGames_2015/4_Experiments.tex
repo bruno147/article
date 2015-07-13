@@ -1,100 +1,121 @@
 \section{Experimental Results}\label{sec:4}%
-The drivers were developed for testing in TORCS\footnote{\url{http://sourceforge.net/projects/torcs/}} (v1.3.6) and SCR\footnote{\url{http://sourceforge.net/projects/cig/files/SCR\%20Championship/Server\%20Linux/}} (v2.1), since it provides an advanced simulation environment which provides complex situations, and enables objective metrics for direct comparison to exiting results. The standard the car model for racing is \emph{car1-trb1}~\cite{SCR}.
+\newcommand{\car}[1]{\emph{#1}}%
 
-Once the FSMDriver models had been defined, a genetic algorithm was applied to each, aiming to improve their performances by changing their control parameters' values. During this stage, the learning module was disabled in FSMDriver3 in order to not interfere with the learning. The module is enabled for the next stage where the drivers' performance is evaluated by racing them in selected tracks, emulating the qualifying stage of SCR. Also as per the competition, before each qualifying race a warm-up stage is held in order for the controllers to adapt themselves to the track. This lasts for 5 laps, conforming to the stipulated 2015 championship rules\footnote{\url{http://cs.adelaide.edu.au/~optlog/SCR2015/}}.
+The drivers were developed in C++ and testing in TORCS\footnote{\url{http://sourceforge.net/projects/torcs/}} (v1.3.6) and SCR\footnote{\url{http://sourceforge.net/projects/cig/files/SCR\%20Championship/Server\%20Linux/}} (v2.1), since they provide an advanced simulation environment which provides complex situations, and enable objective metrics for direct comparison to exiting results. The standard the car model for racing in SCR is \car{car1-trb1}~\cite{SCR}.
 
-Since it is unknown which tracks will be used during the SCR Championship, a more general and versatile controller is desirable and, thus, the controllers were evolved considering their performance in several tracks types. Three basic driver profiles were desired: a \emph{road driver}, which would perform well in road tracks, a \emph{dirt driver} for dirt roads and a \emph{mixed driver}, which should perform well in both types.
+\gnramos{GA foi aplicado a todos os 22/17 parametros?}
 
-The Genetic Algorithm used standard configurations from literature, the population size is arbitrarily set as 30~\cite{RATES}, which leads to 616 generations for moderate problem complexity the optimal population size for problems coded as bitstrings~\cite{218485}.\gnramos{qual das formulas?} Selection is done through elitism by keeping the best 4 individuals from a generation unchanged, and the other 26 are generated from the best 10 individuals' reproduction~\cite{ELITISM}. This step is done by randomly choosing a pair from the top 10 that are cloned with a 5\% chance or generate a pair of offspring with a 95\% probability~\cite{RATES}. These offspring are produced through crossover by partitioning the parents' bitstrings at a random position and swapping them. Finally, mutation (flipping) is applied to every bit in every individual of these 26 with a 1\% probability~\cite{RATES}.
+Once the FSMDriver models had been defined, a genetic algorithm was applied to each, aiming to improve their performances by changing their control parameters' values. During this stage, the learning module was disabled in FSMDriver3 in order to not interfere with the learning. Then drivers' performance is evaluated by racing them in selected tracks, emulating the qualifying stage of SCR. Also similar to the competition, before each qualifying race a warm-up stage is held in order for the controllers to adapt themselves to the track. In this stage, two versions of the 3-state FSM controllers were tested to analyze the effects of the learning module, the FSMDriver3+ with the the module enabled, and FSMDriver3, with it disabled. This lasts for 5 laps, conforming to the stipulated 2015 Championship rules\footnote{\url{http://cs.adelaide.edu.au/~optlog/SCR2015/}}.
 
-For the \emph{road profile}, four road tracks were selected from the standard TORCS distribution list to compose the training set in the evolution process. The tracks were arbitrarily selected for certain features, which might lead to better drivers: \emph{Spring}, the longest track available; \emph{Wheel 2}, with many sharp curves; \emph{E-Track 3}, a fast track with sharp curves; and \emph{Forza}, a fast circuit with smoother curves.
+The Genetic Algorithm used standard configurations from literature, the population size is arbitrarily set as 30~\cite{RATES}, which leads to 616 generations for moderate problem complexity the optimal population size for problems coded as bitstrings~\cite{218485}.\gnramos{qual das formulas?} Selection is done through elitism by keeping the best 4 individuals from a generation unchanged, and the other 26 are generated from the best 10 individuals' reproduction~\cite{ELITISM}. This step is done by randomly choosing a pair from the top 10 that are cloned with a 5\% chance or generate a pair of offspring with a 95\% probability~\cite{RATES}. These offspring are produced through crossover by partitioning the parents' bitstrings at a random position and swapping them. Finally, mutation (a simple bit flip) is applied to every bit in every individual of these 26 with a 1\% probability~\cite{RATES}.
 
-Analogously, four dirt tracks were selected for evolving a \emph{dirt profile}: \emph{Dirt 2}, \emph{Dirt 6}, \emph{Mixed 1}, and \emph{Mixed 2}, which present variations of high speed and curve styles. For the \emph{mixed profile}, \gnramos{quais 4 pistas?}
+\newcommand{\profile}[1]{\emph{#1 driver}}%
+Since it is unknown which tracks will be used during the SCR Championship, a more general and versatile controller is desirable and, thus, the controllers were evolved considering their performance in several tracks types. Three basic driver profiles were desired: a \profile{road}, which would perform well in road tracks, a \profile{dirt}~ for dirt roads and a \profile{mixed}, which should perform well in both types.
+
+\newcommand{\track}[1]{\emph{#1}}%
+For the \profile{road} profile, four road tracks were selected from the standard TORCS distribution list to compose the training set in the evolution process. The tracks were arbitrarily selected for certain features, which might lead to better drivers: \track{Spring}, the longest track available; \track{Wheel 2}, with many sharp curves; \track{E-Track 3}, a fast track with sharp curves; and \track{Forza}, a fast circuit with smoother curves.
+
+Analogously, four dirt tracks were selected for evolving a \profile{dirt profile}: \track{Dirt 2}, \track{Dirt 6}, \track{Mixed 1}, and \track{Mixed 2}, which present variations of high speed and curve styles. For the \profile{mixed}, two of each were selected: \track{Spring}, \track{Wheel 2}, \track{Dirt 2}, and \track{Mixed 1}.
 
 \gnramos{inserir exemplo de resultados de evolucao, talvez uma tabela mostrando os tempos em relacao a bots}
 
-The best solutions evolved for each profile where then evaluated in a set of six tracks, different from the ones used before, which present distinct typed, speeds, and curve features for better analysis. These tracks, also available on the standard TORCS set, were used in previous SCR Championships~\cite{AUTOPIA2009}. They are three road tracks: \emph{Street 1}, \emph{D-Speedway}, and \emph{CG Speedway 1}; and three dirt tracks: \emph{Dirt 1}, \emph{Dirt 3}, and \emph{Dirt 4}. During this stage, the learning module was enabled.
+The best solutions evolved for each profile where then evaluated in a set of six tracks, different from the ones used before, which present distinct typed, speeds, and curve features for better analysis. These tracks, also available on the standard TORCS set, were used in previous SCR Championships~\cite{AUTOPIA2009}. They are two road tracks: \track{Street 1} and \track{CG Speedway 1}; one oval track: \track{D-Speedway}; and three dirt tracks: \track{Dirt 1}, \track{Dirt 3}, and \track{Dirt 4}.
 
-% \begin{figure}
-% \begin{subfigure}[b]{0.2\textwidth}
-%        \includegraphics[width=\textwidth]{img/tracks/CG-Speedway1}
-%        \caption{CG Speedway 1}
-%        \label{fig:mouse}
-%    \end{subfigure}
-% \begin{subfigure}[b]{0.2\textwidth}
-%        \includegraphics[width=\textwidth]{img/tracks/Street1}
-%        \caption{Street1}
-%        \label{fig:mouse}
-%    \end{subfigure}
-% \begin{subfigure}[b]{0.2\textwidth}
-%        \includegraphics[width=\textwidth]{img/tracks/D-Speedway}
-%        \caption{D-Speedway}
-%        \label{fig:mouse}
-%    \end{subfigure}
-% % \begin{subfigure}[b]{0.2\textwidth}
-% %        \includegraphics[width=\textwidth]{img/tracks/Mixed2}
-% %        \caption{Mixed2}
-% %        \label{fig:mouse}
-% %    \end{subfigure}
-%    \caption{Pictures of animals}\label{fig:animals}
+\begin{figure*}
+\centering
+\begin{subfigure}[b]{0.2\textwidth}
+       \includegraphics[width=\textwidth]{img/tracks/Street1}
+       \caption{Street1}
+   \end{subfigure}
+\begin{subfigure}[b]{0.2\textwidth}
+       \includegraphics[width=\textwidth]{img/tracks/CG-Speedway}
+       \caption{CG Speedway 1}
+   \end{subfigure}
+\begin{subfigure}[b]{0.2\textwidth}
+       \includegraphics[width=\textwidth]{img/tracks/D-Speedway}
+       \caption{D-Speedway}
+   \end{subfigure}
 
-% \end{figure}
+\begin{subfigure}[b]{0.2\textwidth}
+       \includegraphics[width=\textwidth]{img/tracks/Dirt1}
+       \caption{Dirt 1}
+   \end{subfigure}
+\begin{subfigure}[b]{0.2\textwidth}
+       \includegraphics[width=\textwidth]{img/tracks/Dirt3}
+       \caption{Dirt 3}
+   \end{subfigure}
+\begin{subfigure}[b]{0.2\textwidth}
+       \includegraphics[width=\textwidth]{img/tracks/Dirt4}
+       \caption{Dirt 4}
+   \end{subfigure}
+   \caption{Test tracks, road tracks (top left and middle), oval (top right), and dirt tracks (bottom)~\protect\cite{TORCS}.}\label{fig:tracks}
+\end{figure*}
 
 \subsection{Single Race Results}
 
 \gnramos{fsmdriver 5 na CG é isso mesmo?}
 \begin{table*}
 % \renewcommand{\arraystretch}{1.3}
-\caption{Distance covered in meters racing alone for 10 000 game ticks}\label{tbl:ticks}
+\caption{Distance covered (in meters) racing alone for 10.000 game ticks}\label{tbl:ticks}
 \centering
-\begin{tabular}{| c | c | c | c | c | c | c | c |}
-\hline
-\multicolumn{2}{| c |}{\bfseries Driver} & \bfseries Street 1 & \bfseries D-speedway & \bfseries CG-speedway & \bfseries Dirt 1 & \bfseries Dirt 3 & \bfseries Dirt 4 \\\hline
+\begin{tabular}{| c | c || c | c | c | c | c | c |}
+\cline{3-8}
+\multicolumn{2}{ c | }{} & \multicolumn{6}{ c |}{\bfseries Track} \\\hline
+\multicolumn{2}{| c ||}{\bfseries Driver} & \bfseries Street 1 & \bfseries CG-speedway & \bfseries D-speedway & \bfseries Dirt 1 & \bfseries Dirt 3 & \bfseries Dirt 4 \\\hline\hline
 \multirow{3}{*}{FSMDriver5}
-& road & 3822.76 & 3427.11 & 4114.66             	& 2145.49 &        	2205.97 & 3260.19 \\\cline{2-8}
-& dirt & 1267.83 & 2936.82 &                     	4114.66 & 1072.92 &	2205.82 & 3260.33 \\\cline{2-8}
-& mixed & 3822.99 & 3427.06 & 4114.80 & 2145.75 &	2205.83 & 3260.31 \\\hline
+& road  & 3822.76 & 4114.66 & 3427.11 & 2145.49 & 2205.97 & 3260.19 \\\cline{2-8}
+& dirt  & 1267.83 & 4114.66 & 2936.82 & 1072.92 & 2205.82 & 3260.33 \\\cline{2-8}
+& mixed & 3822.99 & 4114.80 & 3427.06 & 2145.75 & 2205.83 & 3260.31 \\\hline\hline
 \multirow{3}{*}{FSMDriver3}
-& road & \textbf{7925.60} & 13196.50 & 8745.49 & 3978.01 & 3451.26 & 6757.83 \\\cline{2-8}
-& dirt & 2149.77	& 2450.84 & 1951.93	& 3525.84 & 4905.58 & 5590.78 \\\cline{2-8}
-& mixed & 7219.28 & 12772.40 & 8126.12 & \textbf{4386.64} & \textbf{5481.15} & \textbf{6939.83} \\\hline
-\multicolumn{2}{| c |}{AUTOPIA~\cite{AUTOPIA2009}} & 7091.8 & \textbf{15612.3} & \textbf{8970.4} & * & * & * \\\hline
+& road  & \textbf{7925.60} & 8745.49 & 13196.50 & 3978.01 & 3451.26 & 6757.83 \\\cline{2-8}
+& dirt  & 5103.41          & 5093.82 &  8589.13 & 3525.84 & 4905.58 & 5590.78 \\\cline{2-8}
+& mixed & 5864.48          & 8714.58 & 11694.60 & 5052.38 & 4920.32 & 3797.83 \\\hline\hline
+\multirow{3}{*}{FSMDriver3+}
+& road  & 7532.93 & 8804.73 & 10720.20 & 3678.89          & 5199.46 & 3193.44 \\\cline{2-8}
+& dirt  & 4738.76 & 5102.92 &  8197.55 & 3525.84          & 4214.30 & 5057.18 \\\cline{2-8}
+& mixed & 6780.43 & 8089.41 & 10943.10 & \textbf{5752.90} & \textbf{5824.93} & \textbf{5614.62} \\\hline\hline
+\multicolumn{2}{| c ||}{AUTOPIA~\cite{AUTOPIA2009}} & 7091.8 & \textbf{8970.4} & \textbf{15612.3} & * & * & * \\\hline
 \end{tabular}
 \end{table*}
 
-Table~\ref{tbl:ticks} presents the results for these tests for each FSMDriver model and profile. The fitness function in this case is the sum of distances covered in all tracks, considering 10.000 game ticks per track, as per the SCR rules. The table also includes, for direct comparison with the current state of the art, results for AUTOPIA in three of the same tracks for the same 10.000 game ticks metric, as presented in~\cite{AUTOPIA2009}. The `*' symbol indicates that the driver does not have data available for the track.
+Table~\ref{tbl:ticks} presents the distance covered results for these tests for each FSMDriver model and profile. The fitness function in this case is the sum of distances covered in all tracks, considering 10.000 game ticks per track, as per the SCR rules, so higher values are desirable. The table also includes, for direct comparison with the current state of the art, results for AUTOPIA in three of the same tracks for the same 10.000 game ticks metric, as presented in~\cite{AUTOPIA2009}. The `*' symbol indicates that the driver does not have data available for the track.
 
-Considering the 5-states FSMDriver in road tracks, it is clear that the road and mixed profiles have better results than dirt, as expected. However, in \emph{CG Speedway 1} they are practically the same. \gnramos{por que?} Looking at the results for dirt tracks, all profiles have similar performances except for the dirt profile in Dirt 1 \gnramos{por que?}
+Considering the 5-states FSMDriver in road/oval tracks, it is clear that the road and mixed profiles have better results than dirt, as expected. However, in \track{CG Speedway 1} they are practically the same. \gnramos{por que?} Looking at the results for dirt tracks, all profiles have similar performances except for the dirt profile in \track{Dirt 1} \gnramos{por que?}
 
-Considering the 3-states FSMDriver in road tracks, it is also clear that the road and mixed profiles have better results than dirt, as was expected.  Looking at the results for dirt tracks, the mixed profile's performance was significantly better than the others. FSMDrivers evolved in dirt tracks tend to drive slower to avoid leaving the track limits while evolution in road tracks leads to faster racers which may lose time off track. The combination of both tracks in the metric leads to drivers that compromise in both approaches, being about 5-10\% slower than the road profile in road tracks, and about 5-15\% faster in dirt tracks,a more general driver as hypothesized. It is also better than the dirt profile on all accounts.
+Considering the 3-states FSMDriver in road/oval tracks, it is also clear that the road and mixed profiles have better results than dirt, as was expected. Looking at the results for dirt tracks, the mixed profile's performance was significantly better than the others. FSMDrivers evolved in dirt tracks tend to drive slower to avoid leaving the track limits while evolution in road tracks leads to faster racers which may lose time off track. The combination of both tracks in the metric leads to drivers that compromise in both approaches, being about 5-10\% slower than the road profile in road tracks, and about 5-15\% faster in dirt tracks,a more general driver as hypothesized. It is also better than the dirt profile on all accounts.
 
-Comparing the results with AUTOPIA, the road FSMDriver3 was about 11.7\% better in \emph{Street 1}. By itself this does not imply that FSMDriver3 is a better approach, specially since AUTOPIA had better results in two of the three tracks compared, it still is an impressive result for this simpler approach to driving.
+Comparing the results with AUTOPIA, the road FSMDriver3 was about 11.7\% better in \track{Street 1}. By itself this does not imply that FSMDriver3 is a better approach, specially since AUTOPIA had better results in two of the three tracks compared, it still is an impressive result for this simpler approach to driving.
 
-In order to learn more about FSMDriver's potential, a new set of tests using the distance raced in 10 laps as metric was done, and the results are shown in Table~\ref{tbl:time}, where the `\textdagger'~symbol int Table~\ref{tbl:time} indicates that the driver does not complete the 10 laps required, and the `*' symbol indicates that the driver does not have data available for the track. Results for AUTOPIA in three of the same tracks for the same 10 laps metric, as presented in~\cite{AUTOPIA}.
+In order to learn more about FSMDriver's potential, a new set of tests using the distance raced in 10 laps as metric was done, and the results are shown in Table~\ref{tbl:time}. The values represent the time needed to complete the laps, so lower values are desirable, the `\textdagger'~symbol indicates that the driver does not complete the 10 laps required, and the `*' symbol indicates that the driver does not have data available for the track. Again results for AUTOPIA in three of the same tracks for the same 10 laps metric, as presented in~\cite{AUTOPIA} are shown for comparison.
 
-Table~\ref{tbl:time} also includes results for the robot \emph{Berniw Hist4}, provided in with the TORCS distribution. This was not included in the previous tests because you can only configure a race with the available robots to run for a given amount of laps (not game ticks). This robot was chosen to provide insights on the controllers performance compared to a robot's, having already been compared to AUTOPIA~\cite{AUTOPIA}. \emph{Berniw Hist4} does not, however, use the standard car \emph{car1-trb1}, it uses the \emph{TZ2}.
+Table~\ref{tbl:time} also includes results for the robot \emph{Berniw Hist4}, provided in with the TORCS distribution. This was not included in the previous tests because TORCS only allows a race with the available robots to run for a given amount of laps (not game ticks). This robot has intermediate performance, and was arbitrarily chosen from other robots to provide insights on the controllers performance compared to a robot's and to AUTOPIA, as presented in ~\cite{AUTOPIA}. Direct comparison is not possible because \emph{Berniw Hist4} does not the standard car \car{car1-trb1}, it uses the \car{TZ2}.
 
 \begin{table*}[t]
 	% \renewcommand{\arraystretch}{1.3}
-\caption{Time in seconds elapsed racing alone for 10 laps}\label{tbl:time}
+\caption{Time elapsed (in seconds) racing alone for 10 laps}\label{tbl:time}
 \centering
-\begin{tabular}{| c | c | c | c | c | c | c | c |}
-	\hline
-\multicolumn{2}{| c |}{\bfseries Driver} & \bfseries Street 1 & \bfseries D-speedway & \bfseries CG-speedway & \bfseries Dirt 1 & \bfseries Dirt 3 & \bfseries Dirt 4 \\\hline
+\begin{tabular}{| c | c || c | c | c | c | c | c |}
+	\cline{3-8}
+\multicolumn{2}{ c | }{} & \multicolumn{6}{ c |}{\bfseries Track} \\\hline
+\multicolumn{2}{| c ||}{\bfseries Driver} & \bfseries Street 1 & \bfseries CG-speedway & \bfseries D-speedway & \bfseries Dirt 1 & \bfseries Dirt 3 & \bfseries Dirt 4 \\\hline\hline
 \multirow{3}{*}{FSMDriver5}
-& road & \textdagger & \textdagger & 816.6 & \textdagger & \textdagger & \textdagger \\\cline{2-8}
-& dirt & \textdagger & \textdagger & \textdagger & \textdagger &	\textdagger & \textdagger \\\cline{2-8}
-& mixed & \textdagger & \textdagger & \textdagger & \textdagger & \textdagger & \textdagger \\\hline
+& road  & \textdagger & 816.6       & \textdagger & \textdagger & \textdagger & \textdagger \\\cline{2-8}
+& dirt  & \textdagger & \textdagger & \textdagger & \textdagger & \textdagger & \textdagger \\\cline{2-8}
+& mixed & \textdagger & \textdagger & \textdagger & \textdagger & \textdagger & \textdagger \\\hline\hline
 \multirow{3}{*}{FSMDriver3}
-& road & 1086.30 & 607.40 & 495.00 & \textdagger & 1150.10 & 1756.40 \\\cline{2-8}
-& dirt & \textdagger & 840.00 & 1274.80 & 597.30 & 1089.40 & 1307.50 \\\cline{2-8}
-& mixed & 1216.50 & 572.60 & 613.77& 530.00 & 842.90 & 1005.90 \\\hline
-\multicolumn{2}{| c |}{Berniw Hist4} & 1143.77 & 656.24 & 605.76 & 460.95 & 872.97 & 1127.45 \\\hline
-\multicolumn{2}{| c |}{AUTOPIA~\cite{AUTOPIA}}  & * & * & * & \textbf{339.3} & \textbf{742.4} & \textbf{796.5} \\\hline
+& road  & \textbf{1086.28} & \textbf{483.17} & \textbf{607.35} & \textdagger & 1150.09 & \textdagger \\\cline{2-8}
+& dirt  & \textdagger      & 1274.81         & 840.02          & 597.33      & 1045.62 & 1307.52  \\\cline{2-8}
+& mixed & 1096.95          & 510.86          & 612.00          & 408.57      & 811.96 & 2157.95 \\\hline\hline
+\multirow{3}{*}{FSMDriver3+}
+& road  & 1225.24 & 484.58  & 709.74 & \textdagger & 1108.48 & \textdagger \\\cline{2-8}
+& dirt  & 1658.47 & 1291.31 & 915.86 & 597.33 & 1055.21 & 1360.71 \\\cline{2-8}
+& mixed & 1208.84 & 534.87  & 646.68 & 384.93 & 939.93 & 1930.19 \\\hline\hline
+\multicolumn{2}{| c ||}{Berniw Hist4} & 1143.77 & 605.76 & 656.24 & 460.95 & 872.97 & 1127.45 \\\hline\hline
+\multicolumn{2}{| c ||}{AUTOPIA~\cite{AUTOPIA}}  & * & * & * & \textbf{339.3} & \textbf{742.4} & \textbf{796.5} \\\hline
 \end{tabular}
 \end{table*}
 
-Looking at results for FSMDriver5, only the road profile completed 10 laps in \emph{CG Speedway 1}, all other instances had excessive damage. FSMDriver3, on the other hand, completed all track in at least 2 configurations. Considering road tracks, the road profile had better performance in two of the three tracks, and the dirt profile did not complete one but was significantly slower in two of the tracks. Considering the Dirt tracks, again the mixed profile's performance was significantly better than the others.
+Looking at results for FSMDriver5, only the road profile completed 10 laps in \track{CG Speedway 1}, all other instances had excessive damage. FSMDriver3, on the other hand, completed all track in at least 2 configurations. Considering road tracks, the road profile had better performance in two of the three tracks, and the dirt profile did not complete one but was significantly slower in two of the tracks. Considering the Dirt tracks, again the mixed profile's performance was significantly better than the others.
 
 Considering the robot \emph{Berniw Hist4}, it can be seen that FSMDriver3 is a slightly better driver, despite the ``handicap'' of using SCR's interface for driving and not having access to additional information from the simulator (such as track layout). This means that the proposed model has quickly achieved an intermediate level performance in TORCS. AUTOPIA's results are around 12\%-35\% better than FSMDriver's best results, implying that its configuration is better suited for longer races.
 
@@ -132,6 +153,6 @@ This is likely due to lack of endurance, resulting from careless driving. Since 
 
 
 \subsection{Analysis}
-Further comparing both FSMDrivers, it is clear that different profiles lead to different performances on the tracks for FSMDriver3, but such effect is not as pronounced in FSMDriver5. A more detailed analysis shows that FSMDriver5 has issues handling transitions in \state{Racing} behavior. The issue seems to be that the parameters \gnramos{???} in the transition function that define the current stated are very susceptible to the inputs, resulting in several changes in the states which greatly impacts the evolution of the states' parameters and, consequently, of those in the function.
+Further comparing both FSMDrivers, it is clear that different profiles lead to different performances on the tracks for FSMDriver3, but such effect is not as pronounced in FSMDriver5. A more detailed analysis shows that FSMDriver5 has issues handling transitions in \racing~behavior. The issue seems to be that the parameters \gnramos{???} in the transition function that define the current stated are very susceptible to the inputs, resulting in several changes in the states which greatly impacts the evolution of the states' parameters and, consequently, of those in the function.
 
 This leads to two possibilities, the first being that the specified settings for evolving FSMDriver5 were not adequate, perhaps allowing more generations or individuals would lead to better results. More likely, the 5-state model's implementation is overly complex, specially considering the influence of the transition function's parameter \gnramos{parametros??} on how the states evolve, which could imply that a different strategy should be pursued.
