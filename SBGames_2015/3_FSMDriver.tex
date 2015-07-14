@@ -44,23 +44,20 @@ Each of these states implements its behavior as follows. \SL~ attempts to go as 
 
 \subsection{FSMDriver5}
 
-Initial tests showed that transitioning from \SL~to \C~was too swift, hampering performance because the car consistently entered curves at such high speeds that the controller was unable to turn and exited the track, so the additional behavior \AC~was implemented. \AC~ positions the driver towards the outside of the incoming curve and tries to race at a speed proportional to the curvature, so less braking would be necessary in \C. Thus, a 5-state FSMDriver (FSMDriver5) model (illustrated in Figure~\ref{Fig:FSM5Diagram}) was ready for testing.
+Initial tests showed that transitioning from \SL~to \C~was too swift, hampering performance because the car consistently entered curves at such high speeds that the controller was unable to turn and exited the track, so the additional behavior \AC~was implemented. \AC~ positions the driver towards the outside of the incoming curve and tries to race at a speed proportional to the curvature, so less braking would be necessary in \C. Thus, a 5-state FSMDriver (FSMDriver5) model (illustrated in Figure~\ref{fig:FSMDriver5Model}) was ready for testing. The range sensors were arbitrarily configured at every $10$ degrees from $-90$ to $90$ relative to the car's front axis (that is, a uniform distribution from the left to the right of the car), as illustrated in Figure~\ref{fig:FSMDriver5Finders}.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.45\textwidth]{img/FiveStateFSM}
-	\caption{FSMDriver5 state diagram.}
-	\label{Fig:FSM5Diagram}
-\end{figure}
-
-The range sensors were arbitrarily configured at every $10$ degrees from $-90$ to $90$ relative to the car's front axis (that is, a uniform distribution from the left to the right of the car), as illustrated in Figure~\ref{Fig:FSM5Sensors}.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.45\textwidth]{img/FSM5Sensors}
-	\caption{FSMDriver5 range finders.}
-	\label{Fig:FSM5Sensors}
-\end{figure}
+\begin{figure*}
+\centering
+\begin{subfigure}[b]{0.4\textwidth}
+   \includegraphics[width=\textwidth]{img/FiveStateFSM}
+   \caption{States and transitions.}\label{fig:FSMDriver5Model}%
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+   \includegraphics[width=\textwidth]{img/FSM5Sensors}
+   \caption{Range finders configuration.}\label{fig:FSMDriver5Finders}%
+\end{subfigure}
+   \caption{FSMDriver5 model.}\label{fig:FSMDriver5}
+\end{figure*}
 
 Sensor readings provide an idea of location in the track, in this setting, the difference between frontal and lateral sensors is larger when driving in a straight line than in a curve. Thus, the transition function considers the variance of readings from range finders to define the current state of the \racing~behavior, as described in Algorithm~\ref{alg:FSMDriver5}.
 
@@ -102,30 +99,30 @@ The variance, or the measure of how spread out the sensor readings are, is compu
 
 Initially, random configurations were set and manually adjusted until an acceptable behavior was achieved, i.e. such a configuration in which a car could successfully complete a race. In the beginning, the \recovery~states (\OT~and \St) were constantly triggered, and therefore were first to be adjusted for improved behavior. Eventually their settings were such that the \racing~behaviors could be focused on. These too were manually and arbitrarily set through trial and error, considering the driver's quantitative performance racing (time and damage) and its qualitative skill (visual analysis of tests).
 
-After several iterations, this model performed better performance than some of the less capable robots available in TORCS,showcasing the FSM model's potential for controlling a car. However, testing also revealed that the transitions between states required were the bottleneck for improved racing. Not only some of the triggers needed a more detailed analysis to avoid eventual erratic behavior, but the sheer number parameters considered for transitioning, each with its triggers (see Figure~\ref{Fig:FSM5Diagram}), and their impact on the model's behavior during a complete race caused the whole model to be thought over.
+After several iterations, this model performed better performance than some of the less capable robots available in TORCS,showcasing the FSM model's potential for controlling a car. However, testing also revealed that the transitions between states required were the bottleneck for improved racing. Not only some of the triggers needed a more detailed analysis to avoid eventual erratic behavior, but the sheer number parameters considered for transitioning, each with its triggers (see Figure~\ref{fig:FSMDriver5Model}), and their impact on the model's behavior during a complete race caused the whole model to be thought over.
 
-Analyzing FSMDriver's transitions occurrences within a race, it was clear that the \recovery~behavior had two distinct situations, which were acceptably handled by the current configuration, and that the major issue was frequent triggering between the \racing~states, which inevitably resulted in the car leaving the track and jeopardizing its performance.
+Analyzing FSMDriver5's transitions occurrences within a race, it was clear that the \recovery~behavior had two distinct situations, which were acceptably handled by the current configuration, and that the major issue was frequent triggering between the \racing~states, which inevitably resulted in the car leaving the track and jeopardizing its performance.
 
 \subsection{FSMDriver3}%
-To reduce the model's complexity, and considering the intuitive division of behaviors proposed, a new model where the defined \recovery~behaviors were maintained and the \racing~behaviors were joined into a new state called \IT. Figure~\ref{Fig:FSM3Diagram} illustrates this FSMDriver3 model.
+To reduce the model's complexity, and considering the intuitive division of behaviors proposed, a new model where the defined \recovery~behaviors were maintained and the \racing~behaviors were joined into a new state called \IT. Figure~\ref{fig:FSMDriver3Model} illustrates this FSMDriver3 model.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.4\textwidth]{img/ThreeStateFSM}
-	\caption{FSMDriver3 state diagram.}
-	\label{Fig:FSM3Diagram}
-\end{figure}
+\begin{figure*}
+\centering
+\begin{subfigure}[b]{0.4\textwidth}
+   \includegraphics[width=\textwidth]{img/ThreeStateFSM}
+   \caption{States and transitions.}\label{fig:FSMDriver3Model}%
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+   \includegraphics[width=\textwidth]{img/FSM3Sensors}
+   \caption{Range finders configuration.}\label{fig:FSMDriver3Finders}%
+\end{subfigure}
+   \caption{FSMDriver3 model.}\label{fig:FSMDriver3}
+\end{figure*}
 
 \IT~implements a very straightforward idea, get to an arbitrary target speed towards the largest open space inside track limits. The target speed is proportional to the largest sensor reading, and braking is activated if the current speed is greater than the target. Gear changing works based on RPM threshold as before. Overall, this implementation works for straight lines as well as curves.
 
-In order to have more detailed information on track segment straight ahead, which will guide the movement, the range finders are concentrated in front of the car, as shown in Figure~\ref{Fig:FSM3Sensors}, contrasting with FSMDriver5's equidistant distribution.
+In order to have more detailed information on track segment straight ahead, which will guide the movement, the range finders are concentrated in front of the car, as shown in Figure~\ref{fig:FSMDriver3Finders}, contrasting with FSMDriver5's equidistant distribution.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.45\textwidth]{img/FSM3Sensors}
-	\caption{FSMDriver3 range finders.}
-	\label{Fig:FSM3Sensors}
-\end{figure}
 
 The transition function can then be reimplemented in a simpler fashion, as shown in Algorithm~\ref{alg:FSMDriver3}:
 

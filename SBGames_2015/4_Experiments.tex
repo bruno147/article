@@ -1,7 +1,7 @@
 \section{Experimental Results}\label{sec:4}%
 \newcommand{\car}[1]{\emph{#1}}%
 
-The drivers were developed in C++ and testing in TORCS\footnote{\url{http://sourceforge.net/projects/torcs/}} (v1.3.6) and SCR\footnote{\url{http://sourceforge.net/projects/cig/files/SCR\%20Championship/Server\%20Linux/}} (v2.1), since they provide an advanced simulation environment which provides complex situations, and enable objective metrics for direct comparison to exiting results. The standard the car model for racing in SCR is \car{car1-trb1}~\cite{SCR}.
+The drivers were developed in C++ and testing in TORCS\footnote{\url{http://sourceforge.net/projects/torcs/}} (v1.3.6) and SCR\footnote{\url{http://sourceforge.net/projects/cig/files/SCR\%20Championship/Server\%20Linux/}} (v2.1), since they compose an advanced simulation environment which provides complex situations, and enable objective metrics for direct comparison to exiting results. The standard the car model for racing in SCR is \car{car1-trb1}~\cite{SCR}.
 
 \gnramos{revisado - GA foi aplicado a todos os 22/17 parametros? yes}
 
@@ -14,7 +14,6 @@ The Genetic Algorithm used standard configurations from literature, the populati
 \newcommand{\profile}[1]{\emph{#1 driver}}%
 Since it is unknown which tracks will be used during the SCR Championship, a more general and versatile controller is desirable and, thus, the controllers were evolved considering their performance in several tracks types. Three basic driver profiles were desired: a \profile{road}, which would perform well in road tracks, a \profile{dirt}~ for dirt roads and a \profile{mixed}, which should perform well in both types.
 
-\newcommand{\track}[1]{\emph{#1}}%
 For the \profile{road} profile, four road tracks were selected from the standard TORCS distribution list to compose the training set in the evolution process. The tracks were arbitrarily selected for certain features, which might lead to better drivers: \track{Spring}, the longest track available; \track{Wheel 2}, with many sharp curves; \track{E-Track 3}, a fast track with sharp curves; and \track{Forza}, a fast circuit with smoother curves.
 
 Analogously, four dirt tracks were selected for evolving a \profile{dirt profile}: \track{Dirt 2}, \track{Dirt 6}, \track{Mixed 1}, and \track{Mixed 2}, which present variations of high speed and curve styles. For the \profile{mixed}, two of each were selected: \track{Spring}, \track{Wheel 2}, \track{Dirt 2}, and \track{Mixed 1}.
@@ -25,32 +24,31 @@ The best solutions evolved for each profile where then evaluated in a set of six
 
 \begin{figure*}
 \centering
-\begin{subfigure}[b]{0.2\textwidth}
+\begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/Street1}
        \caption{Street1}
    \end{subfigure}
-\begin{subfigure}[b]{0.2\textwidth}
+\begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/CG-Speedway}
        \caption{CG Speedway 1}
    \end{subfigure}
-\begin{subfigure}[b]{0.2\textwidth}
+\begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/D-Speedway}
        \caption{D-Speedway}
    \end{subfigure}
-
-\begin{subfigure}[b]{0.2\textwidth}
+\begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/Dirt1}
        \caption{Dirt 1}
    \end{subfigure}
-\begin{subfigure}[b]{0.2\textwidth}
+\begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/Dirt3}
        \caption{Dirt 3}
    \end{subfigure}
-\begin{subfigure}[b]{0.2\textwidth}
+\begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/Dirt4}
        \caption{Dirt 4}
    \end{subfigure}
-   \caption{Test tracks, road tracks (top left and middle), oval (top right), and dirt tracks (bottom)~\protect\cite{TORCS}.}\label{fig:tracks}
+   \caption{Test tracks, road tracks (a, b), oval (c), and dirt tracks (d, e, and f)~\protect\cite{TORCS}.}\label{fig:tracks}
 \end{figure*}
 
 \subsection{Single Race Results}
@@ -58,7 +56,7 @@ The best solutions evolved for each profile where then evaluated in a set of six
 \gnramos{revisado - fsmdriver 5 na CG é isso mesmo? resultado corrigido}
 \begin{table*}
 % \renewcommand{\arraystretch}{1.3}
-\caption{Distance covered (in meters) racing alone for 10.000 game ticks}\label{tbl:ticks}
+\caption{Distance covered (in meters) racing alone for 10.000 game ticks.}\label{tbl:ticks}
 \centering
 \begin{tabular}{| c | c || c | c | c | c | c | c |}
 \cline{3-8}
@@ -94,7 +92,7 @@ Table~\ref{tbl:time} also includes results for the robot \emph{Berniw Hist4}, pr
 
 \begin{table*}[t]
 	% \renewcommand{\arraystretch}{1.3}
-\caption{Time elapsed (in seconds) racing alone for 10 laps}\label{tbl:time}
+\caption{Time elapsed (in seconds) racing alone for 10 laps.}\label{tbl:time}
 \centering
 \begin{tabular}{| c | c || c | c | c | c | c | c |}
 	\cline{3-8}
