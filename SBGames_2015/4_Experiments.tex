@@ -3,7 +3,7 @@
 
 The drivers were developed in C++ and testing in TORCS\footnote{\url{http://sourceforge.net/projects/torcs/}} (v1.3.6) and SCR\footnote{\url{http://sourceforge.net/projects/cig/files/SCR\%20Championship/Server\%20Linux/}} (v2.1), since they provide an advanced simulation environment which provides complex situations, and enable objective metrics for direct comparison to exiting results. The standard the car model for racing in SCR is \car{car1-trb1}~\cite{SCR}.
 
-\gnramos{GA foi aplicado a todos os 22/17 parametros?}
+\gnramos{revisado - GA foi aplicado a todos os 22/17 parametros? yes}
 
 Once the FSMDriver models had been defined, a genetic algorithm was applied to each, aiming to improve their performances by changing their control parameters' values. During this stage, the learning module was disabled in FSMDriver3 in order to not interfere with the learning. Then drivers' performance is evaluated by racing them in selected tracks, emulating the qualifying stage of SCR. Also similar to the competition, before each qualifying race a warm-up stage is held in order for the controllers to adapt themselves to the track. In this stage, two versions of the 3-state FSM controllers were tested to analyze the effects of the learning module, the FSMDriver3+ with the the module enabled, and FSMDriver3, with it disabled. This lasts for 5 laps, conforming to the stipulated 2015 Championship rules\footnote{\url{http://cs.adelaide.edu.au/~optlog/SCR2015/}}.
 
@@ -55,7 +55,7 @@ The best solutions evolved for each profile where then evaluated in a set of six
 
 \subsection{Single Race Results}
 
-\gnramos{fsmdriver 5 na CG é isso mesmo?}
+\gnramos{revisado - fsmdriver 5 na CG é isso mesmo? resultado corrigido}
 \begin{table*}
 % \renewcommand{\arraystretch}{1.3}
 \caption{Distance covered (in meters) racing alone for 10.000 game ticks}\label{tbl:ticks}
@@ -66,7 +66,7 @@ The best solutions evolved for each profile where then evaluated in a set of six
 \multicolumn{2}{| c ||}{\bfseries Driver} & \bfseries Street 1 & \bfseries CG-speedway & \bfseries D-speedway & \bfseries Dirt 1 & \bfseries Dirt 3 & \bfseries Dirt 4 \\\hline\hline
 \multirow{3}{*}{FSMDriver5}
 & road  & 3822.76 & 4114.66 & 3427.11 & 2145.49 & 2205.97 & 3260.19 \\\cline{2-8}
-& dirt  & 1267.83 & 4114.66 & 2936.82 & 1072.92 & 2205.82 & 3260.33 \\\cline{2-8}
+& dirt  & 1267.83 & 2057.47 & 2936.82 & 1072.92 & 2205.82 & 3260.33 \\\cline{2-8}
 & mixed & 3822.99 & 4114.80 & 3427.06 & 2145.75 & 2205.83 & 3260.31 \\\hline\hline
 \multirow{3}{*}{FSMDriver3}
 & road  & \textbf{7925.60} & 8745.49 & 13196.50 & 3978.01 & 3451.26 & 6757.83 \\\cline{2-8}
