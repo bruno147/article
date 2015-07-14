@@ -3,14 +3,13 @@
 
 The drivers were developed in C++\footnote{Code available at \url{https://github.com/bruno147/fsmdriver}} and tested in TORCS\footnote{\url{http://sourceforge.net/projects/torcs/}} (v1.3.6) and SCR\footnote{\url{http://sourceforge.net/projects/cig/files/SCR\%20Championship/Server\%20Linux/}} (v2.1). The car used in the experiments was \car{car1-trb1}, the standard model for SCR~\cite{SCR}.
 
-\gnramos{revisado, formula colocada nos comentarios, ponderar a sua necessidade - qual das formulas?}
-\gnramos{QUE FORMULA EH ESSA????}
+\gnramos{que formula eh essa? nao esta na referencia (pelo menos nao deste jeito. a ideia eh saber exatamente a referencia/pagina/linha que originou este valor  de 616}
 % G = 267,43*ln(P) - 293,21 (G = generations, N = population size)
-The FSMDrivers' parameters are evolved through a genetic algorithm, aiming to improve their racing performances by changing their values. The GA used standard configurations from literature, the population size was arbitrarily set as 30~\cite{RATES}, which leads to 616 generations for a moderate problem complexity in which the optimal population size was coded as bitstrings~\cite{218485}. Selection is done through elitism by keeping the best 4 individuals from a generation unchanged, and the other 26 are generated from the best 10 individuals' reproduction~\cite{ELITISM}. This step is done by randomly choosing a pair from the top 10 that are cloned with a 5\% chance or generate a pair of offspring with a 95\% probability~\cite{RATES}. These offspring are produced through crossover by partitioning the parents' bitstrings at a random position and swapping them. Finally, mutation (a simple bit flip) is applied to every bit in every individual of these 26 with a 1\% probability~\cite{RATES}.
+The FSMDrivers' parameters are evolved through a genetic algorithm, aiming to improve their racing performances by changing their values. The GA used standard configurations from literature, the population size was arbitrarily set as 30~\cite{RATES}, which leads to 616 generations for a moderate problem complexity in which the optimal population size was coded as bitstrings~\cite{218485}. Selection is done through elitism by keeping the best 4 individuals from a generation unchanged, and the other 26 are generated from the best 10 individuals' reproduction. This step is done by randomly choosing a pair from the top 10 that are cloned with a 5\% chance or generate a pair of offspring with a 95\% probability~\cite{RATES}. These offspring are produced through crossover by partitioning the parents' bitstrings at a random position and swapping them. Finally, mutation (a simple bit flip) is applied to every bit in every individual of these 26 with a 1\% probability~\cite{RATES}.
 
 The fitness of each individual is computed as the distance covered in the race. The GA communicates with the test platform, simulating races with the drivers in the desired tracks in TORCS, through operating system calls to the command line interface and the fitness communicated through shared memory\footnote{Code available at \url{https://github.com/bruno147/driver-ga}}.
 
-The two FSMDriver models had their parameters evolved through the GA and compared to each other. During this evolution, the learning module in FSMDriver3 is disabled in order to not interfere with the learning, and no parameter in the module was included model's bitstring representation. To analyze the learning module's effect, two instances of the 3-state FSM controller were tested, the FSMDriver3+ with it enabled, and disabled in FSMDriver3. When enabled, the learning module's threshold speed is arbitrarily set to 85 km/h. All controllers have 5 laps for warm-up, during which they can adapt to the track, in accordance to the stipulated 2015 Championship rules\footnote{\url{http://cs.adelaide.edu.au/~optlog/SCR2015/}}.
+The two FSMDriver models had their parameters evolved through the GA and compared to each other. This considers only the \racing~states, as \OT~and \St~are considered adequate with the manual settings. During this evolution, the learning module in FSMDriver3 is disabled in order to not interfere with the learning, and no parameter in the module was included model's bitstring representation. To analyze the learning module's effect, two instances of the 3-state FSM controller were tested, the FSMDriver3+ with it enabled, and disabled in FSMDriver3. When enabled, the learning module's threshold speed is arbitrarily set to 85 km/h. All controllers have 5 laps for warm-up, during which they can adapt to the track, in accordance to the stipulated 2015 Championship rules\footnote{\url{http://cs.adelaide.edu.au/~optlog/SCR2015/}}.
 
 \newcommand{\profile}[1]{\emph{#1 driver}}%
 Since it is unknown which tracks will be used during the SCR Championship, a more general and versatile controller is desirable and, thus, the controllers were evolved considering their performance in several tracks types. Three basic driver profiles were desired: a \profile{road}, which should perform well in \track{road} and \track{oval} tracks, a \profile{dirt}~for \track{dirt} roads and a \profile{mixed}, which should perform well in both types.
@@ -19,19 +18,15 @@ For the \profile{road} profile, four road tracks were selected from the standard
 
 Analogously, four dirt tracks were selected for evolving a \profile{dirt profile}: \track{Dirt 2}, \track{Dirt 6}, \track{Mixed 1}, and \track{Mixed 2}, which present variations of high speed and curve styles. For the \profile{mixed}, two of each were selected: \track{Spring}, \track{Wheel 2}, \track{Dirt 2}, and \track{Mixed 1}.
 
-\gnramos{inserir exemplo de resultados de evolucao, talvez uma tabela mostrando os tempos em relacao a bots}
-
-The best solutions evolved for each profile where then evaluated in a set of six tracks, different from the ones used before, which present distinct typed, speeds, and curve features for better analysis. These tracks, also available on the standard TORCS set, were used in previous SCR Championships~\cite{AUTOPIA2009}. They are two road tracks: \track{Street 1} and \track{CG Speedway 1}; one oval track: \track{D-Speedway}; and three dirt tracks: \track{Dirt 1}, \track{Dirt 3}, and \track{Dirt 4}.
-
-\begin{figure*}
+\begin{figure*}[t]
 \centering
 \begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/Street1}
-       \caption{Street1}
+       \caption{Street 1}
    \end{subfigure}
 \begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/CG-Speedway}
-       \caption{CG Speedway 1}
+       \caption{CG Speedway number 1}
    \end{subfigure}
 \begin{subfigure}[b]{0.15\textwidth}
        \includegraphics[width=\textwidth]{img/tracks/D-Speedway}
@@ -52,53 +47,54 @@ The best solutions evolved for each profile where then evaluated in a set of six
    \caption{Test tracks, road tracks (a, b), oval (c), and dirt tracks (d, e, and f)~\protect\cite{TORCS}.}\label{fig:tracks}
 \end{figure*}
 
-\subsection{Single Race Results}
+The best solutions evolved for each profile where then evaluated in a set of six tracks, different from the ones used before, which present distinct typed, speeds, and curve features for better analysis. These tracks, shown in Figure~\ref{fig:tracks} and available on the standard TORCS set, were used in previous SCR Championships~\cite{AUTOPIA2009}. They are two road tracks: \track{Street 1} and \track{CG Speedway 1}; one oval track: \track{D-Speedway}; and three dirt tracks: \track{Dirt 1}, \track{Dirt 3}, and \track{Dirt 4}.
 
-\gnramos{revisado - fsmdriver 5 na CG é isso mesmo? resultado corrigido}
-\begin{table*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Single Race Results}
+\begin{table*}[!btp]
 % \renewcommand{\arraystretch}{1.3}
 \caption{Distance covered (in meters) racing alone for 10.000 game ticks.}\label{tbl:ticks}
 \centering
 \begin{tabular}{| c | c || c | c | c | c | c | c |}
 \cline{3-8}
 \multicolumn{2}{ c | }{} & \multicolumn{6}{ c |}{\bfseries Track} \\\hline
-\multicolumn{2}{| c ||}{\bfseries Driver} & \bfseries Street 1 & \bfseries CG-speedway & \bfseries D-speedway & \bfseries Dirt 1 & \bfseries Dirt 3 & \bfseries Dirt 4 \\\hline\hline
+\multicolumn{2}{| c ||}{\bfseries Driver} & \bfseries\track{Street 1} & \bfseries\track{CG Speedway number 1} & \bfseries\track{D-speedway} & \bfseries\track{Dirt 1} & \bfseries\track{Dirt 3} & \bfseries\track{Dirt 4} \\\hline\hline
 \multirow{3}{*}{FSMDriver5}
 & road  & 3822.76 & 4114.66 & 3427.11 & 2145.49 & 2205.97 & 3260.19 \\\cline{2-8}
 & dirt  & 1267.83 & 2057.47 & 2936.82 & 1072.92 & 2205.82 & 3260.33 \\\cline{2-8}
 & mixed & 3822.99 & 4114.80 & 3427.06 & 2145.75 & 2205.83 & 3260.31 \\\hline\hline
 \multirow{3}{*}{FSMDriver3}
-& road  & \textbf{7925.60} & 8745.49 & 13196.50 & 3978.01 & 3451.26 & 6757.83 \\\cline{2-8}
+& road  & \textbf{7925.60} & 8745.49 & 13196.50 & 3978.01 & 3451.26 & \textbf{6757.83} \\\cline{2-8}
 & dirt  & 5103.41          & 5093.82 &  8589.13 & 3525.84 & 4905.58 & 5590.78 \\\cline{2-8}
 & mixed & 5864.48          & 8714.58 & 11694.60 & 5052.38 & 4920.32 & 3797.83 \\\hline\hline
 \multirow{3}{*}{FSMDriver3+}
-& road  & 7532.93 & 8804.73 & 10720.20 & 3678.89          & 5199.46 & 3193.44 \\\cline{2-8}
-& dirt  & 4738.76 & 5102.92 &  8197.55 & 3525.84          & 4214.30 & 5057.18 \\\cline{2-8}
-& mixed & 6780.43 & 8089.41 & 10943.10 & \textbf{5752.90} & \textbf{5824.93} & \textbf{5614.62} \\\hline\hline
+& road  & 7532.93 & 8804.73 & 10720.20 & 3678.89          & 5199.46          & 3193.44 \\\cline{2-8}
+& dirt  & 4738.76 & 5102.92 &  8197.55 & 3525.84          & 4214.30          & 5057.18 \\\cline{2-8}
+& mixed & 6780.43 & 8089.41 & 10943.10 & \textbf{5752.90} & \textbf{5824.93} & 5614.62 \\\hline\hline
 \multicolumn{2}{| c ||}{AUTOPIA~\cite{AUTOPIA2009}} & 7091.8 & \textbf{8970.4} & \textbf{15612.3} & * & * & * \\\hline
 \end{tabular}
 \end{table*}
 
-Table~\ref{tbl:ticks} presents the distance covered results for these tests for each FSMDriver model and profile. The fitness function in this case is the sum of distances covered in all tracks, considering 10.000 game ticks per track, as per the SCR rules, so higher values are desirable. The table also includes, for direct comparison with the current state of the art, results for AUTOPIA in three of the same tracks for the same 10.000 game ticks metric, as presented in~\cite{AUTOPIA2009}. The `*' symbol indicates that the driver does not have data available for the track.
+Table~\ref{tbl:ticks} presents the distance covered results for these tests for each FSMDriver model and profile (best results per track in bold). The fitness function in this case is the sum of distances covered in all tracks, considering 10.000 game ticks per track, as per the SCR rules, so higher values are desirable. The table also includes, for direct comparison with the current state of the art, results for AUTOPIA in three of the same tracks for the same 10.000 game ticks metric, as presented in~\cite{AUTOPIA2009}. The `*' symbol indicates that the driver does not have data available for the track.
 
-Considering the 5-states FSMDriver in road/oval tracks, it is clear that the road and mixed profiles have better results than dirt, as expected. However, in \track{CG Speedway 1} they are practically the same. \gnramos{por que?} Looking at the results for dirt tracks, all profiles have similar performances except for the dirt profile in \track{Dirt 1}. \gnramos{por que?}
+Considering the 5-states FSMDriver in \track{road}/\track{oval} tracks, it is clear that the \profile{road} and \profile{mixed} have better results than \profile{dirt}, since this profile uses road tracks for evaluating individuals during evolution. Looking at the results for \track{dirt} tracks, all profiles have similar performances except for the \profile{dirt} in \track{Dirt 1}. \gnramos{por que? relacionado ao formato da pista?} FSMDriver5's \profile{road} and \profile{mixed} are practically equivalent and at least as good as its \profile{dirt}, and all profiles are quite inferior to the other controllers shown in Table~\ref{tbl:ticks}.
 
-Considering the 3-states FSMDriver in road/oval tracks, it is also clear that the road and mixed profiles have better results than dirt, as was expected. Looking at the results for dirt tracks, the mixed profile's performance was significantly better than the others. FSMDrivers evolved in dirt tracks tend to drive slower to avoid leaving the track limits while evolution in road tracks leads to faster racers which may lose time off track. The combination of both tracks in the metric leads to drivers that compromise in both approaches, being about 5-10\% slower than the road profile in road tracks, and about 5-15\% faster in dirt tracks,a more general driver as hypothesized. It is also better than the dirt profile on all accounts.
+Looking at FSMDriver3 in \track{road}/\track{oval} tracks, it is also clear that the \profile{road} and \profile{mixed} have better results than \profile{dirt}, as was expected. Considering the results for \track{dirt} tracks, \profile{mixed}'s performance was significantly better than the others in \track{Dirt 1} and \track{Dirt 3}, but \profile{road} produced the best result in \track{Dirt 4}. \gnramos{por que? relacionado ao formato da pista?} \profile{road}'s result for \track{Street 1} was also the best all around.
 
-Comparing the results with AUTOPIA, the road FSMDriver3 was about 11.7\% better in \track{Street 1}. By itself this does not imply that FSMDriver3 is a better approach, specially since AUTOPIA had better results in two of the three tracks compared, it still is an impressive result for this simpler approach to driving.
+FSMDriver3+ profiles (with learning module enabled) also performed as expected in \track{road}/\track{oval} tracks. For these, FSMDriver3+ had shorter distances than FSMDriver3 for \track{Street 1} (5\%) and \track{D-speedway} (18.8\%), and a slightly longer for \track{CG Speedway number 1} (0.7\%). This is also expected as the driver learns to slow down in order to stay in the track. For \track{dirt} tracks, FSMDriver3+'s \profile{mixed} had the best results, better than FSMDriver3 for \track{Dirt 1} (13.9\%) and \track{Dirt 3} (18.4\%), though worse in \track{Dirt 4} (16.9\%). \gnramos{os resultados para Dirt 4 estao certos?}
 
-In order to learn more about FSMDriver's potential, a new set of tests using the distance raced in 10 laps as metric was done, and the results are shown in Table~\ref{tbl:time}. The values represent the time needed to complete the laps, so lower values are desirable, the `\textdagger'~symbol indicates that the driver does not complete the 10 laps required, and the `*' symbol indicates that the driver does not have data available for the track. Again results for AUTOPIA in three of the same tracks for the same 10 laps metric, as presented in~\cite{AUTOPIA} are shown for comparison.
+Comparing the results for \track{road}/\track{oval} tracks with AUTOPIA (\cite{AUTOPIA2009}), the current state of the art in SCR, FSMDriver3's \profile{road} was about 11.8\% better in \track{Street 1} while FSMDriver3+ was 6.2\% better. In \track{CG Speedway number 1}, FSMDriver3 and FSMDriver3+ were only 2.5\% and 1.8\% worse, respectively. In \track{D-speedway}, these numbers rise to 15.5\% and 31.3\%. Thus, the 3-state FSMDriver model showed potential for competing on \track{road} tracks.
 
-Table~\ref{tbl:time} also includes results for the robot \emph{Berniw Hist4}, provided in with the TORCS distribution. This was not included in the previous tests because TORCS only allows a race with the available robots to run for a given amount of laps (not game ticks). This robot has intermediate performance, and was arbitrarily chosen from other robots to provide insights on the controllers performance compared to a robot's and to AUTOPIA, as presented in ~\cite{AUTOPIA}. Direct comparison is not possible because \emph{Berniw Hist4} does not the standard car \car{car1-trb1}, it uses the \car{TZ2}.
+In order to learn more about FSMDriver's endurance, a new set of tests using the distance raced in 10 laps as metric was executed, and the results presented in Table~\ref{tbl:time}. The values represent the time needed to complete the laps, so lower values are desirable, the `\textdagger'~symbol indicates that the driver does not complete the 10 laps required, and the `*' symbol indicates that the driver does not have data available for the track.
 
-\begin{table*}[t]
+\begin{table*}[!btp]
 	% \renewcommand{\arraystretch}{1.3}
 \caption{Time elapsed (in seconds) racing alone for 10 laps.}\label{tbl:time}
 \centering
 \begin{tabular}{| c | c || c | c | c | c | c | c |}
 	\cline{3-8}
 \multicolumn{2}{ c | }{} & \multicolumn{6}{ c |}{\bfseries Track} \\\hline
-\multicolumn{2}{| c ||}{\bfseries Driver} & \bfseries Street 1 & \bfseries CG-speedway & \bfseries D-speedway & \bfseries Dirt 1 & \bfseries Dirt 3 & \bfseries Dirt 4 \\\hline\hline
+\multicolumn{2}{| c ||}{\bfseries Driver} & \bfseries\track{Street 1} & \bfseries\track{CG Speedway number 1} & \bfseries\track{D-speedway} & \bfseries\track{Dirt 1} & \bfseries\track{Dirt 3} & \bfseries\track{Dirt 4} \\\hline\hline
 \multirow{3}{*}{FSMDriver5}
 & road  & \textdagger & 816.6       & \textdagger & \textdagger & \textdagger & \textdagger \\\cline{2-8}
 & dirt  & \textdagger & \textdagger & \textdagger & \textdagger & \textdagger & \textdagger \\\cline{2-8}
@@ -106,54 +102,40 @@ Table~\ref{tbl:time} also includes results for the robot \emph{Berniw Hist4}, pr
 \multirow{3}{*}{FSMDriver3}
 & road  & \textbf{1086.28} & \textbf{483.17} & \textbf{607.35} & \textdagger & 1150.09 & \textdagger \\\cline{2-8}
 & dirt  & \textdagger      & 1274.81         & 840.02          & 597.33      & 1045.62 & 1307.52  \\\cline{2-8}
-& mixed & 1096.95          & 510.86          & 612.00          & 408.57      & 811.96 & 2157.95 \\\hline\hline
+& mixed & 1096.95          & 510.86          & 612.00          & 408.57      & 811.96  & 2157.95 \\\hline\hline
 \multirow{3}{*}{FSMDriver3+}
 & road  & 1225.24 & 484.58  & 709.74 & \textdagger & 1108.48 & \textdagger \\\cline{2-8}
-& dirt  & 1658.47 & 1291.31 & 915.86 & 597.33 & 1055.21 & 1360.71 \\\cline{2-8}
-& mixed & 1208.84 & 534.87  & 646.68 & 384.93 & 939.93 & 1930.19 \\\hline\hline
+& dirt  & 1658.47 & 1291.31 & 915.86 & 597.33      & 1055.21 & 1360.71 \\\cline{2-8}
+& mixed & 1208.84 & 534.87  & 646.68 & 384.93      & 939.93  & 1930.19 \\\hline\hline
 \multicolumn{2}{| c ||}{Berniw Hist4} & 1143.77 & 605.76 & 656.24 & 460.95 & 872.97 & 1127.45 \\\hline\hline
 \multicolumn{2}{| c ||}{AUTOPIA~\cite{AUTOPIA}}  & * & * & * & \textbf{339.3} & \textbf{742.4} & \textbf{796.5} \\\hline
 \end{tabular}
 \end{table*}
 
-Looking at results for FSMDriver5, only the road profile completed 10 laps in \track{CG Speedway 1}, all other instances had excessive damage. FSMDriver3, on the other hand, completed all track in at least 2 configurations. Considering road tracks, the road profile had better performance in two of the three tracks, and the dirt profile did not complete one but was significantly slower in two of the tracks. Considering the Dirt tracks, again the mixed profile's performance was significantly better than the others.
+Table~\ref{tbl:time} also includes results for the robot \emph{Berniw Hist4}, provided in with the TORCS distribution. This was not included in the previous tests because TORCS only allows a race with the available robots to run for a given amount of laps (not game ticks). This robot has intermediate performance, and was arbitrarily chosen from other robots to provide insights on the controllers performance compared to a robot's and to AUTOPIA, as presented in ~\cite{AUTOPIA}. Direct comparison is not exactly fair because \emph{Berniw Hist4} does not the standard car \car{car1-trb1}, it uses the legacy \car{TZ2}.
 
-Considering the robot \emph{Berniw Hist4}, it can be seen that FSMDriver3 is a slightly better driver, despite the ``handicap'' of using SCR's interface for driving and not having access to additional information from the simulator (such as track layout). This means that the proposed model has quickly achieved an intermediate level performance in TORCS. AUTOPIA's results are around 12\%-35\% better than FSMDriver's best results, implying that its configuration is better suited for longer races.
+Looking at results for FSMDriver5, only the \profile{road} completed 10 laps in \track{CG Speedway number 1}, all other instances had excessive damage. The 3-state FSMDriver, on the other hand, completed all track in at least 2 profiles.
 
-This is likely due to lack of endurance, resulting from careless driving. Since dirt profile tends to drive slower, it drives farther on this longer test.
+Considering FSMDriver3 in \track{road}/\track{oval} tracks, it is also clear that the \profile{road} and \profile{mixed} have better results than \profile{dirt}, as expected. Considering the results for \track{dirt} tracks, \profile{mixed}'s performance was significantly better than the others in \track{Dirt 1} and \track{Dirt 3}, while \profile{dirt} was almost twice as fast in \track{Dirt 4}. \gnramos{por que? relacionado ao formato da pista?}
 
+FSMDriver3+ profiles also performed as expected in \track{road}/\track{oval} tracks. For these, FSMDriver3+ required a longer time than FSMDriver3 for \track{Street 1} (12.8\%) and \track{D-speedway} (0.3\%), but it did finish \track{CG Speedway number 1} while FSMDriver3 did not. This is also expected as the driver learns to avoid leaving the track and, thus, receive damage. For \track{dirt} tracks, FSMDriver3+'s \profile{mixed} had better than FSMDriver3 for \track{Dirt 1} (5.8\%), but worse in \track{Dirt 3} (15.8\%) and \track{Dirt 4} (14.1\%).
 
+Considering the robot \emph{Berniw Hist4}, it seems that the 3-state FSMDriver is better controller, despite the ``handicap'' of using SCR's interface for driving and not having access to additional information from the simulator (such as track layout).
 
+Finally, comparing the results for \track{dirt} tracks with AUTOPIA (\cite{AUTOPIA}), FSMDriver3's \profile{mixed} was about 20.4\% worse in \track{Dirt 1} while FSMDriver3+ was 13.2\%. In \track{Dirt 3}, FSMDriver3 and FSMDriver3+ were only 9.4\% and 26.6\% worse, respectively. In \track{Dirt 4}, these numbers rise to 170.9\% and 142.3\%.
 
-
-% \subsection{Analysis} \label{subsec:Analysis}
-
-%	The overall comparison between the two approaches presented favored the Three-State FSM, on account of the considerably superior results it produced in all the tracks tested. The Five-State FSM presents a very complex transition function that takes into account the variance of the sensorial input to decide if the car is in a straight line, approaching a turn or in a turn. On the other hand, the Three-State FSM has only a single state for handling normal driving situations and it is very easy to say if the controller is inside or outside the track only by checking the track sensor. By having multiple states acting inside the track the Five-State FSM leads to a struggle in defining the boundaries of a curve, the characteristics of an approaching curve and how those situations are different from a straight line. Mismatching emergent from the transiction function would often cause the car to leave the track. It seemed that a single state for handling those situations ended in more accurate behavior on account of having no dependence from an external function.
-
-%	Besides the difficulty in deciding on which state should be triggred. There is the complexity related to defining the behavior for each state. The steering control in the straight line was too smooth and sometimes depending on how the car left a curve it was not capable of correcting the trajectory and could led to those exception situations. However if the same control was too abrupt like the curve's one it would also led to exception situations due to excessive steer. These and other problems emphasized the need of a unified state for dealing with those situations.
-
-%	This contrast in behavior is then interpreted to be the reason of the overwhelming difference in performance, the complexity of the transition function, which supports the initial hypothesis of the evaluation. Due to this attribute, the Five-State FSM undergoes a lot of damage in its car, which can be noted in Table~\ref{tbl:time raced} where all the ``\textdagger'' symbols represent individuals that did not finish the race for the reason of reaching the maximum damage permitted.
-
-%	Because the Three-State FSM demonstrated better results than the other approach proposed, it was elected to be subject of analysis on the evaluation process. As expected, the controller evolved only on Road Tracks was the fastest one. These tracks provide an environment susceptible to high speeds, since its curves are smoother and the friction experienced by the car is higher than the ones from Dirt Tracks. These factors, when combined, allow the controller to race without having to steer too abruptly and to brake without losing control while racing in Road Tracks. Consequently, as the friction increases, steering becomes more accurate in road tracks, practically eliminating critical skidding. Therefore, the result from this end of the evolution process was an aggressive driver with high base-speed.
-
-%	Dirt Tracks provide a more difficult environment for the pilot to fit in. Sudden braking in tracks of this type often results in unwanted behavior, skidding is noticeably more common then. The driver evolved in this end of the evolution process tends to drive in a low speed so it can keep itself inside the boundaries of the track. Speed driving results in higher damage outcomes and even in the total loss of the car in critical situations. The result obtained was a very careful driver with a low base-speed, and an early brake policy - the car starting to brake far before the turn. This passive driving pattern obtained the smallest distance covered both for the Three-State and the Five-State FSMs.
-
-%	The driver evolved in a mixed set of tracks combines characteristics from both of them. It drives in a reasonable speed comparing to the first one, but also has the preventive brake policy from the second one. This last end of the evolution process achieved better results than the Dirt evolved behavior in all the tracks tested and outperformed the road-evolved one in every single dirt track. From this information gathered, it was inferred that the controller evolved in mixed tracks tries to reach higher speeds even though this means leaving the track in some turns, mostly because the time spent trying to get back to the racing lane is compensated by the speed of the car. The aggressive behavior inherited from the road-evolved end of the evolution makes this latest controller receive ample damage when leaving the track, and also causes it to hit walls, which resulted in the premature ending of some of the tested races, due to reaching the maximum acceptable damage.
-
-% \subsubsection{Comparing the Three-State FSM to AUTOPIA} \label{subsubsec:CompAUTOPIA}
-
-%	Once the Three-State FSM was demonstrated to be more suitable to competitive environments due to its superior performance regarding the Five-State FSM, it was compared to the renowned controller AUTOPIA. Using the distance covered after racing alone in Road Tracks for 10 000 game tics as metric, the Three-State FSMs evolved in Road Tracks and in mixed tracks were able to overcome AUTOPIA in 1 of the 3 tracks tested, as displayed in the bold values in Table~\ref{tbl:dist covered}. The road-evolved Three-State FSM was the controller that got closer to this State of the Art approach using the ``distance raced'', which comes to endorse the assumption of it being a competitive proposal.
-
-%	However, while racing alone for 10 laps and computing the time elapsed as metric, AUTOPIA outperformed every controller proposed, just as can be seen in Table~\ref{tbl:time raced}. Even though the Three-State controller with Road evolved parameters outperformed AUTOPIA in the first 10 000 tics it was not capable of maintaining the advantage in longer races. The road evolved pilot presents a more aggressive behavior even though it means taking more damage it has a gain in performance for the early stages of the race. Although when racing for more than a couple laps the controller becomes more careful after each lap reducing it speed to maintain itself inside the track.
-
-%	The graphical analysis was quite useful at this point. It revealed that AUTOPIA's brake, acceleration and recovery policies are robuster than the ones presented in this papper. AUTOPIA barely leaves and track and when it does a fast recovering behavior is performed  resulting in small losses in performance. It also has a better stability control which can be observerd moslty in Dirt tracks, where the car is more susceptible to splip and skidding.
-
-%	The online learning module plays a crucial role in the overall controller's performance as it prevents unwanted situations to repeat, for example leaving the track. Although this strong dependence might result in performance loss as the controller will gradually reduces it speed after each lap in those points where it leaves the track. More accurate actuators control may reduce the dependence of this module and therefore improves performance.
-
-%	These results can be used to infer that the Five-State and the Three-State FSMs have a great deal of improvement to achieve when it comes to endurance. The Five-State FSM received total loss and did not complete almost every test performed, ending only one race using this metric. The Three-State FSM, on the other hand, completed practically all the tracks, but did not surpass AUTOPIA in either of them. In order to enhance the endurance feature in the controllers proposed, more robust behavior concerning situations in which the car might crash must be taken into account.
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Analysis}
-Further comparing both FSMDrivers, it is clear that different profiles lead to different performances on the tracks for FSMDriver3, but such effect is not as pronounced in FSMDriver5. A more detailed analysis shows that FSMDriver5 has issues handling transitions in \racing~behavior. The issue seems to be that the parameters \gnramos{???} in the transition function that define the current stated are very susceptible to the inputs, resulting in several changes in the states which greatly impacts the evolution of the states' parameters and, consequently, of those in the function.
+As expected, the controllers evolved on \track{road}/\track{oval} tracks were fastest. \track{dirt} tracks provide a more difficult environment, sudden braking often results in unwanted behavior, skidding is noticeably more common then. The controllers evolved in this end of the evolution process tends to drive in lower speeds to stay within track boundaries. \profile{Mixed}s tend to evolve some of the faster, reckless behavior for \profile{road}, while keeping some of the carefulness of a \profile{dirt}, producing intermediate results.
 
-This leads to two possibilities, the first being that the specified settings for evolving FSMDriver5 were not adequate, perhaps allowing more generations or individuals would lead to better results. More likely, the 5-state model's implementation is overly complex, specially considering the influence of the transition function's parameter \gnramos{parametros??} on how the states evolve, which could imply that a different strategy should be pursued.
+Though the FSMDriver5 configuration proposed seems intuitively correct, the performance - obviously - dependent which states are activated during the race, and, thus, how these states were handled in the evolution process. A more detailed analysis of race logs indicate that the parameters in the transition function, which define the current state, are very susceptible to the inputs, resulting in several changes in the states which greatly impacts the evolution of the states' parameters and, consequently, of those in the function. By having multiple states acting inside the track the 5-state model struggles to define the boundaries of different typed of track segments, and mismatching between perceived and actual states would often cause the car to leave the track.
+
+This suggests a different approach to development, such as adjusting one state at a time (independently) and then the transition function or augmenting the FSM from a successful 3-state configuration. Additionally, the variance approach is also very sensitive to the car's position at the moment, implying that a different, more robust metric for establishing the type of track segment the car is in should be pursued. Another possibility, since the search space is larger than FSMDriver3's, is to increase the number of individuals and/or generations in the genetic algorithm's configurations.
+
+Considering the 3-state model, it was seen that it quickly achieved an intermediate level performance in TORCS (compared to FSMDriver5 and \emph{Berniw Hist4}). The less complex finite state machine model is more compatible with the tested optimization method, since it has a 23\% smaller search space and with the simpler transition function, which enables completely independent evolution of the states.
+
+Considering the 10.000 game ticks results, the learning module produces slightly slower drivers, but both FSMDriver3 and FSMDriver3+ had interesting results in all tracks tested, and they bested AUTOPIA's qualifying mark for \track{Street 1}. This is very significant because it implies that FSMDriver could qualify to the SCR Championship's racing stage (after the qualifying stage) ahead of the current state of the art.
+
+Analyzing the results for 10 laps, FSMDriver5 has obviously poor driving skills for longer races, taking excessive damage and being unable to complete any. The 3-state models, on the other hand were able to finish the all tracks. FSMDriver3+ finished \track{Street 1} while FSMDriver3 did not, which could indicate that the learning module produces a more careful driver that takes less damage, prolonging its endurance (a desired feature during the race stage). \gnramos{eh preciso dados sobre os danos para poder argumentar alguma coisa aqui}. In these tests, AUTOPIA was clearly a better driver than the others, despite not having supremacy in the qualifying.
+
+A visual comparison between FSMDriver and AUTOPIA in a simulation using TORCS graphical interface revealed that AUTOPIA's brake, acceleration and recovery policies are better than the ones achieved with FSMDriver. AUTOPIA barely leaves and track and is more stable in curves in \track{dirt} tracks.

@@ -28,18 +28,30 @@ These can be further divided into two more specific behaviors for implementation
 
 Each of these states implements its behavior as follows. \SL~ attempts to go as fast as possible parallel to the track axis by accelerating at full throttle, and changing gears according to RPM thresholds. \C~steers towards the direction towards the track sensor with the largest reading (see Figure~\ref{Fig:FSensor}) with 60\% throttle, braking in case it starts to slide in the X axis. \OT~ attempts to return to the track, facing the right direction, adjusting its speed and steering according to its current orientation concerning the track (see Figure~\ref{Fig:Angle}). \St~ tries to get unstuck by using the reverse gear and hard steering for a limited amount of game ticks and then switching to \OT~or a \racing~state.
 
+% \begin{figure*}
+% \centering
+% \begin{subfigure}[b]{0.4\textwidth}
+%    \includegraphics[width=\textwidth]{img/FarthestSensor}%
+%	\caption{Sensor input in Curve state.}\label{Fig:FSensor}%
+% \end{subfigure}
+% \begin{subfigure}[b]{0.4\textwidth}
+%    \includegraphics[width=\textwidth]{img/ReturnAngle}
+%		\caption{Angle between car and track axis in \OT.}\label{Fig:Angle}%
+% \end{subfigure}
+%    \caption{FSMDriver model .}\label{fig:FSMDriver5}
+% \end{figure*}
+
+
 \begin{figure}[h]
-	\centering
+	\centering%
 	\includegraphics[width=.45\textwidth]{img/FarthestSensor}
-	\caption{Sensor input in curve.}
-	\label{Fig:FSensor}
+	\caption{Sensor input in \C.}\label{Fig:FSensor}%
 \end{figure}
 
 \begin{figure}%[h]
 		\centering
 		\includegraphics[width=.45\textwidth]{img/ReturnAngle}
-		\caption{Angle between car and track axis.}
-		\label{Fig:Angle}
+		\caption{Angle between car and track axis in \OT.}\label{Fig:Angle}%
 \end{figure}
 
 \subsection{FSMDriver5}
