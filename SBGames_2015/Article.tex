@@ -10,8 +10,15 @@
 \usepackage[labelfont=bf,textfont=it]{caption}
 
 \usepackage{url}
+\usepackage{algorithmic}%
+\usepackage{algorithm}%
+\usepackage{multicol}%
+\usepackage{multirow}%
+\usepackage{xcolor}%
+\usepackage{subcaption}%
+% \usepackage[section]{placeins}%
+ \usepackage{placeins}%
 
-\usepackage{xcolor}
 \newcommand{\toDo}[1]{\textcolor{red}{#1}}
 
 \newcommand{\insertPicture}[1]{\textcolor{green}{#1}:
@@ -23,41 +30,38 @@
 	\\
 	}
 
-\title{Comparing the Performance of Finite-State Machines with Different Numbers of States on TORCS}
+\title{Evolving Finite-State Machines Controllers for the Simulated Car Racing Championship}
 
-\author{Bruno H. F. Macedo\\Gabriel F. P. Araujo\\
-		\and Gabriel S. Silva\\Matheus C. Crestani\\\textit{University of Bras\'{i}lia}
-		\and Yuri B. Galli\\ Guilherme N. Ramos\\
-}
+% \author{Manuscript number $<$147281$>$}
+% \contactinfo{147281}
 
-\contactinfo{\{bhfmacedo\}@gmail.com \\
-             gnramos@cic.unb.br \\
-}
+\author{Bruno H. F. Macedo\\Gabriel F. P. Araujo\\Gabriel S. Silva\\\and Matheus C. Crestani\\Yuri B. Galli\\Guilherme N. Ramos\\\hspace{-12em}\textit{University of Bras\'{i}lia}}
 
-\keywords{finite-state machine, computer games, TORCS, SCRC, artificial intelligence, genetic algorithm, self-driving car}
+\contactinfo{gnramos@unb.br}
+
+\keywords{finite-state machine, genetic algorithm, TORCS, simulated car racing}
+\newcommand{\gnramos}[1]{\textcolor{red}{#1}}%
 \begin{document}
 
 	\maketitle
 
 	\begin{abstract}
-		
-		This work presents two different approaches developed to control a self-driving car in the racing environment simulated by TORCS. The problematic is the understanding of the behavior that a pilot assumes during a race, and the proposals for dealing with it are two finite-state machines that reproduce this behavior. The evaluation of the methods proposed provided a comparison between finite state machines in which the one with fewer states led to improved performance in simulated races from TORCS.
-		
+		Autonomous vehicles have many practical applications, but the development of software controllers for such use has several difficulties. This work presents a finite state-machine model with evolved parameters as a suitable solution for a self-driving car, an approach that enables a clear division of behaviors in states, providing an easy way to test different configurations and simplifying the search for better controllers by allowing changes only in selected states. A 5-state and a 3-state drivers were evolved through genetic algorithm, and a learning module developed to improve their behaviors. These were compared to each other and to AUTOPIA, the current state of the art controller for the Simulated Car Racing Championship, using The Open Racing Car Simulator. Results showed that the proposed model has potential for racing, besting one of AUTOPIA's qualifying marks, and provide insights on developing and configuring the model.
 	\end{abstract}
 
 	\keywordlist
 	\contactlist
-	
-	\input{Introduction}
-	\input{TORCS_Environment}
-	\input{Related_Works}
-	\input{FSMDriver}
-	\input{Experimental_Results}
-	\input{Conclusions}
+
+	\input{1_Introduction}%
+	\input{2_Background}%
+	\input{3_FSMDriver}%
+	\input{4_Experiments}%
+	\input{5_Conclusions}%
+	\FloatBarrier%
 
 	%\section*{Acknowledgements}
-	
+
 	\bibliographystyle{sbgames}
 	\bibliography{Bibliography}
-	
+
 \end{document}

@@ -1,0 +1,67 @@
+\section{Related Work}\label{sec:2}
+Scientific research has been enormously aided by the evolution of simulators, which greatly simplify and reduce initial development costs. These tools have been widely used in several areas, such as medical education~\cite{MEDIC}, aiding decision making~\cite{useOfSimulaton2002}, aviation industry~\cite{AIR}, and automotive research and development~\cite{AUTR}. In the field of Machine Learning (ML), simulations are specially helpful for training and learning through experimentation.
+
+Advanced car simulators model several elements of a vehicular dynamics, including inertia, suspension types, differentials, friction, aerodynamics, and others~\cite{TORCS}. These models represent an approximation of real systems, and the differences between model and real system results that stems from the simplifications made have to be considered~\cite{brookes2012authentic}, so these tools cannot completely replace experimentation on actual cars. However, current simulators provide such realistic experiences, and enable a simpler, faster way to experiment that they are ideal for the initial development phase.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\subsection{TORCS \& SCR}
+The Open Racing Car Simulator\footnote{\url{http://torcs.sourceforge.net/}} is a platform that is renowned for its highly credible physics modeling engine and yet user-friendly interface with very customizable environment for car racing simulations~\cite{SCR,TORCS}, and has widely used in AI research for developing and comparing solutions~\cite{2009}. It considers factors such as collision, traction, aerodynamics, and fuel consumption; and provides several circuits, vehicles, and controllers~\cite{2009,Loiacono:2012:LEA:2212908.2212953}, enabling all kinds of possible in-game situations. Additionally, it is open source, with an active community, making it possible to suggest modifications of its source code (and encouraging them) to better suit specific needs. It has been used as a standard platform for simulated racing since 2007~\cite{Loiacono:2012:LEA:2212908.2212953}.
+
+\newcommand{\track}[1]{\emph{#1}}%
+TORCS tracks\footnote{\url{http://www.berniw.org/trb/tracks/tracklist.php}} differ in categorization according to the surface they simulate, and there are three types available: \track{road}, with asphalt surface in wide variety of environments; \track{oval}, which also have asphalt but are generally wider and have smoother curves than \track{road}; and \track{dirt}, which are usually short and bumpy tracks with dirt or ice surfaces. Each type has its own characteristics that influence the dynamics of the cars and the necessary driver abilities during a race.
+
+There are also several cars available\footnote{\url{http://www.berniw.org/trb/cars/carlist.php}}, each with its specific weight, suspension, differentials, tires, aerodynamic and other properties~\cite{TORCS}. The AI controllers available with TORCS are called \emph{robots}, and they are linked to the game engine and have access to its internal model. External drivers are called \emph{controllers}, and can these can be dynamically linked to the game engine, like the robots, or communicate through the SCR interface.
+
+The Simulated Car Racing Championship is a competition between controllers built on TORCS~\cite{SCR}. It was the first simulated car racing championship organized as a joined event of major scientific conferences: IEEE Congress on Evolutionary Computation, the ACM Genetic and Evolutionary Computation Conference, and the IEEE Symposium on Computational Intelligence and Games~\cite{2009}, and has been accepted by researchers as suitable platform for evaluation and comparison of controllers~\cite{TORCS}.
+
+Controllers are ranked according to performance during the championship, which consists of several races on different tracks divided into legs, spread through the conferences~\cite{2009}. Each race has three stages: warm-up, where the controllers race alone on the track before being evaluated (to encourage online learning); qualifying, where the driver races alone for a fixed amount of time; and the main race, where the best controllers in the previous stage race against each other and are scored using the Formula 1 point system\footnote{\url{http://www.formula1.com/}}.
+
+The software for SCR extends the TORCS architecture by structuring it as a client–server application, incorporating real time processing, and physically separating the driver code and the race server through a sensors/actuators model abstraction layer~\cite{2009}. These changes provide an even more interesting environment for researchers, they enable any kind of controller implementation (as long as it can communicate via UDP connections) and define a clear abstract sensor/actuator interface between controller and simulated car, which can be easily adapted for testing the controller with a different simulator or even a real car.
+
+Car control is based on the drivers perceptions and the available actions; inputs are data about the car status (gear, fuel level, etc.), the race status (lap time, distance raced, etc.), and car surroundings (track borders, obstacles, etc.); outputs are steering, acceleration and breaking, gear. There are 19 range finders available, these provide distance readings between the car axis and the track and their configuration can be customized by the developer. Further details for sensor and actuators are presented in the Simulated Car Racing Championship
+Competition Software Manual~\cite{SCR}.
+
+SCR controllers have been developed using several AI techniques, such as neural networks, fuzzy logic, potential fields, and genetic algorithms~\cite{Loiacono:2012:LEA:2212908.2212953}. In the competition, the race tracks are unknown and several drivers incorporate machine learning procedures to improve their performance in the Championship~\cite{2009}, attempting to not only develop a controller that can handle tracks with diverse characteristics, but exploiting the information available during the stages. These procedures can essentially be \emph{online}, which learn by moving about the environment and observing the results, or offline, which learn solely by simulating actions within an internal model~\cite{mitchell_1997}.
+
+Several approaches to implementing a controller have taken part in SCR, including imitating the human behavior~\cite{Exp,5593318}. \emph{Mr. Racer}, which won the last three championships (2011 to 2013), employs several heuristics and black-box optimization methods in a a modular structure in order to reproduce human-like mechanisms~\cite{MrRacer}, and applies a Covariance Matrix Adaptation Evolution Strategy (CMA-ES), to evolve parameters offline.
+
+In the GECCO leg of the 2013 competition\footnote{\url{http://www.slideshare.net/dloiacono/gecco13scr}}, \emph{AUTOPIA}'s performance stood out from the other competitors. It implements a fuzzy architecture with gear, steering and speed control modules which are optimized offline by a genetic algorithm and an online learning mechanism for landmarking lane exit points to avoid leaving the track~\cite{AUTOPIA}.
+
+Not surprisingly, many participants use combinations of offline and online learning, as well as a modular approach to implementing them~\cite{2009,DIEGO,Exp}. Modularity may advance development and optimization by allowing parts of the controller to be improved independently\cite{MrRacer,AUTOPIA2009}, or to separate driving behaviors and work on them separately.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\subsection{Finite-State Machines}%
+One of the most simple and intuitive models for implementing different behaviors is a finite-state machine, a model which views a system as a black box with a number of inputs and outputs with a finite number of possible states, of which it can be in only one at any given instant~\cite{belzer_encyclopedia_1992}. FSMs have been widely used in AI application~\cite{Millington:2006:FSM}, mostly due to its inherent characteristics of flexibility, modularity, and intuitive behavior, among others~\cite{Buckland:2005:AI}.
+
+States are usually implemented with hard-coded rules concerning a specific situation~\cite{Buckland:2005:AI}, which in turn demands small amounts of processor time, and can be easily implemented in different manners. The different driving behaviors can then be coded in parallel with less effort, and easily translated into different states of a FSM. Such approach has successfully been used in SCR~\cite{2009,DIEGO}.
+
+The proper configuration of states and transitions, however, are a more complex problem. Several possible solutions exist to solve this, from a hard coded approach bases on trial and error to different machine learning techniques (or the composition of both).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\subsection{Genetic Algorithms}
+GAs are a particular kind of genetic optimization mechanism, inspired by evolutionary algorithms from Darwin's theory of natural selection~\cite{GA}. They are probabilistic search procedures designed to work on large spaces~\cite{goldberg1988}, and have been successfully applied in many areas such as non-linear systems identification~\cite{GACTRL}, prosthesis development~\cite{GABIO}, economic dispatch~\cite{GAECO}, neuroevolution~\cite{stanley_real-time_2005}, data classifiers~\cite{pedrycz_genetic_2005}, and others.
+
+This well-known approach works by generating successor solutions by repeatedly mutating and recombining parts of the best currently known solutions, replacing a fraction of the population by offspring~\cite{mitchell_1997}. This is interesting because it works with little information on the problem's domain, the only requirements related specifically to the problem are a representation of a solution for it and a means for evaluating it's quality (fitness).
+
+In the context of a simulated self-driving car controller, a solution can be seen as a representation of some of the driver's parameters (or configurations) and the fitness a measure of its performance, considering speed, safety, fuel consumption, or whatever is the developer's interest. Considering SCR, the fitness depends on the stage of the competition; in warm-up it could be anything from distance raced or average speed to the amount of information gathered from the track to be used in the following stages, which have their own metrics. In the qualifying stage, fitness should be the distance driven during the given simulation time as that is what defines the participants to the race. In the race, though the winner gets more points, several other factors must be considered into play, such as average speed, car damage, and opponents position (and points in the Championship).
