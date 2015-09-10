@@ -1,0 +1,36 @@
+\begin{table}
+	\renewcommand{\arraystretch}{1.3}
+	\caption{Parameters evolved}
+	\centering
+\begin{tabular}{|c||c|}
+\hline
+\bfseries Parameter & \bfseries Description \\
+\hline
+\hline STUCK\_SPEED &  Threshold velocity for transitioning into the stuck state. The driver will be considered stuck when running bellow that velocity for a certain number of ticks. \\
+\hline MAX\_SLOW\_TICKS & Maximum number of ticks running in low speed before the driver is considered stuck.\\
+\hline MAX\_STUCK\_TICKS & Maximum number of ticks that the driver will perform the reverse behavior. \\
+\hline MIN\_RACED\_DIST &  Minimal distance required for the stuck verification to begin. This avoids wrong stuck detections at the very beginning of the race.\\
+\hline LOW\_GEAR\_LIMIT &  Threshold for considering current gear as low gear.\\
+\hline LOW\_RPM & Threshold for considering current RPM as low. \\
+\hline AVERAGE\_RPM & Threshold for considering current RPM as average. \\
+\hline HIGH\_RPM & Threshold for considering current RPM as high. \\
+\hline SPEED\_FACTOR & Scales the difference among sensor in order to obtain the target speed. \\
+\hline BASE\_SPEED & Offset velocity value. \\
+\hline MAX\_SKIDDING & Maximum skidding allowed before any recover action is taken in the out of track state. \\
+\hline VELOCITY\_GEAR\_4 & Threshold velocity for changing to fourth gear in the OutOfTrack state. \\
+\hline VELOCITY\_GEAR\_3 & Threshold velocity for changing to third gear in the OutOfTrack state. \\
+\hline VELOCITY\_GEAR\_2 & Threshold velocity for changing to second gear in the OutOfTrack state. \\
+\hline NEGATIVE\_ACCEL\_PERCENT & Reduces the acceleration based on how much the car is skidding. \\
+\hline MAX\_RETURN\_ANGLE & Maximum angle desired for reentering the track. \\
+\hline MIN\_RETURN\_ANGLE & Minimum angle desired for reentering the track. \\ 
+\hline MAX\_STRAIGHT\_LINE\_VAR & Upper variance threshold for the driver to be considered in a straight line. \\ 
+\hline MIN\_STRAIGHT\_LINE\_VAR & Lower variance threshold for the driver to be considered in a straight line. \\ 
+\hline MAX\_APPROACHING\_CURVE\_VAR & Upper variance threshold for the driver to be considered approaching a curve. \\
+\hline MIN\_APPROACHING\_CURVE\_VAR & Lower variance threshold for the driver to be considered approaching a curve. \\
+\hline 
+
+\end{tabular}
+
+\end{table}
+
+The 4 last parameters are only present in FSM5
